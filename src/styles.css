@@ -80,3 +80,8 @@
     flex: 2;
     height: 20px;
   }
+
+  .inline{
+    display: inline-block;
+    vertical-align: middle;
+  }
