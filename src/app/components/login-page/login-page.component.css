@@ -1,0 +1,8 @@
+h1{
+    text-align: center;
+}
+  .logo-image {
+    margin-top: 10px; /* Adds space between the heading and logo */
+    width: 150px; /* Adjust size as needed */
+    height: auto;
+  }
