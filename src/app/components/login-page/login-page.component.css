@@ -9,10 +9,10 @@ h1 {
 
 
 .logo-image {
-    width: 50%; 
+    width: 80%; 
     height: auto;
-    margin-bottom: 40px;
-    border-radius: 30%;
+    margin-bottom: 50px;
+    border-radius: 40%;
     object-fit: contain;
 }
 

@@ -1,0 +1,117 @@
+/* Home Screen CSS for Mobile Library App */
+
+.home-container {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header */
+  app-header {
+    display: block;
+  }
+  
+  /* Section Styling */
+  .section {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+  }
+  
+  /* Notifications */
+  .notification-content {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  /* Feature Cards */
+  .feature-cards {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+  }
+  
+  .feature-card {
+    flex: 1;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Upcoming Books */
+  .upcoming-books .books-carousel {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 8px 0;
+  }
+  
+  .book-card {
+    flex: 0 0 auto;
+    width: 120px;
+    text-align: center;
+    background-color: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+  }
+  
+  .book-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  /* Bottom Navigation */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    font-size: 12px;
+  }
+  
+  .nav-button i {
+    font-size: 24px;
+  }
+  
