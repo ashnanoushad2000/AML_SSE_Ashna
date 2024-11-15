@@ -1,29 +1,58 @@
 <div class="centered-container">
     <h1>Advanced Media<br>Library</h1>
-    <h3>Sign Up</h3>
+    <h3>Sign Up Form</h3>
     <p class="small-text"><i>please fill out the form below</i></p>
-<form Class="add-form">
-    <div class="form-control inline">
-        <label for="first-name">*First Name: </label>
-        <input type="first-name" name="first-name" id="first-name" placeholder="First Name" required>
-    </div>
-    <div class="form-control inline">
-        <label for="last-name">Last Name: </label>
-        <input type="last-name" name="last-name" id="last-name" placeholder="Last Name" required>
-    </div>
-    <div class="form-control" style="margin-top: 0">
-        <label for="email">Email: </label>
-        <input type="email" name="email" id="email" placeholder="Email" required>
-    </div>
-    <div class="form-control">
-        <label for="password">Password: </label>
-        <input type="password" name="password" id="password" placeholder="Password" required>
-    </div>
-    <div class="form-control">
-        <label for="password">Confirm Password: </label>
-        <input type="password" name="password" id="password" placeholder="Confirm Password" required>
-    </div>
-    <input type="submit" value="Sign Up" class="btn btn-block">
-</form>
-<p>Already have an Account? <a routerLink="/">Sign in</a></p>
+    <form class="add-form" onsubmit="return validateForm(event)">
+        <div class="form-control">
+            <label for="first-name">*First Name: </label>
+            <input type="text" name="first-name" id="first-name" placeholder="First Name" required>
+        </div>
+        <div class="form-control">
+            <label for="last-name">Last Name: </label>
+            <input type="text" name="last-name" id="last-name" placeholder="Last Name" required>
+        </div>
+        <div class="form-control">
+            <label for="dob">Date of Birth: </label>
+            <input type="date" name="dob" id="dob" required>
+        </div>
+        <div class="form-control">
+            <label for="email">Email: </label>
+            <input type="email" name="email" id="email" placeholder="Email" required>
+        </div>
+        
+        <div class="form-control">
+            <label for="street">Street Address: </label>
+            <input type="text" name="street" id="street" placeholder="Street Address" required>
+        </div>
+        <div class="form-control">
+            <label for="city">City: </label>
+            <input type="text" name="city" id="city" placeholder="City" required>
+        </div>
+        <div class="form-control">
+            <label for="county">County: </label>
+            <input type="text" name="county" id="county" placeholder="County" required>
+        </div>
+        <div class="form-control">
+            <label for="country">Country: </label>
+            <input type="text" name="country" id="country" placeholder="Country" required>
+        </div>
+        <div class="form-control">
+            <label for="postal-code">Postal Code: </label>
+            <input type="text" name="postal-code" id="postal-code" placeholder="Postal Code" required>
+        </div>
+    
+        <div class="form-control">
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password" [(ngModel)]="password" (input)="checkPasswordStrength(); validatePasswords()" placeholder="Password" required>
+            <p class="strength-indicator">Password strength: <span [style.color]="getPasswordStrengthColor()">{{ passwordStrength }}</span></p>
+        </div>
+        <div class="form-control">
+            <label for="confirm-password">Confirm Password: </label>
+            <input type="password" name="confirm-password" id="confirm-password" [(ngModel)]="confirmPassword" placeholder="Confirm Password" (input)="validatePasswords()" required>
+            <p class="error-message">{{passwordError}}</p>
+        </div>
+        
+        <input type="submit" value="Sign Up" class="btn btn-block">
+    </form>
+<p class="route">Already have an Account? <a routerLink="/">Sign in</a></p>
 </div>

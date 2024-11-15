@@ -12,5 +12,6 @@ import { RegistrationPageComponent } from './components/registration-page/regist
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  forpullrequestashna = 'Please Word';
   title = 'AML-16';
 }
