@@ -12,5 +12,5 @@ import { RegistrationPageComponent } from './components/registration-page/regist
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'AML-16'; 
+  title = 'AML-16';
 }
