@@ -1,0 +1,55 @@
+  .container {
+    padding: 30px;
+  }
+  .payment-section {
+    width: 100%;
+    background-color: #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  .payment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+  }
+  .payment-item:not(:last-child) {
+    border-bottom: 1px solid #999;
+  }
+  .total {
+    font-weight: bold;
+    padding: 10px 0;
+  }
+  .pay-button {
+    background-color: #e0a106;
+    padding: 10px;
+    text-align: center;
+    width: 80%;
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  .upcoming-deadlines {
+    width: 90%;
+    background-color: #d3d3d3;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .upcoming-deadlines ul {
+    list-style: disc;
+    padding-left: 20px;
+    text-align: left;
+  }
+  .footer-icons {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+  .footer-icon {
+    text-align: center;
+    width: 20%;
+  }
+
+
+
+  

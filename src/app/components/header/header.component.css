@@ -1,0 +1,33 @@
+.fa-stack {
+    position: relative; /* Ensures stacking works as expected */
+    display: inline-block; /* Keeps the icons aligned inline */
+    width: 2.5em; /* Adjust as needed for size */
+    height: 2.5em;
+    line-height: 2.5em; /* Aligns text/icons vertically */
+    text-align: center; /* Aligns text/icons horizontally */
+}
+
+.fa-stack-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.fa-stack-user {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers the user icon perfectly */
+}
+
+.profile-container {
+    position: relative; /* Position relative to the parent container */        /* Adjust distance from the top */
+    right: -20px;       /* Adjust distance from the right */
+    top: -15px;
+}
+
+.back-arrow {
+    position: relative;
+    right: -15px;
+    top: -15px;
+}

@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="centered-container">
+  <h1>Payments</h1>
+</div>
+  
+  <div class="centered-container">
+    
+    <div class="payment-section">
+      <div class="payment-item" (click)="viewDetails('Fees')">
+        <span>Fees</span>
+        <span>{{ payments.fees | currency: 'GBP' }}</span>
+      </div>
+      <div class="payment-item" (click)="viewDetails('Fines')">
+        <span>Fines</span>
+        <span>{{ payments.fines | currency: 'GBP' }}</span>
+      </div>
+      <div class="payment-item" (click)="viewDetails('Subscriptions')">
+        <span>Subscriptions</span>
+        <span>{{ payments.subscriptions | currency: 'GBP' }}</span>
+      </div>
+      <div class="payment-item total">
+        <span>Total</span>
+        <span>{{ total | currency: 'GBP' }}</span>
+      </div>
+    </div>
+  
+    
+    <div class="pay-button" (click)="makePayment()">Pay</div>
+  
+    
+    <div class="upcoming-deadlines">
+      <h3>Upcoming Deadlines</h3>
+      <ul>
+        <li *ngFor="let deadline of deadlines">{{ deadline }}</li>
+      </ul>
+    </div>
+  </div>
+  
+  
+  <div class="footer-icons">
+    <div class="footer-icon">Home</div>
+    <div class="footer-icon">Books</div>
+    <div class="footer-icon">Search</div>
+    <div class="footer-icon">Payments</div>
+    <div class="footer-icon">Profile</div>
+  </div>
+  
+  
