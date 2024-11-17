@@ -4,15 +4,13 @@ h1 {
     text-align: center;
     font-size: 1.8rem;
     color: #333;
-    margin-bottom: 45px;
 }
 
 
 .logo-image {
     width: 50%; 
     height: auto;
-    margin-bottom: 40px;
-    border-radius: 30%;
+    border-radius: 70%;
     object-fit: contain;
 }
 
@@ -97,4 +95,8 @@ a:hover {
 .container {
     padding: 30px;
   }
+
+.centered-container{
+    padding-top: 50px;
+}
 

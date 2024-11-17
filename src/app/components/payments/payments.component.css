@@ -1,55 +1,137 @@
-  .container {
-    padding: 30px;
-  }
-  .payment-section {
+.payment-section {
     width: 100%;
-    background-color: #ccc;
-    padding: 10px;
-    margin-bottom: 20px;
-  }
-  .payment-item {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.payment-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 0;
-  }
-  .payment-item:not(:last-child) {
-    border-bottom: 1px solid #999;
-  }
-  .total {
-    font-weight: bold;
     padding: 10px 0;
-  }
-  .pay-button {
-    background-color: #e0a106;
-    padding: 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.payment-item:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+}
+
+.total {
+    font-weight: bold;
+    padding: 15px 0;
+    color: black; 
+}
+
+.pay-button {
+    background-color: orange;
+    padding: 15px;
     text-align: center;
     width: 80%;
-    margin: 10px 0;
+    margin: 20px auto;
     cursor: pointer;
-  }
-  .upcoming-deadlines {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem; 
+    border-radius: 5px;
+    transition: background-color 0.3s ease; 
+}
+
+.pay-button:hover {
+    background-color: #e69500; 
+}
+
+.upcoming-deadlines {
     width: 90%;
-    background-color: #d3d3d3;
-    padding: 10px;
+    background-color: #f9f9f9;
+    padding: 20px; 
     text-align: center;
-    margin-bottom: 20px;
-  }
-  .upcoming-deadlines ul {
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+.upcoming-deadlines ul {
     list-style: disc;
     padding-left: 20px;
     text-align: left;
-  }
-  .footer-icons {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-  }
-  .footer-icon {
+    margin: 15px 0;
+    color: #333;
+}
+
+h1 {
+    font-size: 2rem; 
+    color: #333;
     text-align: center;
-    width: 20%;
-  }
+    margin-bottom: 20px;
+    margin-top: -20px;
+}
 
+h3 {
+    font-size: 1.5rem;
+    color: green; 
+    text-align: center;
+    margin-bottom: 15px;
+}
 
+.centered-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
 
-  
+main {
+    flex: 1;
+}
+
+app-header{
+    display: block;
+    margin: 0;
+}
+
+.organizer{
+    overflow: hidden;
+}
+
+.upcoming-deadlines {
+    width: 90%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.upcoming-deadlines h3 {
+    text-align: center;
+    font-size: 1.6rem;
+    color: green;
+    margin-bottom: 10px;
+}
+
+.upcoming-deadlines ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 15px 0;
+    color: #333;
+}
+
+.upcoming-deadlines ul li {
+    position: relative;
+    margin-bottom: 10px; 
+    padding-left: 20px; 
+    font-size: 1rem; 
+}
+
+.upcoming-deadlines ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1.2rem;
+    line-height: 1;
+}

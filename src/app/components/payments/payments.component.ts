@@ -5,6 +5,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome'
 import {faArrowLeftLong, faUser} from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from '../footer/footer.component';
 
 
 export interface payment{
@@ -16,7 +17,7 @@ export interface payment{
 @Component({
   selector: 'app-payments',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, RouterLink, HeaderComponent],
+  imports: [CommonModule, FontAwesomeModule, RouterLink, HeaderComponent, FooterComponent],
   templateUrl: './payments.component.html',
   styleUrl: './payments.component.css'
 })
