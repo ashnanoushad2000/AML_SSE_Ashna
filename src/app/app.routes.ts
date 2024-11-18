@@ -5,6 +5,7 @@ import { RegistrationPageComponent } from './components/registration-page/regist
 import { HeaderComponent } from './components/header/header.component';
 import { PaymentsComponent } from './components/payments/payments.component';
 import { StaffLoginComponent } from './components/staff-login/staff-login.component';
+import { SingleMediaAdditionComponent } from './components/single-media-addition/single-media-addition.component';
 
 export const routes: Routes = [{
     path: '', component: LoginPageComponent},
@@ -15,6 +16,9 @@ export const routes: Routes = [{
     },
     {
         path: 'staff', component: StaffLoginComponent
+    },
+    {
+        path: 'single-media-addition', component: SingleMediaAdditionComponent
     }
 ];
 
