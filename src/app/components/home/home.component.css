@@ -1,29 +1,47 @@
-/* home.component.css */
-/* Container */
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Main Container */
 .container {
-    max-width: 414px;
-    margin: 30px auto;
-    min-height: 780px;
+    width: 414px;
+    height: 780px;
+    background: white;
     border: 1px solid steelblue;
-    border-radius: 5px;
-    background-color: #f5f5f5;
-    position: relative;
+    border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
+    margin: 0 auto;
 }
 
 /* Header Styles */
 .app-header {
     background: #2c3e50;
-    width: 96%;
-    padding: 10px;
+    padding: 0;
+    position: relative;
 }
 
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 15px 20px;
 }
 
 .logo {
@@ -34,50 +52,93 @@
 }
 
 .logo i {
-    font-size: 1.2rem;
+    font-size: 20px;
 }
 
 .logo span {
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: 500;
 }
 
-.nav-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: #2c3e50;
-    width: 200px;
-    border-radius: 0 0 5px 5px;
-    padding: 10px;
-    list-style: none;
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-.nav-menu.active {
-    display: block;
+.regular-menu {
+    display: flex;
+    gap: 10px;
 }
 
-.nav-menu li a {
+.auth-link {
     color: white;
     text-decoration: none;
-    padding: 10px;
-    display: block;
-    transition: all 0.3s ease;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
-.nav-menu li a:hover {
-    background: #34495e;
-    border-radius: 5px;
+.auth-link:hover {
+    background: rgba(255,255,255,0.1);
 }
 
 .menu-toggle {
     background: none;
     border: none;
     color: white;
-    font-size: 1.2rem;
+    font-size: 20px;
     cursor: pointer;
     padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s;
+}
+
+/* Navigation Menu */
+.nav-menu {
+    background: #2c3e50;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.nav-menu.active {
+    max-height: 300px;
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-menu li:last-child {
+    border-bottom: none;
+}
+
+.nav-menu li a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.nav-menu li a:hover {
+    background: rgba(255,255,255,0.1);
 }
 
 /* Main Content */
@@ -87,14 +148,25 @@
     overflow-y: auto;
 }
 
-/* Cards with Hover Effect */
-.hover-effect {
-    transition: all 0.3s ease;
+/* Welcome Section */
+.welcome-section {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.hover-effect:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+.welcome-section h1 {
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.welcome-section p {
+    color: #666;
+    font-size: 14px;
 }
 
 /* Stats Grid */
@@ -102,21 +174,32 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    margin: 20px 0;
+    margin-bottom: 20px;
 }
 
 .stat-card {
     background: white;
     padding: 15px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .stat-card i {
-    font-size: 1.5rem;
     color: #3498db;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.stat-card h3 {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.stat-card p {
+    color: #2c3e50;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 /* Quick Actions */
@@ -124,31 +207,47 @@
     margin-top: 20px;
 }
 
+.quick-actions h2 {
+    color: #2c3e50;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
 .actions-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    margin-top: 15px;
 }
 
 .action-card {
     background: white;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 12px;
     text-align: center;
-    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-2px);
 }
 
 .action-card i {
-    font-size: 1.5rem;
+    font-size: 24px;
     color: #3498db;
     margin-bottom: 8px;
+    display: block;
+}
+
+.action-card span {
+    font-size: 14px;
+    color: #2c3e50;
 }
 
 /* Footer */
 .app-footer {
     background: #2c3e50;
-    padding: 15px;
+    padding: 15px 20px;
     margin-top: auto;
 }
 
@@ -157,7 +256,6 @@
     justify-content: space-between;
     align-items: center;
     color: white;
-    font-size: 0.9rem;
 }
 
 .footer-links {
@@ -168,38 +266,35 @@
 .footer-links a {
     color: white;
     text-decoration: none;
-    transition: color 0.3s ease;
+    font-size: 14px;
+    transition: color 0.3s;
 }
 
 .footer-links a:hover {
     color: #3498db;
 }
 
-/* Welcome Section */
-.welcome-section {
-    text-align: center;
-    margin-bottom: 20px;
+/* Utility Classes */
+.hover-effect:active {
+    transform: scale(0.98);
 }
 
-.welcome-section h1 {
-    color: #2c3e50;
-    font-size: 1.8rem;
-    margin-bottom: 10px;
+/* Hide scrollbar */
+.main-content::-webkit-scrollbar {
+    display: none;
 }
 
-.welcome-section p {
-    color: #666;
-}
-
-/* Responsive Design */
-@media (max-width: 360px) {
-    .stats-grid, .actions-grid {
-        grid-template-columns: 1fr;
+/* Media Query */
+@media (max-width: 414px) {
+    .container {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        border: none;
+        border-radius: 0;
     }
 
-    .footer-content {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
+    .regular-menu {
+        display: none;
     }
 }

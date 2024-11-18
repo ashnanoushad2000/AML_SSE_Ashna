@@ -1,24 +1,32 @@
-<!-- home.component.html -->
 <div class="container">
     <!-- Header -->
     <header class="app-header">
         <div class="header-content">
             <div class="logo">
                 <i class="fas fa-book-reader"></i>
-                <span>Library App</span>
+                <span>Advanced Library App</span>
             </div>
-            <nav>
+            
+            <div class="header-right">
+                <div class="regular-menu">
+                    <a routerLink="/login" class="auth-link">Login</a>
+                    <a routerLink="/registration-page" class="auth-link">Register</a>
+                </div>
+                
                 <button class="menu-toggle" (click)="toggleMenu()">
-                    <i class="fas fa-bars"></i>
+                    <i [class]="isMenuOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
                 </button>
-                <ul class="nav-menu" [class.active]="isMenuOpen">
-                    <li><a routerLink="/" routerLinkActive="active">Home</a></li>
-                    <li><a routerLink="/books" routerLinkActive="active">Books</a></li>
-                    <li><a routerLink="/members" routerLinkActive="active">Members</a></li>
-                    <li><a routerLink="/settings" routerLinkActive="active">Settings</a></li>
-                </ul>
-            </nav>
+            </div>
         </div>
+        
+        <nav class="nav-menu" [class.active]="isMenuOpen">
+            <ul>
+                <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+                <li><a routerLink="/books" routerLinkActive="active">Books</a></li>
+                <li><a routerLink="/members" routerLinkActive="active">Members</a></li>
+                <li><a routerLink="/settings" routerLinkActive="active">Settings</a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- Main Content -->
@@ -62,10 +70,10 @@
                     <i class="fas fa-search"></i>
                     <span>Search Books</span>
                 </div>
-                <div class="action-card hover-effect">
+                <!-- <div class="action-card hover-effect">
                     <i class="fas fa-user-plus"></i>
                     <span>Add Member</span>
-                </div>
+                </div> -->
                 <div class="action-card hover-effect">
                     <i class="fas fa-book"></i>
                     <span>Issue Book</span>
