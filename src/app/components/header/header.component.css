@@ -1,0 +1,33 @@
+.fa-stack {
+    position: relative;
+    display: inline-block;
+    width: 2.5em;
+    height: 2.5em;
+    line-height: 2.5em;
+    text-align: center;
+}
+
+.fa-stack-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.fa-stack-user {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.profile-container {
+    position: relative;
+    right: -25px;  
+    top: -15px;
+}
+
+.back-arrow {
+    position: relative;
+    right: -15px;
+    top: -15px;
+}
