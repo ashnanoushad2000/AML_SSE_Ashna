@@ -1,3 +1,7 @@
-<div class="container">
+<div class="small-container" *ngIf="!isAdminOrLibrarianRoute()"> 
     <router-outlet></router-outlet>
-    </div>
+  </div>
+  
+  <div class="large-container" *ngIf="isAdminOrLibrarianRoute()"> 
+    <router-outlet></router-outlet>
+  </div>
