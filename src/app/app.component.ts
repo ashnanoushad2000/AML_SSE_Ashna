@@ -19,7 +19,6 @@ export class AppComponent {
 
   constructor(private router: Router) {}
 
-  // Check if the current route is for Admin or Librarian pages
   isAdminOrLibrarianRoute(): boolean {
     const currentUrl = this.router.url;
     return currentUrl === '/librarian' || currentUrl === '/admin';
