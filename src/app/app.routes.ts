@@ -23,7 +23,13 @@ export const routes: Routes = [{
     },
     {
         path: 'home', component: HomeComponent
-    }
+    },
+    {
+        path: 'librarian', component: StaffLoginComponent
+    },
+    {
+        path: 'admin', component: HomeComponent
+    },
 ];
 
 Imports: [LoginPageComponent, RouterModule.forRoot(routes, {enableTracing: true})]
