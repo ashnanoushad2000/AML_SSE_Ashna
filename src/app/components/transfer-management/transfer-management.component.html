@@ -1,5 +1,5 @@
 <div class="transfer-management">
-        <app-header arrowColor="#E0E0E0" route="/inventory_management"></app-header>
+        <app-header arrowColor="#E0E0E0" route="/inventory_management" profileColor="#E0E0E0"></app-header>
         <h1>Transfer Management</h1>
         <input type="text" placeholder="Search Source/Destination" class="search-media" [(ngModel)]="searchQuery" (input)="filterTransfers()">
 
@@ -20,4 +20,5 @@
     <div class="footer-buttons">
         <a routerLink="/transfer_initiation"><button>Initiate New Transfer</button></a>
     </div>
+    <app-footer-admin></app-footer-admin>
 </div>

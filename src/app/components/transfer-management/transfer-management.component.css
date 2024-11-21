@@ -1,20 +1,28 @@
 .transfer-management {
     font-family: 'Arial', sans-serif;
-    color: #E0E0E0; 
-    background-color: #282c34; 
-    padding: 40px;
+    color: #E0E0E0;
+    background-color: #282c34;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    min-width: 1200px;
+    min-width: 100vw;
+    min-height: 100vh; /* Ensures the container is at least the height of the viewport */
+    display: flex;
+    flex-direction: column; /* Organizes children in a column */
+    overflow: hidden;
 }
 
 .search-media {
-    width: 100%;
     padding: 12px;
     border-radius: 5px;
     border: 2px solid #646e82;
     background-color: #3a3f4b;
     color: #E0E0E0;
     margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.transfer-history{
+    padding: 20px;
 }
 
 .transfer-history ul {
@@ -69,6 +77,8 @@
     display: flex;
     justify-content: space-around;
     padding-top: 30px;
+    flex: 1;
+    
 }
 
 .footer-buttons button {
@@ -83,6 +93,7 @@
 app-header{
     display: block;
     margin: 0;
+    padding: 40px;
 }
 
 h1 {
@@ -92,4 +103,11 @@ h1 {
     margin-top: -20px;
     margin-bottom: 50px;
     color: #ABB2BF; 
+    padding: 40px;
+    padding-bottom: 20px;
+}
+
+.transfer-history {
+    flex: 1; /* Allows this element to expand and fill available space */
+    overflow-y: auto; /* Adds scroll to this element if content exceeds the available space */
 }

@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { FooterAdminComponent } from "../footer-admin/footer-admin.component";
 
 @Component({
   selector: 'app-inventory-management',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, RouterModule, FormsModule],
+  imports: [CommonModule, HeaderComponent, RouterModule, FormsModule, FooterAdminComponent],
   templateUrl: './inventory-management.component.html',
   styleUrl: './inventory-management.component.css'
 })
@@ -16,6 +17,9 @@ export class InventoryManagementComponent {
     { id: 1, name: 'Media 1' },
     { id: 2, name: 'Media 2' },
     { id: 3, name: 'Media 3' },
+    { id: 4, name: 'Media 4' },
+    { id: 5, name: 'Media 5' },
+    { id: 6, name: 'Media 6' },
   ];
   filteredMediaList = this.mediaList;
   searchQuery: string = '';

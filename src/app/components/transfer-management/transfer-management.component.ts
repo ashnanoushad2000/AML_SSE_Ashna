@@ -5,11 +5,12 @@ import { faArrowLeft, faCog, faArrowRight } from '@fortawesome/free-solid-svg-ic
 import { HeaderComponent } from '../header/header.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FooterAdminComponent } from "../footer-admin/footer-admin.component";
 
 @Component({
   selector: 'app-transfer-management',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule, HeaderComponent, FormsModule, RouterModule],
+  imports: [FontAwesomeModule, CommonModule, HeaderComponent, FormsModule, RouterModule, FooterAdminComponent],
   templateUrl: './transfer-management.component.html',
   styleUrl: './transfer-management.component.css'
 })

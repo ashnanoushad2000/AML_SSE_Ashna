@@ -14,6 +14,7 @@ import { faCircle } from "@fortawesome/free-regular-svg-icons";
 export class HeaderComponent {
   @Input() route: string = '';
   @Input() arrowColor: string = 'black'
+  @Input() profileColor: string = 'black'
   faArrowLeftLong = faArrowLeftLong;
   faUser = faUser;
   faCircle = faCircle;
