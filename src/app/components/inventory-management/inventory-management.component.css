@@ -1,0 +1,75 @@
+.inventory-management {
+    font-family: 'Arial', sans-serif;
+    color: #E0E0E0;  /* Soft white for text */
+    background-color: #171d2b;  /* Dark grey background */
+    min-width: 1200px;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.search-media {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 2px solid #646e82;  /* Darker grey for input border */
+    background-color: #3a3f4b;  /* Slightly lighter grey for input field */
+    color: #E0E0E0;  /* Maintaining soft white for input text */
+    margin-bottom: 30px;
+}
+
+.media-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.media-list li {
+    background-color: #3a3f4b;  /* Consistent with input field color */
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.media-list button {
+    border: none;
+    background: none;
+    color: #e06c75;  /* Soft red for icons */
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.footer-navigation {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 30px;
+}
+
+.footer-navigation button {
+    background-color: #3d78a9;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.footer-navigation button:hover {
+    background-color: #4a91d4;
+}
+
+app-header{
+    display: block;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2rem; 
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: -20px;
+    margin-bottom: 50px;
+    color: #ABB2BF; 
+}

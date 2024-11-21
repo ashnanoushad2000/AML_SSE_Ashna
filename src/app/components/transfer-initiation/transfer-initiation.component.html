@@ -1,0 +1,36 @@
+<div class="transfer-initiation">
+    <app-header></app-header>
+        <h1>Transfer Initiation</h1>
+    <form>
+        <div class="form-group">
+            <label for="sourceBranch">Source Branch:</label>
+            <select id="sourceBranch" [(ngModel)]="transfer.sourceBranch" name="sourceBranch" required>
+                <option value="">Select Source Branch</option>
+                <option value="s1">Source Branch 1</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="destinationBranch">Destination Branch:</label>
+            <select id="destinationBranch" [(ngModel)]="transfer.destinationBranch" name="destinationBranch" required>
+                <option value="">Select Destination Branch</option>
+                <option value="d1">Destination Branch 1</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="mediaItem">Media Item:</label>
+            <select id="mediaItem" [(ngModel)]="transfer.mediaItem" name="mediaItem" required>
+                <option value="">Select Media Item</option>
+                <option value="m1">Book 1</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" [(ngModel)]="transfer.quantity" name="quantity" required>
+        </div>
+        <div class="form-group">
+            <label for="reason">Reason for Transfer (optional):</label>
+            <textarea id="reason" [(ngModel)]="transfer.reason" name="reason"></textarea>
+        </div>
+        <button type="submit">Transfer</button>
+    </form>
+</div>

@@ -1,0 +1,95 @@
+.transfer-management {
+    font-family: 'Arial', sans-serif;
+    color: #E0E0E0; 
+    background-color: #282c34; 
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    min-width: 1200px;
+}
+
+.search-media {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 2px solid #646e82;
+    background-color: #3a3f4b;
+    color: #E0E0E0;
+    margin-bottom: 30px;
+}
+
+.transfer-history ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transfer-history li {
+    display: flex;
+    align-items: center;
+    background-color: #3a3f4b;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.transfer-details {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.transfer-source-destination {
+    flex-grow: 1;
+}
+
+.transfer-date {
+    white-space: nowrap;
+    padding-left: 20px;
+}
+
+.view-icon {
+    margin-left: 20px;
+    color: #61aeee;
+}
+
+.transfer-details span {
+    color: #ABB2BF;
+}
+
+.view-details {
+    background: none;
+    border: none;
+    color: #61aeee;
+    cursor: pointer;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 30px;
+}
+
+.footer-buttons button {
+    background-color: #61aeee;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+app-header{
+    display: block;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2rem; 
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: -20px;
+    margin-bottom: 50px;
+    color: #ABB2BF; 
+}

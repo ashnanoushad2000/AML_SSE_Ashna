@@ -1,0 +1,26 @@
+<div class="admin-dashboard">
+    <div class="dashboard-header">
+        <h1>Hello {{ firstName }}!</h1>
+        <button class="header-button" (click)="onClickingSettings()">⚙️</button>
+    </div>
+    <div class="dashboard-tiles">
+        <div class="tile larger alert-tile" (click)="handleTileClick('Alerts and Notifications')">Alerts and Notifications</div>
+        <div class="tile loan-tile" (click)="handleTileClick('View Current Loans')">View Current Loans</div>
+        <div class="tile large inventory-tile" (click)="handleTileClick('Manage Inventory')">Manage Inventory</div>
+        <div class="tile accounts-tile" (click)="handleTileClick('User Accounts')">User Accounts</div>
+        <div class="tile financial-tile" (click)="handleTileClick('Financial Overview')">Financial Overview</div>
+        <div class="tile media-tile" (click)="handleTileClick('Add New Media')">Add New Media</div>
+        <div class="tile large report-tile" (click)="handleTileClick('Generate Reports')">Generate Reports</div>
+        <div class="tile settings-tile" (click)="handleTileClick('Update Settings')">Update Settings</div>
+    </div>
+    <div class="dashboard-footer">
+        <span>© 2024 Library System</span>
+        <nav>
+            <a href="javascript:void(0)" (click)="handleLinkClick('Home')">Home</a>
+            <a href="javascript:void(0)" (click)="handleLinkClick('Reports')">Reports</a>
+            <a href="javascript:void(0)" (click)="handleLinkClick('Inventory')">Inventory</a>
+            <a href="javascript:void(0)" (click)="handleLinkClick('Users')">Users</a>
+        </nav>
+    </div>
+</div>
+

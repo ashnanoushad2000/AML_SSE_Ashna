@@ -7,6 +7,11 @@ import { PaymentsComponent } from './components/payments/payments.component';
 import { StaffLoginComponent } from './components/staff-login/staff-login.component';
 import { SingleMediaAdditionComponent } from './components/single-media-addition/single-media-addition.component';
 import { HomeComponent } from './components/home/home.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { AdminHomepageComponent } from './components/admin-homepage/admin-homepage.component';
+import { InventoryManagementComponent } from './components/inventory-management/inventory-management.component';
+import { TransferManagementComponent } from './components/transfer-management/transfer-management.component';
+import { TransferInitiationComponent } from './components/transfer-initiation/transfer-initiation.component';
 
 export const routes: Routes = [{
     path: '', component: LoginPageComponent},
@@ -19,7 +24,7 @@ export const routes: Routes = [{
         path: 'staff', component: StaffLoginComponent
     },
     {
-        path: 'single-media-addition', component: SingleMediaAdditionComponent
+        path: 'single_media_addition', component: SingleMediaAdditionComponent
     },
     {
         path: 'home', component: HomeComponent
@@ -28,8 +33,20 @@ export const routes: Routes = [{
         path: 'librarian', component: StaffLoginComponent
     },
     {
-        path: 'admin', component: HomeComponent
+        path: 'admin', component: AdminLoginComponent
     },
+    {
+        path: 'admin_homepage', component: AdminHomepageComponent
+    },
+    {
+        path: 'inventory_management', component: InventoryManagementComponent
+    },
+    {
+        path: 'transfer_management', component: TransferManagementComponent
+    },
+    {
+        path: 'transfer_initiation', component: TransferInitiationComponent
+    }
 ];
 
 Imports: [LoginPageComponent, RouterModule.forRoot(routes, {enableTracing: true})]

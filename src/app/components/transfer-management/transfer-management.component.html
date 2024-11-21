@@ -1,0 +1,23 @@
+<div class="transfer-management">
+        <app-header arrowColor="#E0E0E0" route="/inventory_management"></app-header>
+        <h1>Transfer Management</h1>
+        <input type="text" placeholder="Search Source/Destination" class="search-media" [(ngModel)]="searchQuery" (input)="filterTransfers()">
+
+        <div class="transfer-history">
+            <ul>
+                <li *ngFor="let transfer of filteredTransfers" (click)="viewDetails(transfer)">
+                    <div class="transfer-details">
+                        <div class="transfer-source-destination">
+                            <span>{{ transfer.source }} to {{ transfer.destination }}</span>
+                        </div>
+                        <span class="transfer-date">{{ transfer.date | date:'shortDate' }}</span>
+                    </div>
+                    <fa-icon [icon]="faArrowRight" class="view-icon"></fa-icon>
+                </li>
+            </ul>
+        </div>
+
+    <div class="footer-buttons">
+        <a routerLink="/transfer_initiation"><button>Initiate New Transfer</button></a>
+    </div>
+</div>

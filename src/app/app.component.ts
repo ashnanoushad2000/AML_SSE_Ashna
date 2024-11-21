@@ -21,6 +21,6 @@ export class AppComponent {
 
   isAdminOrLibrarianRoute(): boolean {
     const currentUrl = this.router.url;
-    return currentUrl === '/librarian' || currentUrl === '/admin';
+    return currentUrl === '/librarian' || currentUrl === '/admin' || currentUrl === '/admin_homepage' || currentUrl === '/inventory_management' || currentUrl === '/transfer_management' || currentUrl === '/transfer_initiation';
   }
 }
