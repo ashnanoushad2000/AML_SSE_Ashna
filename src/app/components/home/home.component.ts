@@ -1,21 +1,24 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, CommonModule, FooterComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  isMenuOpen = false;
+  navItems = [
+    { icon: '🏠', label: 'Home', active: true },
+    { icon: '📚', label: 'Books', active: false },
+    { icon: '🔍', label: 'Search', active: false },
+    { icon: '💳', label: 'Payments', active: false },
+    { icon: '👤', label: 'Profile', active: false }
+  ];
 
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-    console.log('Menu toggled:', this.isMenuOpen); // For debugging
+  setActive(label: string) {
+    this.navItems = this.navItems.map(item => ({
+      ...item,
+      active: item.label === label
+    }));
   }
 }
