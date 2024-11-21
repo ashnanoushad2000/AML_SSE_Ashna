@@ -7,7 +7,7 @@ import { FooterComponent } from "../footer/footer.component";
 @Component({
   selector: 'app-staff-login',
   standalone: true,
-  imports: [FormsModule, RouterLink, HeaderComponent, FooterComponent],
+  imports: [FormsModule],
   templateUrl: './staff-login.component.html',
   styleUrl: './staff-login.component.css'
 })
