@@ -1,54 +1,84 @@
-<div class="home-container">
+<div class="container">
     <!-- Header -->
-    <div class="header">
-        <h1>Home Screen</h1>
-        <div class="user-icon">👤</div>
+    <header class="header">
+      <h1>Home Screen</h1>
+      <div class="profile-icon">👤</div>
+    </header>
+  
+    <!-- Notification Banner -->
+    <div class="notification-banner" [class.show]="showNotification">
+      <div class="notification-content">
+        <span>{{ notificationMessage }}</span>
+        <button class="close-btn" (click)="closeNotification()">✕</button>
+      </div>
     </div>
   
-    <!-- Notifications -->
-    <div class="notifications">
-        <div class="notification-item">
-            Notifications <span class="notification-icon">🔔</span>
-        </div>
+    <!-- Notifications Card -->
+    <div class="notification-card" [class.has-notification]="hasNewNotification">
+      <div class="notification-content">
+        <span>Notifications</span>
+        @if (hasNewNotification) {
+          <div class="red-dot"></div>
+        }
+      </div>
+      <span class="bell-icon">🔔</span>
     </div>
   
     <!-- Quick Access Cards -->
-    <div class="quick-access">
-        <div class="access-card">
-            <h3>Current Loans</h3>
-            <div>3</div>
-            <small>Active</small>
+    <div class="mx-4 grid grid-cols-3 gap-4">
+      <div class="bg-white p-4 rounded-lg shadow quick-card-hover">
+        <h3 class="font-medium mb-3">Current Loans</h3>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-blue-500">3</div>
+          <div class="text-sm text-gray-500">Active</div>
         </div>
-        <div class="access-card">
-            <h3>Holds</h3>
-            <div>1</div>
-            <small>Pending</small>
+      </div>
+<!--       
+      <div class="bg-white p-4 rounded-lg shadow quick-card-hover">
+        <h3 class="font-medium mb-9">Holds</h3>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-blue-500">1</div>
+          <div class="text-sm text-gray-500">Pending</div>
         </div>
-        <div class="access-card">
-            <h3>Discovery</h3>
-            <div>🔍</div>
-            <small>Explore</small>
+      </div> -->
+      <div class="bg-white p-4 rounded-lg shadow quick-card-hover" (click)="navigateToHolds()">
+        <h3 class="font-medium mb-9">Holds</h3>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-blue-500">1</div>
+          <div class="text-sm text-gray-500">Pending</div>
+        </div>
+      </div>
+      
+      <div class="bg-white p-4 rounded-lg shadow quick-card-hover">
+        <h3 class="font-medium mb-9">Discovary</h3>
+        <div class="text-center">
+          <div class="text-2xl">🔍</div>
+          <div class="text-sm text-gray-500">Explore</div>
         </div>
     </div>
-  
+
     <!-- Upcoming Books -->
-    <div class="upcoming-books">
-        <div class="book-date">
-            <span>January 12th</span>
-            <div class="book-icon">📚</div>
-        </div>
-        <div class="book-date">
-            <span>January 24th</span>
-            <div class="book-icon">📚</div>
-        </div>
-    </div>
+    <div class="books-section">
+      <div class="section-header">
+        <h2>Upcoming Books</h2>
+        <span class="more-icon">⋮</span>
+      </div>
   
-    <!-- Navigation Bar -->
-    <div class="navigation">
-        <div class="nav-item active">Home</div>
-        <div class="nav-item">Books</div>
-        <div class="nav-item">Search</div>
-        <div class="nav-item">Payments</div>
-        <div class="nav-item">Profile</div>
+      <div class="books-grid">
+        <div class="book-card" (click)="showBookNotification()">
+          <span class="date">January 12th</span>
+          <div class="book-placeholder">
+            <span class="book-icon">📚</span>
+          </div>
+          <div class="notification-dot"></div>
+        </div>
+  
+        <div class="book-card" (click)="showBookNotification()">
+          <span class="date">January 24th</span>
+          <div class="book-placeholder">
+            <span class="book-icon">📚</span>
+          </div>
+        </div>
     </div>
-</div>
+  </div>
+  <app-footer></app-footer>

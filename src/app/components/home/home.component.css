@@ -1,83 +1,243 @@
-:host {
-  display: block;
-  height: 100%;
-  max-width: 100%;
-  margin: auto;
-  font-family: 'Arial', sans-serif;
-  background-color: #f9f9f9;  /* Lighter background */
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-  background-color: #ffffff; /* White background for the header */
-  border-bottom: 1px solid #e1e1e1; /* Subtle border for separation */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Lighter shadow */
-}
-
-.user-icon {
-  font-size: 1.5rem;
-  background-color: #dddddd; /* Matching icon background */
-  padding: 10px;
-  border-radius: 50%;
-}
-
-.notifications, .quick-access, .upcoming-books {
-  background-color: #ffffff; /* Consistent white background for content blocks */
-  margin: 8px;
-  padding: 12px;
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Consistent shadows */
-}
-
-.quick-access {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Grid for access cards */
-  gap: 10px;
-}
-
-.access-card {
-  text-align: center;
-  padding: 20px;
-  border-radius: 8px; /* Rounded corners for the cards */
-  background-color: #f1f1f1; /* Slightly different background for emphasis */
-}
-
-.upcoming-books {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 10px; /* Space above the section */
-}
-
-.book-date {
-  flex: 1;
-  text-align: center;
-  margin: 5px;
-  padding: 10px; /* Padding for touch friendliness */
-  background-color: #f1f1f1; /* Slightly different background for emphasis */
-  border-radius: 8px; /* Rounded corners */
-}
-
-.navigation {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  background-color: #ffffff; /* White background for navigation */
-  box-shadow: 0 -2px 4px rgba(0,0,0,0.05); /* Shadow for elevation effect */
-  border-top: 1px solid #e1e1e1; /* Border for clean separation */
-}
-
-.nav-item {
-  text-align: center;
-  padding: 10px;
-  flex-grow: 1; /* Equal width for all navigation items */
-  color: #666; /* Subdued text color for unselected items */
-  font-size: 14px; /* Smaller font size for cleaner look */
-  transition: color 0.3s; /* Smooth transition for color change */
-}
-
-.nav-item.active {
-  color: #0056b3; /* Highlight color for active item */
-}
+.container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    min-height: 100vh;
+    padding-bottom: 70px;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-icon {
+    width: 40px;
+    height: 40px;
+    background: #f1f3f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  /* Notification Banner */
+  .notification-banner {
+    position: fixed;
+    top: -60px;
+    left: 0;
+    right: 0;
+    background: #228be6;
+    color: white;
+    padding: 16px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .notification-banner.show {
+    top: 0;
+  }
+  
+  /* Notification Card */
+  .notification-card {
+    background: white;
+    padding: 16px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  
+  .notification-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .red-dot {
+    width: 6px;
+    height: 6px;
+    background: #fa5252;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  
+  .bell-icon {
+    color: #fcc419;
+    font-size: 20px;
+  }
+  
+  /* Quick Access Grid */
+  .quick-access {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px;
+  }
+  
+  .stats-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .stats-card h3 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 16px;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
+  
+  .stat-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .stat-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  
+  .number {
+    font-size: 32px;
+    font-weight: 600;
+    color: #228be6;
+    line-height: 1;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .underline {
+    width: 24px;
+    height: 2px;
+    background: #228be6;
+    position: absolute;
+    bottom: -4px;
+  }
+  
+  .stat-label {
+    font-size: 14px;
+    color: #868e96;
+    margin-top: 12px;
+  }
+  
+  .search-icon {
+    font-size: 24px;
+    color: #228be6;
+  }
+  
+  /* Books Section */
+  .books-section {
+    margin-top: 24px;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .more-icon {
+    color: #868e96;
+    font-size: 20px;
+  }
+  
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .book-card {
+    background: white;
+    padding: 16px;
+    border-radius: 16px;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  
+  .date {
+    color: #868e96;
+    font-size: 14px;
+  }
+  
+  .book-placeholder {
+    aspect-ratio: 3/4;
+    background: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  
+  .book-icon {
+    font-size: 24px;
+  }
+  
+  .notification-dot {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 6px;
+    height: 6px;
+    background: #fa5252;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  
+  /* Hover Effects */
+  .stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+  }
+  
+  .book-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+  }
+  
+  .notification-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+  }
+  
+  .profile-icon:hover {
+    transform: scale(1.05);
+    background: #e9ecef;
+  }
+  
+  /* Animations */
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(250, 82, 82, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 6px rgba(250, 82, 82, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(250, 82, 82, 0);
+    }
+  }

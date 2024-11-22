@@ -7,6 +7,8 @@ import { PaymentsComponent } from './components/payments/payments.component';
 import { StaffLoginComponent } from './components/staff-login/staff-login.component';
 import { SingleMediaAdditionComponent } from './components/single-media-addition/single-media-addition.component';
 import { HomeComponent } from './components/home/home.component';
+import { SearchComponent } from './components/search/search.component';
+import { HoldsComponent } from './components/holds/holds.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminHomepageComponent } from './components/admin-homepage/admin-homepage.component';
 import { InventoryManagementComponent } from './components/inventory-management/inventory-management.component';
@@ -36,6 +38,12 @@ export const routes: Routes = [{
     {
         path: 'admin', component: AdminLoginComponent
     },
+   {
+    path: 'search', component: SearchComponent
+   },
+   {
+    path: 'holds', component: HoldsComponent
+   },
     {
         path: 'admin_homepage', component: AdminHomepageComponent
     },
