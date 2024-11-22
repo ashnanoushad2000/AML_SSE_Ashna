@@ -9,7 +9,7 @@ import { faUser, faCircle } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-admin-homepage',
   standalone: true,
-  imports: [RouterModule, CommonModule, FooterComponent, FooterAdminComponent, FontAwesomeModule],
+  imports: [RouterModule, CommonModule, FooterAdminComponent, FontAwesomeModule],
   templateUrl: './admin-homepage.component.html',
   styleUrl: './admin-homepage.component.css'
 })

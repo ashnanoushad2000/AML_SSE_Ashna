@@ -12,6 +12,7 @@ import { AdminHomepageComponent } from './components/admin-homepage/admin-homepa
 import { InventoryManagementComponent } from './components/inventory-management/inventory-management.component';
 import { TransferManagementComponent } from './components/transfer-management/transfer-management.component';
 import { TransferInitiationComponent } from './components/transfer-initiation/transfer-initiation.component';
+import { StaffHomepageComponent } from './components/staff-homepage/staff-homepage.component';
 
 export const routes: Routes = [{
     path: '', component: LoginPageComponent},
@@ -46,6 +47,9 @@ export const routes: Routes = [{
     },
     {
         path: 'transfer_initiation', component: TransferInitiationComponent
+    },
+    {
+        path: 'staff_homepage', component: StaffHomepageComponent
     }
 ];
 
