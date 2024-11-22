@@ -1,10 +1,10 @@
 <div class="header"> 
 <div class="back-arrow">
-    <a routerLink={{route}}><fa-icon [icon] = "faArrowLeftLong" style="font-size: 2rem;"></fa-icon></a>
+    <a routerLink={{route}}><fa-icon [icon] = "faArrowLeftLong" style="font-size: 2rem" [style.color]="arrowColor"></fa-icon></a>
     </div>
-    <div class="profile-container">
-    <a routerLink="/"><span class="fa-stack fa-2x">
-    <fa-icon [icon]="faCircle" class="fa-stack-2x" style="color: green; font-size: 2rem;"></fa-icon>
+    <div class="profile-container" (click)="profileAlert()">
+    <a><span class="fa-stack fa-2x">
+    <fa-icon [icon]="faCircle" class="fa-stack-2x" [style.color]="profileColor" style="font-size: 2rem;"></fa-icon>
     <fa-icon [icon]="faUser" class="fa-stack-1x" style="color: gray; font-size: 1.0rem;"></fa-icon>
   </span></a>
     </div>

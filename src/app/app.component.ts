@@ -23,9 +23,8 @@ export class AppComponent {
 
   constructor(private router: Router) {}
 
-  // Check if the current route is for Admin or Librarian pages
   isAdminOrLibrarianRoute(): boolean {
     const currentUrl = this.router.url;
-    return currentUrl === '/librarian' || currentUrl === '/admin';
+    return currentUrl === '/librarian' || currentUrl === '/admin' || currentUrl === '/admin_homepage' || currentUrl === '/inventory_management' || currentUrl === '/transfer_management' || currentUrl === '/transfer_initiation' || currentUrl === '/staff_homepage' || currentUrl === '/single_media_addition';
   }
 }

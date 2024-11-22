@@ -1,0 +1,12 @@
+<div class="media-addition-modal-container" (click)="closeOnClickOutside($event)">
+  <div class="media-addition-modal">
+    <button class="close-button" (click)="closeModal.emit()"><fa-icon [icon] = "faXmark"></fa-icon></button>
+    <h2>Media Addition Method</h2>
+    <div>
+      <button (click)="navigateToSingleMedia()">Single Media</button>
+      <p>OR</p>
+      <button (click)="uploadFile()">Multiple Media</button>
+      <input type="file" (change)="handleFileInput($event)" hidden #fileInput>
+    </div>
+  </div>
+</div>
