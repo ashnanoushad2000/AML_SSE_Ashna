@@ -1,33 +1,48 @@
-<div class="h-screen flex flex-col bg-gray-100">
+<div class="container">
     <!-- Header -->
-    <div class="p-4 flex justify-between items-center bg-white">
-      <h1 class="text-lg font-semibold">Home Screen</h1>
-      <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center cursor-pointer card-hover">
-        <div class="text-gray-600">👤</div>
+    <header class="header">
+      <h1>Home Screen</h1>
+      <div class="profile-icon">👤</div>
+    </header>
+  
+    <!-- Notification Banner -->
+    <div class="notification-banner" [class.show]="showNotification">
+      <div class="notification-content">
+        <span>{{ notificationMessage }}</span>
+        <button class="close-btn" (click)="closeNotification()">✕</button>
       </div>
     </div>
   
-    <!-- Notifications -->
-    <div class="m-4 p-4 bg-white rounded-lg shadow flex justify-between items-center notification-hover">
-      <div class="flex items-center gap-2">
+    <!-- Notifications Card -->
+    <div class="notification-card" [class.has-notification]="hasNewNotification">
+      <div class="notification-content">
         <span>Notifications</span>
-        <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+        @if (hasNewNotification) {
+          <div class="red-dot"></div>
+        }
       </div>
-      <div>🔔</div>
+      <span class="bell-icon">🔔</span>
     </div>
   
     <!-- Quick Access Cards -->
     <div class="mx-4 grid grid-cols-3 gap-4">
       <div class="bg-white p-4 rounded-lg shadow quick-card-hover">
-        <h3 class="font-medium mb-4">Current Loans</h3>
+        <h3 class="font-medium mb-3">Current Loans</h3>
         <div class="text-center">
           <div class="text-2xl font-bold text-blue-500">3</div>
           <div class="text-sm text-gray-500">Active</div>
         </div>
       </div>
-      
+<!--       
       <div class="bg-white p-4 rounded-lg shadow quick-card-hover">
-        <h3 class="font-medium mb-4">Holds</h3>
+        <h3 class="font-medium mb-9">Holds</h3>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-blue-500">1</div>
+          <div class="text-sm text-gray-500">Pending</div>
+        </div>
+      </div> -->
+      <div class="bg-white p-4 rounded-lg shadow quick-card-hover" (click)="navigateToHolds()">
+        <h3 class="font-medium mb-9">Holds</h3>
         <div class="text-center">
           <div class="text-2xl font-bold text-blue-500">1</div>
           <div class="text-sm text-gray-500">Pending</div>
@@ -35,7 +50,7 @@
       </div>
       
       <div class="bg-white p-4 rounded-lg shadow quick-card-hover">
-        <h3 class="font-medium mb-4">Discov</h3>
+        <h3 class="font-medium mb-9">Discovary</h3>
         <div class="text-center">
           <div class="text-2xl">🔍</div>
           <div class="text-sm text-gray-500">Explore</div>
@@ -44,52 +59,29 @@
     </div>
   
     <!-- Upcoming Books -->
-    <div class="m-4">
-      <div class="flex justify-between items-center mb-3">
-        <h2 class="font-medium">Upcoming Books</h2>
-        <button class="text-gray-600 hover:text-gray-800">⋮</button>
+    <div class="books-section">
+      <div class="section-header">
+        <h2>Upcoming Books</h2>
+        <span class="more-icon">⋮</span>
       </div>
-      
-      <div class="grid grid-cols-2 gap-4">
-        <div class="bg-white p-4 rounded-lg shadow relative book-card-hover">
-          <span class="text-sm text-gray-600">January 12th</span>
-          <div class="mt-2">
-            <div class="book-container">
-              <div class="book-content">
-                📚
-              </div>
-            </div>
-          </div>
-          <div class="absolute top-4 right-4 w-2 h-2 bg-red-500 rounded-full"></div>
-        </div>
-        
-        <div class="bg-white p-4 rounded-lg shadow book-card-hover">
-          <span class="text-sm text-gray-600">January 24th</span>
-          <div class="mt-2">
-            <div class="book-container">
-              <div class="book-content">
-                📚
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   
-    <!-- Navigation -->
-    <div class="mt-auto border-t bg-white">
-      <nav class="grid grid-cols-5 p-4">
-        @for (item of navItems; track item.label) {
-          <button 
-            class="flex flex-col items-center gap-1 nav-button" 
-            [class.text-blue-500]="item.active"
-            [class.text-gray-600]="!item.active"
-            (click)="setActive(item.label)"
-          >
-            <div>{{item.icon}}</div>
-            <span class="text-xs">{{item.label}}</span>
-          </button>
-        }
-      </nav>
+      <div class="books-grid">
+        <div class="book-card" (click)="showBookNotification()">
+          <span class="date">January 12th</span>
+          <div class="book-placeholder">
+            <span class="book-icon">📚</span>
+          </div>
+          <div class="notification-dot"></div>
+        </div>
+  
+        <div class="book-card" (click)="showBookNotification()">
+          <span class="date">January 24th</span>
+          <div class="book-placeholder">
+            <span class="book-icon">📚</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  
+  <app-footer></app-footer>

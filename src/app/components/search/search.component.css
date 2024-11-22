@@ -1,0 +1,131 @@
+.search-container {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: white;
+    padding: 20px;
+    padding-bottom: 70px;
+    position: relative;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .back-btn {
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .profile-icon {
+    width: 40px;
+    height: 40px;
+    background: #f1f3f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Search Input */
+  .search-box {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px;
+    padding-right: 40px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .clear-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: #adb5bd;
+    cursor: pointer;
+  }
+  
+  /* Filter Section */
+  .filter-section {
+    margin-bottom: 24px;
+  }
+  
+  .filter-section h2 {
+    margin-bottom: 16px;
+    font-size: 18px;
+  }
+  
+  .filter-group {
+    margin-bottom: 16px;
+  }
+  
+  .filter-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #495057;
+  }
+  
+  .select-container {
+    position: relative;
+  }
+  
+  .select-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    appearance: none;
+    background: white;
+    font-size: 16px;
+  }
+  
+  .clear-select {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: #adb5bd;
+    cursor: pointer;
+  }
+  
+  /* Checkboxes */
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  
+  /* Search Button */
+  .search-btn {
+    width: 100%;
+    padding: 16px;
+    background: #e9ecef;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 24px;
+  }

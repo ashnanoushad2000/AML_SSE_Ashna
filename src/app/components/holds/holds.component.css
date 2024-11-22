@@ -1,0 +1,84 @@
+.holds-container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    min-height: 100vh;
+    padding-bottom: 70px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .back-btn {
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .book-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .book-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+  }
+  
+  .book-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  
+  .book-icon {
+    font-size: 24px;
+  }
+  
+  .book-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .book-title {
+    font-weight: 500;
+  }
+  
+  .book-status {
+    font-size: 14px;
+    color: #fa5252;
+  }
+  
+  .book-status.available {
+    color: #40c057;
+  }
+  
+  .hold-date {
+    font-size: 12px;
+    color: #868e96;
+  }

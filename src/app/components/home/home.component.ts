@@ -1,24 +1,62 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
+  imports: [CommonModule, FooterComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  navItems = [
-    { icon: '🏠', label: 'Home', active: true },
-    { icon: '📚', label: 'Books', active: false },
-    { icon: '🔍', label: 'Search', active: false },
-    { icon: '💳', label: 'Payments', active: false },
-    { icon: '👤', label: 'Profile', active: false }
-  ];
+  showNotification = false;
+  hasNewNotification = false;
+  notificationMessage = 'No new notifications';
 
-  setActive(label: string) {
-    this.navItems = this.navItems.map(item => ({
-      ...item,
-      active: item.label === label
-    }));
+  constructor(private router: Router) {}
+
+  navigateToHolds() {
+    this.router.navigate(['/holds']);
+  }
+
+  showBookNotification() {
+    this.showNotification = true;
+    this.hasNewNotification = true;
+    this.notificationMessage = 'New book added to your upcoming list!';
+    
+    // Show notification banner
+    setTimeout(() => {
+      this.showNotification = false;
+    }, 3000);
+
+    // Update notification card
+    setTimeout(() => {
+      this.hasNewNotification = false;
+    }, 5000);
+  }
+
+  clearNotification() {
+    this.showNotification = false;
+    this.hasNewNotification = false;
+  }
+
+  // Optional: Add method to handle notification card click
+  onNotificationClick() {
+    if (this.hasNewNotification) {
+      this.hasNewNotification = false;
+      // You can add logic here to show notification details
+    }
+  }
+
+  // Optional: Add method to handle close button click
+  closeNotification() {
+    this.showNotification = false;
+  }
+
+  // Optional: Add method for navigation back home
+  goBack() {
+    this.router.navigate(['/home']);
   }
 }

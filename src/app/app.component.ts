@@ -5,11 +5,15 @@ import { RegistrationPageComponent } from './components/registration-page/regist
 import { HomeComponent } from './components/home/home.component';
 import { StaffLoginComponent } from './components/staff-login/staff-login.component';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { HoldsComponent } from './components/holds/holds.component';
+
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginPageComponent, RegistrationPageComponent, HomeComponent, StaffLoginComponent, CommonModule],
+  imports: [RouterOutlet, LoginPageComponent, RegistrationPageComponent, HomeComponent, StaffLoginComponent, CommonModule,HoldsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -7,6 +7,8 @@ import { PaymentsComponent } from './components/payments/payments.component';
 import { StaffLoginComponent } from './components/staff-login/staff-login.component';
 import { SingleMediaAdditionComponent } from './components/single-media-addition/single-media-addition.component';
 import { HomeComponent } from './components/home/home.component';
+import { SearchComponent } from './components/search/search.component';
+import { HoldsComponent } from './components/holds/holds.component';
 
 export const routes: Routes = [{
     path: '', component: LoginPageComponent},
@@ -30,6 +32,12 @@ export const routes: Routes = [{
     {
         path: 'admin', component: HomeComponent
     },
+   {
+    path: 'search', component: SearchComponent
+   },
+   {
+    path: 'holds', component: HoldsComponent
+   },
 ];
 
 Imports: [LoginPageComponent, RouterModule.forRoot(routes, {enableTracing: true})]
