@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FooterComponent } from '../footer/footer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FooterComponent],
+  imports: [CommonModule, FooterComponent, FontAwesomeModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -14,6 +16,8 @@ export class HomeComponent {
   showNotification = false;
   hasNewNotification = false;
   notificationMessage = 'No new notifications';
+  faCircle = faCircle;
+    faUser = faUser
 
   constructor(private router: Router) {}
 
@@ -58,5 +62,9 @@ export class HomeComponent {
   // Optional: Add method for navigation back home
   goBack() {
     this.router.navigate(['/home']);
+  }
+
+  profileAlert(){
+    alert("This icon opens profile settings")
   }
 }

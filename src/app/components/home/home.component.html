@@ -1,8 +1,13 @@
 <div class="container">
     <!-- Header -->
     <header class="header">
-      <h1>Home Screen</h1>
-      <div class="profile-icon">👤</div>
+      <h1>Dashboard</h1>
+      <div class="profile-container" (click)="profileAlert()">
+        <a><span class="fa-stack fa-2x">
+        <fa-icon [icon]="faCircle" class="fa-stack-2x" style="font-size: 2rem; color: white"></fa-icon>
+        <fa-icon [icon]="faUser" class="fa-stack-1x" style="color: gray; font-size: 1.0rem;"></fa-icon>
+      </span></a>
+    </div>
     </header>
   
     <!-- Notification Banner -->
@@ -24,44 +29,34 @@
       <span class="bell-icon">🔔</span>
     </div>
   
-    <!-- Quick Access Cards -->
-    <div class="mx-4 grid grid-cols-3 gap-4">
-      <div class="bg-white p-4 rounded-lg shadow quick-card-hover">
-        <h3 class="font-medium mb-3">Current Loans</h3>
-        <div class="text-center">
-          <div class="text-2xl font-bold text-blue-500">3</div>
-          <div class="text-sm text-gray-500">Active</div>
+    <div class="quick-access">
+        <div class="quick-access-card">
+          <h3>Current Loans</h3>
+          <div class="stat-content">
+            <span class="loans-number">3</span>
+            <span class="stat-label">Active</span>
+          </div>
+        </div>
+        <div class="quick-access-card" (click)="navigateToHolds()">
+          <h3>Holds</h3>
+          <div class="stat-content">
+            <span class="holds-number">1</span>
+            <span class="stat-label">Pending</span>
+          </div>
+        </div>
+        <div class="quick-access-card">
+          <h3>Discovery</h3>
+          <div class="stat-content">
+            <span class="search-icon">🔍</span>
+            <span class="stat-label">Explore</span>
+          </div>
         </div>
       </div>
-<!--       
-      <div class="bg-white p-4 rounded-lg shadow quick-card-hover">
-        <h3 class="font-medium mb-9">Holds</h3>
-        <div class="text-center">
-          <div class="text-2xl font-bold text-blue-500">1</div>
-          <div class="text-sm text-gray-500">Pending</div>
-        </div>
-      </div> -->
-      <div class="bg-white p-4 rounded-lg shadow quick-card-hover" (click)="navigateToHolds()">
-        <h3 class="font-medium mb-9">Holds</h3>
-        <div class="text-center">
-          <div class="text-2xl font-bold text-blue-500">1</div>
-          <div class="text-sm text-gray-500">Pending</div>
-        </div>
-      </div>
-      
-      <div class="bg-white p-4 rounded-lg shadow quick-card-hover">
-        <h3 class="font-medium mb-9">Discovary</h3>
-        <div class="text-center">
-          <div class="text-2xl">🔍</div>
-          <div class="text-sm text-gray-500">Explore</div>
-        </div>
-    </div>
 
     <!-- Upcoming Books -->
     <div class="books-section">
       <div class="section-header">
         <h2>Upcoming Books</h2>
-        <span class="more-icon">⋮</span>
       </div>
   
       <div class="books-grid">
@@ -80,5 +75,5 @@
           </div>
         </div>
     </div>
-  </div>
+</div>
   <app-footer></app-footer>
