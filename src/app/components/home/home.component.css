@@ -1,24 +1,28 @@
-.container {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    min-height: 100vh;
-    padding-bottom: 70px;
+  .container {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%; /* Ensure container can expand to the edge */
+    margin: 0 auto; /* Centering if needed */
+    background: #f5f5f5; /* Background color */
+    position: relative; /* Needed to position footer at the bottom */
+    overflow: hidden;
   }
-  
+
   /* Header */
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    padding: 0 20px;
+    background-color: #266c75;
+    color: white;
   }
   
   .profile-icon {
     width: 40px;
     height: 40px;
-    background: #f1f3f5;
+    background: #f8f9fa;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -32,7 +36,7 @@
     top: -60px;
     left: 0;
     right: 0;
-    background: #228be6;
+    background: #FFA726;
     color: white;
     padding: 16px;
     transition: all 0.3s ease;
@@ -45,7 +49,7 @@
   
   /* Notification Card */
   .notification-card {
-    background: white;
+    background: #ffffff;
     padding: 16px;
     border-radius: 16px;
     margin-bottom: 20px;
@@ -53,6 +57,7 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin: 0 20px;
   }
   
   .notification-content {
@@ -70,16 +75,44 @@
   }
   
   .bell-icon {
-    color: #fcc419;
+    color: #fcc419;;
     font-size: 20px;
   }
   
   /* Quick Access Grid */
   .quick-access {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin: 20px;
+    grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+    gap: 16px; /* Space between cards */
+    margin-top: 20px; /* Space above the section */
+    margin-bottom: 20px; /* Space below the section */
+    padding: 0 20px;
+  }
+
+  .quick-access-card {
+    background-color: white;
+    padding: 16px;
+    border-radius: 16px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); /* Subtle shadow for depth */
+    text-align: center; /* Center align text */
+    transition: all 0.3s ease; /* Smooth hover effect */
+    cursor: pointer; /* Pointer cursor to indicate clickability */
+    display: flex;
+    flex-direction: column; /* Vertical stack */
+    justify-content: space-between; /* Evenly space content */
+    height: 100%; /* Full height to align cards */
+  }
+  
+  .quick-access-card:hover {
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08); /* More prominent shadow on hover */
+  }
+  
+  /* Quick Access Card Content */
+  .quick-access-card h3 {
+    font-size: 16px; /* Medium font size */
+    color: #333; /* Darker text for contrast */
+    margin: 12px 0; /* Space around the header */
   }
   
   .stats-card {
@@ -100,13 +133,32 @@
     flex-shrink: 0;
   }
   
+  /* Stat Content */
   .stat-content {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+    align-items: center; /* Center align content */
+    flex-grow: 1; /* Expand to fill available space */
+  }
+  
+  .stat-content .holds-number {
+    font-size: 32px; /* Large font size for numbers */
+    font-weight: 600; /* Bold font weight */
+    color: #228be6; /* Primary blue color */
+    margin-bottom: 4px; /* Small gap below the number */
+    margin-top: 16px;
+  }
+
+  .stat-content .loans-number {
+    font-size: 32px; /* Large font size for numbers */
+    font-weight: 600; /* Bold font weight */
+    color: #228be6;/* Primary blue color */
+    margin-bottom: 4px; /* Small gap below the number */
+  }
+  
+  .stat-content .stat-label {
+    font-size: 14px; /* Smaller font size for labels */
+    color: #757575; /* Grey color for labels */
   }
   
   .stat-main {
@@ -114,15 +166,6 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-  }
-  
-  .number {
-    font-size: 32px;
-    font-weight: 600;
-    color: #228be6;
-    line-height: 1;
-    margin-bottom: 8px;
-    display: block;
   }
   
   .underline {
@@ -133,20 +176,21 @@
     bottom: -4px;
   }
   
-  .stat-label {
-    font-size: 14px;
-    color: #868e96;
-    margin-top: 12px;
-  }
-  
-  .search-icon {
-    font-size: 24px;
-    color: #228be6;
+  .stat-content .search-icon {
+    font-size: 32px; /* Large search icon size */
+    color: #228be6; /* Same blue color as numbers */
+    margin-top: 10px;
+    margin-bottom: 4px;
   }
   
   /* Books Section */
   .books-section {
-    margin-top: 24px;
+    margin-top: 10px;
+    padding: 20px;
+  }
+
+  .books-section h2{
+    margin-bottom: 10px;
   }
   
   .section-header {
@@ -165,6 +209,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+    margin-bottom: 20px;
   }
   
   .book-card {
@@ -182,7 +227,7 @@
   
   .book-placeholder {
     aspect-ratio: 3/4;
-    background: #f8f9fa;
+    background: #e0e0e0;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -241,3 +286,15 @@
       box-shadow: 0 0 0 0 rgba(250, 82, 82, 0);
     }
   }
+
+  app-footer{
+    margin-top: auto;
+  }
+
+  .profile-container {
+    position: relative;
+    right: -25px;  
+    top: 0px;
+    cursor: pointer;
+    display: inline;
+}
