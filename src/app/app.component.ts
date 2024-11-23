@@ -7,13 +7,14 @@ import { StaffLoginComponent } from './components/staff-login/staff-login.compon
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HoldsComponent } from './components/holds/holds.component';
+import { LoansComponent } from './components/loans/loans.component';
 
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginPageComponent, RegistrationPageComponent, HomeComponent, StaffLoginComponent, CommonModule,HoldsComponent],
+  imports: [RouterOutlet, LoginPageComponent, RegistrationPageComponent, HomeComponent, StaffLoginComponent, CommonModule,HoldsComponent, LoansComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

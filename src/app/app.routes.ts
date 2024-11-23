@@ -15,6 +15,7 @@ import { InventoryManagementComponent } from './components/inventory-management/
 import { TransferManagementComponent } from './components/transfer-management/transfer-management.component';
 import { TransferInitiationComponent } from './components/transfer-initiation/transfer-initiation.component';
 import { StaffHomepageComponent } from './components/staff-homepage/staff-homepage.component';
+import { LoansComponent } from './components/loans/loans.component';
 
 export const routes: Routes = [{
     path: '', component: LoginPageComponent},
@@ -58,7 +59,10 @@ export const routes: Routes = [{
     },
     {
         path: 'staff_homepage', component: StaffHomepageComponent
-    }
+    },
+    {
+        path: 'loans', component: LoansComponent
+       },
 ];
 
 Imports: [LoginPageComponent, RouterModule.forRoot(routes, {enableTracing: true})]
