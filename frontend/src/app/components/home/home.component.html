@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="header">
+    <h1>Home Screen</h1>
+    <div class="profile-icon">👤</div>
+  </div>
+
+  <div *ngIf="userName" class="welcome-message">
+    Welcome back, {{userName}}!
+  </div>
+
+  <div class="notification-card">
+    <div class="notification-text">
+      Notifications
+    </div>
+    <div class="bell-icon">🔔</div>
+  </div>
+
+  <div class="stats-container">
+    <div class="stats-item">
+      <h3>Current Loans</h3>
+      <div class="number">3</div>
+      <div class="label">Active</div>
+    </div>
+
+    <div class="stats-item" (click)="navigateToHolds()">
+      <h3>Holds</h3>
+      <div class="number">1</div>
+      <div class="label">Pending</div>
+    </div>
+
+    <div class="stats-item">
+      <h3>Discovery</h3>
+      <div class="search-icon">🔍</div>
+      <div class="label">Explore</div>
+    </div>
+  </div>
+
+  <div class="upcoming-section">
+    <div class="section-header">
+      <h2>Upcoming Books</h2>
+      <span class="more">⋮</span>
+    </div>
+
+    <div class="books-grid">
+      <div class="book-item">
+        <div class="date">January 12th</div>
+        <div class="book-icon">📚</div>
+      </div>
+      <div class="book-item">
+        <div class="date">January 24th</div>
+        <div class="book-icon">📚</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

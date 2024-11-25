@@ -1,0 +1,145 @@
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  min-height: calc(100vh - 70px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.profile-icon {
+  font-size: 1.2rem;
+}
+
+.welcome-message {
+  margin-bottom: 20px;
+  color: #228be6;
+  font-size: 1.1rem;
+}
+
+.notification-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.bell-icon {
+  color: #ffd700;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stats-item {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stats-item h3 {
+  font-size: 1rem;
+  margin: 0 0 10px 0;
+}
+
+.number {
+  font-size: 1.8rem;
+  color: #228be6;
+  margin: 10px 0;
+}
+
+.label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.search-icon {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.upcoming-section {
+  margin-top: 20px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.section-header h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.more {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.book-item {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.date {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.book-icon {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 20px 0;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+
+.notification-banner {
+  position: fixed;
+  top: -60px;
+  left: 0;
+  right: 0;
+  background: #228be6;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.notification-banner.show {
+  top: 0;
+}
