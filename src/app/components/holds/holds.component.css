@@ -12,6 +12,7 @@
     align-items: center;
     gap: 16px;
     margin-bottom: 20px;
+
   }
   
   .back-btn {
@@ -48,6 +49,7 @@
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     transition: all 0.3s ease;
+    cursor: pointer;
   }
   
   .book-item:hover {

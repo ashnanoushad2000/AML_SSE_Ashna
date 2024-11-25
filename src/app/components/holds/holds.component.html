@@ -13,7 +13,7 @@
     <!-- Book List -->
     <div class="book-list">
       @for (book of books; track book.id) {
-        <div class="book-item">
+        <div class="book-item" (click)="bookDetails()">
           <div class="book-icon">📚</div>
           <div class="book-info">
             <span class="book-title">{{ book.title }}</span>
