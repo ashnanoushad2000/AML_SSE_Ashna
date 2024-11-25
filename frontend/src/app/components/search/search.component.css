@@ -8,14 +8,6 @@
     position: relative;
   }
   
-  /* Header */
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
   .back-btn {
     border: none;
     background: none;
@@ -122,10 +114,25 @@
   .search-btn {
     width: 100%;
     padding: 16px;
-    background: #e9ecef;
+    background: orange;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
     margin-top: 24px;
+    font-weight: bold;
+    color: white;
   }
+
+  app-header{
+    display: block;
+    margin: 0;
+}
+
+h1 {
+  font-size: 2rem; 
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: -20px;
+}

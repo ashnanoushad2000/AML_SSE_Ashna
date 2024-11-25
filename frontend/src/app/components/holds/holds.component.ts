@@ -31,4 +31,8 @@ export class HoldsComponent {
   goBack() {
     this.router.navigate(['/home']);
   }
+
+  bookDetails(){
+    alert("This will show book details")
+  }
 }

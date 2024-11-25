@@ -2,65 +2,50 @@
     font-family: 'Arial', sans-serif;
     color: #333;
     background-color: #f8f9fa;
-    padding: 20px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    min-width: 100vw;
+    width: 100vw; /* Adjusts width to 80% of the viewport width */
+    max-width: 1200px; /* Maximum width of the container */
+    margin: 0 auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
 }
 
 h1 {
     text-align: center;
+    font-size: 1.8rem;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .form-control {
-    margin-bottom: 15px;
+    flex: 1; /* Each control takes full available space */
+    margin: 0 20px 20px 20px;
 }
 
-.form-control label {
-    display: block;
-    margin-bottom: 5px;
-    color: #666;
-}
-
-.form-control input,
-.form-control textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.form-control input[type="number"],
-.form-control input[type="text"],
-.form-control textarea {
-    background-color: #f7f7f7;
+.form-row {
+    display: flex; /* Using flexbox to layout form rows */
+    justify-content: space-between; /* Space between controls */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 input[type="submit"] {
+    margin-top: 20px;
+    width: 100%; /* Full width button */
+    padding: 15px;
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 15px;
-    font-size: 1rem;
     border-radius: 4px;
     cursor: pointer;
-    display: block;
-    width: 100%;
-    margin-top: 20px;
 }
 
 input[type="submit"]:hover {
     background-color: #0056b3;
-}
-
-.route {
-    text-align: center;
-    margin-top: 20px;
 }
 
 .route a {
