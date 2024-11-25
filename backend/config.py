@@ -7,7 +7,7 @@ class Config:
     DEBUG = True
     
     # Database config
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:bibin9019@localhost/myaml'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ChessFun%402@localhost/myaml'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # JWT config
