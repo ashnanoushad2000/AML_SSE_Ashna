@@ -19,7 +19,7 @@ export class MediaAdditionMethodComponent {
   constructor(private router: Router) {}
 
   navigateToSingleMedia() {
-    this.router.navigate(['/single_media']);
+    this.router.navigate(['/single_media_addition']);
   }
 
   uploadFile() {
