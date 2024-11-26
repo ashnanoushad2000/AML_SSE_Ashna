@@ -1,6 +1,6 @@
 import {
   getDOM
-} from "./chunk-C5OUSQY5.js";
+} from "./chunk-X4IJVVUT.js";
 import {
   ChangeDetectorRef,
   Directive,
@@ -45,7 +45,7 @@ import {
   ɵɵdirectiveInject,
   ɵɵgetInheritedFactory,
   ɵɵlistener
-} from "./chunk-MCIBOZ2P.js";
+} from "./chunk-VYVHE2CJ.js";
 import {
   __spreadProps,
   __spreadValues
