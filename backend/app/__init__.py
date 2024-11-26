@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 from flask_session import Session
 from config import Config
 from sqlalchemy import text
+from datetime import datetime
 
 db = SQLAlchemy()
 jwt = JWTManager()
@@ -20,9 +21,24 @@ def create_app():
     # Initialize Session
     Session(app)
     
-    # Configure CORS with simpler setup
-    CORS(app, supports_credentials=True)
+    # Configure CORS
+    CORS(app, 
+         resources={
+             r"/api/*": {
+                 "origins": app.config['CORS_ORIGINS'],
+                 "supports_credentials": True,
+                 "allow_headers": app.config['CORS_HEADERS']
+             }
+         })
     
+    # Session activity tracker
+    @app.before_request
+    def before_request():
+        if 'user_id' in session:
+            session['last_activity'] = datetime.now().isoformat()
+            if 'created_at' not in session:
+                session['created_at'] = datetime.now().isoformat()
+
     # Test route for database connection
     @app.route('/test-db')
     def test_db():
@@ -39,7 +55,7 @@ def create_app():
                 'status': 'error'
             }), 500
     
-    # Register blueprints with the original prefix
+    # Register blueprints
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     
