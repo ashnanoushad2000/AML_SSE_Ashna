@@ -39,37 +39,36 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    // First try to get the name from localStorage
     const storedFullName = localStorage.getItem('fullName');
     if (storedFullName) {
       this.userName = storedFullName.split(' ')[0];
     }
 
-    // Also validate the token and get fresh user data
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
 
-    this.http.get<UserResponse>('http://localhost:5000/api/auth/validate', { headers })
-      .subscribe({
-        next: (response) => {
-          if (response.full_name) {
-            this.userName = response.full_name.split(' ')[0];
-            // Update stored name if different
-            if (response.full_name !== storedFullName) {
-              localStorage.setItem('fullName', response.full_name);
-            }
-          }
-        },
-        error: (error) => {
-          console.error('Token validation error:', error);
-          if (error.status === 401) {
-            localStorage.clear(); // Clear all stored data if token is invalid
-            this.router.navigate(['/login']);
+    this.http.get<UserResponse>('http://localhost:5000/api/auth/validate', { 
+      headers,
+      withCredentials: true 
+    }).subscribe({
+      next: (response) => {
+        if (response.full_name) {
+          this.userName = response.full_name.split(' ')[0];
+          if (response.full_name !== storedFullName) {
+            localStorage.setItem('fullName', response.full_name);
           }
         }
-      });
+      },
+      error: (error) => {
+        console.error('Token validation error:', error);
+        if (error.status === 401) {
+          localStorage.clear();
+          this.router.navigate(['/login']);
+        }
+      }
+    });
   }
 
   navigateToHolds() {

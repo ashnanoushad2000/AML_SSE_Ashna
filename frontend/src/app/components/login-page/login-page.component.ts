@@ -47,40 +47,42 @@ export class LoginPageComponent {
       'Content-Type': 'application/json'
     });
 
-    this.http.post('http://localhost:5000/api/auth/login', payload, { headers })
-      .subscribe({
-        next: (response: any) => {
-          console.log('Login response:', response);
-          this.isLoading = false;
-          if (response.access_token) {
-            localStorage.setItem('token', response.access_token);
-            localStorage.setItem('user_type', response.user_type);
-            localStorage.setItem('user_id', response.user_id.toString());
-            if (response.full_name) {
-              localStorage.setItem('fullName', response.full_name);
-            }
-            
-            this.successMessage = 'Login successful';
-            
-            setTimeout(() => {
-              switch (response.user_type) {
-                case 'ADMIN':
-                  this.router.navigate(['/admin-homepage']);
-                  break;
-                case 'LIBRARIAN':
-                  this.router.navigate(['/staff-homepage']);
-                  break;
-                default:
-                  this.router.navigate(['/home']);
-              }
-            }, 1500);
+    this.http.post('http://localhost:5000/api/auth/login', payload, { 
+      headers, 
+      withCredentials: true 
+    }).subscribe({
+      next: (response: any) => {
+        console.log('Login response:', response);
+        this.isLoading = false;
+        if (response.access_token) {
+          localStorage.setItem('token', response.access_token);
+          localStorage.setItem('user_type', response.user_type);
+          localStorage.setItem('user_id', response.user_id.toString());
+          if (response.full_name) {
+            localStorage.setItem('fullName', response.full_name);
           }
-        },
-        error: (error) => {
-          console.error('Login error:', error);
-          this.isLoading = false;
-          this.error = error.error.message || 'Login failed. Please try again.';
+          
+          this.successMessage = 'Login successful';
+          
+          setTimeout(() => {
+            switch (response.user_type) {
+              case 'ADMIN':
+                this.router.navigate(['/admin-homepage']);
+                break;
+              case 'LIBRARIAN':
+                this.router.navigate(['/staff-homepage']);
+                break;
+              default:
+                this.router.navigate(['/home']);
+            }
+          }, 1500);
         }
-      });
+      },
+      error: (error) => {
+        console.error('Login error:', error);
+        this.isLoading = false;
+        this.error = error.error.message || 'Login failed. Please try again.';
+      }
+    });
   }
 }
