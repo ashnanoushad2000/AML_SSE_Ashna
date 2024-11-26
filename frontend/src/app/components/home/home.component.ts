@@ -104,4 +104,8 @@ export class HomeComponent implements OnInit {
   closeNotification() {
     this.showNotification = false;
   }
+
+  profileAlert(){
+    alert("This icon opens profile settings")
+  }
 }
