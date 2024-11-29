@@ -15,6 +15,8 @@ Each ADR should follow the format specified in `template.md` which includes sect
 
 ## Key ADRs in our project
 1. [ADR 1: Adopt Service-Oriented Architecture Style](0001-adopt-service-oriented-architecture-style.md)
-2. [ADR 2: Another Decision](0002-another-decision.md)
+2. [ADR 2: Choice of Technology Stack](0002-choice-of-technology-stack.md)
+3. [ADR 0003: Rejection of SQLite for Database Management]()
+
 
 Thank you for contributing to the project documentation!

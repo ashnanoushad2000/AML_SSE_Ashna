@@ -1,4 +1,4 @@
-# ADR 0002: Choice of Technology Stack
+# ADR 0003: Choice of Technology Stack
 
 ## Status
 - Approved
