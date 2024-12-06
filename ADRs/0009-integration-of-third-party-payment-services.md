@@ -1,4 +1,4 @@
-# ADR 0007: Integration of Third-Party Payment Services
+# ADR 0009: Integration of Third-Party Payment Services
 
 ## Status
 - Proposed
