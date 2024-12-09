@@ -1,16 +1,24 @@
 <div class="login-section">
-    <h1>ADML Admin Login</h1>
+    <h1>AML Staff Login</h1>
     <img src="/ADML_Logo.ico" alt="Logo" class="logo-image" />
-    <form class="login-form" (ngSubmit)="onSubmit()">
+    <form class="login-form" #loginForm="ngForm" (ngSubmit)="onSubmit() ">
         <div class="form-control">
             <label for="username">Email:</label>
-            <input type="email" name="username" id="username" placeholder="Enter Email" required>
+            <input type="email" name="username" id="username" placeholder="Enter Email" [(ngModel)]="email" required>
         </div>
         <div class="form-control">
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password" placeholder="Enter Password" required>
+            <input type="password" name="password" id="password" placeholder="Enter Password" [(ngModel)]="password" required>
         </div>
-        <button type="submit" class="login-button btn btn-block">Login</button>
+        <div class="message-container">
+            <div *ngIf="successMessage" class="success-message">
+                {{ successMessage }}
+            </div>
+            <div *ngIf="error" class="error-message">
+                {{ error }}
+            </div>
+        </div>
+        <button type="submit" [disabled]="isLoading" class="login-button btn btn-block">{{ isLoading ? 'Logging in...' : 'Login' }}</button>
     </form>
 </div>
 

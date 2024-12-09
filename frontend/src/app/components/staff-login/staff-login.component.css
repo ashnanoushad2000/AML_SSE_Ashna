@@ -19,6 +19,8 @@ h1 {
     width: 120px;
     height: 120px;
     margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .login-form {
@@ -65,4 +67,21 @@ h1 {
 
 .login-button:hover {
     background-color: #5648c9;
+}
+
+.message-container {
+    margin: 10px 0;
+    min-height: 20px;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.success-message {
+    color: #28a745;
+    font-size: 0.9rem;
+    text-align: center;
 }

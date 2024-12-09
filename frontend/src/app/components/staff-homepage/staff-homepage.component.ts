@@ -5,6 +5,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FooterStaffComponent } from '../footer-staff/footer-staff.component';
 import { MediaAdditionMethodComponent } from '../media-addition-method/media-addition-method.component';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+interface UserResponse {
+  full_name: string;
+  user_type: string;
+  user_id: number;
+}
 
 @Component({
   selector: 'app-staff-homepage',
@@ -14,12 +21,51 @@ import { MediaAdditionMethodComponent } from '../media-addition-method/media-add
   styleUrl: './staff-homepage.component.css'
 })
 export class StaffHomepageComponent {
-  firstName: string = "Librarian";
+  firstName: string = "";
   faUser = faUser;
   faCircle = faCircle;
   showMediaAddition = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
+
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.router.navigate(['/staff']);
+      return;
+    }
+
+    const storedFullName = localStorage.getItem('fullName');
+    if (storedFullName) {
+      this.firstName = storedFullName.split(' ')[0];
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    this.http.get<UserResponse>('http://localhost:5000/api/auth/validate', { 
+      headers,
+      withCredentials: true 
+    }).subscribe({
+      next: (response) => {
+        if (response.full_name) {
+          this.firstName = response.full_name.split(' ')[0];
+          if (response.full_name !== storedFullName) {
+            localStorage.setItem('fullName', response.full_name);
+          }
+        }
+      },
+      error: (error) => {
+        console.error('Token validation error:', error);
+        if (error.status === 401) {
+          localStorage.clear();
+          this.router.navigate(['/staff']);
+        }
+      }
+    });
+  }
 
   handleTileClick(tileName: string): void {
     if (tileName === 'Manage Inventory') {

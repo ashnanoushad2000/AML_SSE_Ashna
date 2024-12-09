@@ -24,10 +24,6 @@ export class LoginPageComponent {
     private router: Router
   ) {}
 
-  togglePasswordVisibility(): void {
-    this.showPassword = !this.showPassword;
-  }
-
   onSubmit(): void {
     if (!this.email || !this.password) {
       this.error = 'Please enter both email and password';
