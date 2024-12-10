@@ -56,8 +56,8 @@ export class StaffLoginComponent {
           localStorage.setItem('token', response.access_token);
           localStorage.setItem('user_type', response.user_type);
           localStorage.setItem('user_id', response.user_id.toString());
-          if (response.full_name) {
-            localStorage.setItem('fullName', response.full_name);
+          if (response.first_name) {
+            localStorage.setItem('first_Name', response.first_name);
           }
           
           if (response.user_type === 'ADMIN' || response.user_type === 'MEMBER') {

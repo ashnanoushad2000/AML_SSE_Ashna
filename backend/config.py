@@ -8,8 +8,13 @@ class Config:
     DEBUG = True
     
     # Database config
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ChessFun%402@localhost/myaml'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ChessFun%402@localhost/auth_db'
+    SQLALCHEMY_BINDS = {
+        'auth_db': 'mysql+pymysql://root:ChessFun%402@localhost/media_db'
+    }
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ECHO = True
+
     
     # JWT config
     JWT_SECRET_KEY = secrets.token_hex(32)

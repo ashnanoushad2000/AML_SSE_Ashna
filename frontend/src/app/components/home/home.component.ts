@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
       'Content-Type': 'application/json'
     });
 
-    this.http.get<UserResponse>('http://localhost:5000/api/auth/validate', { 
+    this.http.get<UserResponse>('http://localhost:5000/api/auth/session-check', { 
       headers,
       withCredentials: true 
     }).subscribe({

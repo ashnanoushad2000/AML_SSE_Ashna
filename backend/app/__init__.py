@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, session
+from flask import Flask, jsonify, session, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
@@ -39,6 +39,23 @@ def create_app():
             if 'created_at' not in session:
                 session['created_at'] = datetime.now().isoformat()
 
+    def handle_options_requests():
+        if request.method == 'OPTIONS':
+           response = jsonify({'message': 'CORS preflight successful'})
+           response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
+           response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+           response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+           response.headers.add('Access-Control-Allow-Credentials', 'true')
+           return response, 200            
+        
+    @app.after_request
+    def after_request(response):
+        print(f"Request Method: {request.method}")
+        print(f"Request Headers: {request.headers}")
+        print(f"Response Headers: {response.headers}")
+        return response
+
+
     # Test route for database connection
     @app.route('/test-db')
     def test_db():
@@ -58,7 +75,10 @@ def create_app():
     # Register blueprints
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
-    
+
+    from app.routes.media import media_bp
+    app.register_blueprint(media_bp, url_prefix='/api/media')
+
     return app
 
 # Import models after db is defined

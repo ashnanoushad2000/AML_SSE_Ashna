@@ -55,7 +55,7 @@ export class LoginPageComponent {
           localStorage.setItem('user_type', response.user_type);
           localStorage.setItem('user_id', response.user_id.toString());
           if (response.full_name) {
-            localStorage.setItem('fullName', response.full_name);
+            localStorage.setItem('first_name', response.first_name);
           }
           
           this.successMessage = 'Login successful';
@@ -63,10 +63,10 @@ export class LoginPageComponent {
           setTimeout(() => {
             switch (response.user_type) {
               case 'ADMIN':
-                this.router.navigate(['/admin-homepage']);
+                this.router.navigate(['/admin_homepage']);
                 break;
               case 'LIBRARIAN':
-                this.router.navigate(['/staff-homepage']);
+                this.router.navigate(['/staff_homepage']);
                 break;
               default:
                 this.router.navigate(['/home']);

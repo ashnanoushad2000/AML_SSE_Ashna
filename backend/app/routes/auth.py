@@ -86,7 +86,7 @@ def login():
             'access_token': access_token,
             'user_type': user.user_type,
             'user_id': user.user_id,
-            'full_name': user.full_name
+            'first_name': user.first_name
         }), 200
         
     except Exception as e:
@@ -121,3 +121,7 @@ def logout():
     except Exception as e:
         print("Logout error:", str(e))
         return jsonify({'message': 'Logout error'}), 500
+    
+@auth_bp.route('/validate', methods=['GET'])
+def validate_token():
+    return jsonify({"message": "Validation successful"}), 200

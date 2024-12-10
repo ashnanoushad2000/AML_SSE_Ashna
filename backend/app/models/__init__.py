@@ -7,7 +7,8 @@ class Users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.String(255))
     email = db.Column(db.String(100))
-    full_name = db.Column(db.String(100))
+    first_name = db.Column(db.String(100))
+    last_name = db.Column(db.String(100))
     date_of_birth = db.Column(db.Date)
     address = db.Column(db.Text)
     phone = db.Column(db.String(20))
@@ -29,9 +30,9 @@ class MediaItems(db.Model):
 # Media Categories Model
 class MediaCategories(db.Model):
     __tablename__ = 'media_categories'
-    category_id = db.Column(db.Integer, primary_key=True)
+    category_id = db.Column(db.String, primary_key=True)
     category_name = db.Column(db.String(50))
-    description = db.Column(db.Text)
+    category_description = db.Column(db.String)
 
 # Loans Model
 class Loans(db.Model):
