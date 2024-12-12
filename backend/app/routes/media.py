@@ -3,20 +3,36 @@ from app.models import MediaItems, MediaCategories, db
 from sqlalchemy.exc import SQLAlchemyError
 from uuid import uuid4
 from datetime import datetime
-from sqlalchemy import text  # Import text for raw SQL queries
-
+import logging
 
 media_bp = Blueprint('media', __name__)
 
-@media_bp.route('/', methods=['POST'])
-def add_media():
+@media_bp.route('/categories', methods=['GET'])
+def get_categories():
     """
-    Add a new media item. Checks for duplicate ISBN.
+    Fetch all media categories.
     """
     try:
-        data = request.json
+        categories = MediaCategories.query.all()
+        return jsonify([{
+            'category_id': category.category_id,
+            'category_name': category.category_name,
+            'category_description': category.category_description
+        } for category in categories]), 200
+    except Exception as e:
+        logging.error(f"Error fetching categories: {str(e)}")
+        return jsonify({'message': f"Error fetching categories: {str(e)}"}), 500
 
-        # Check if a media item with the same ISBN already exists
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
+@media_bp.route('/add', methods=['POST'])
+def add_media():
+    try:
+        data = request.json
+        logging.debug(f"Request Data: {data}")
+
+        # Check for duplicate ISBN
         existing_media = MediaItems.query.filter_by(isbn=data.get('isbn')).first()
         if existing_media:
             return jsonify({'message': 'Media with the same ISBN already exists.'}), 400
@@ -30,9 +46,7 @@ def add_media():
             category_id=data.get('categoryId'),
             publication_date=data.get('publicationDate'),
             publisher=data.get('publisher'),
-            item_description=data.get('description'),
-            created_at=datetime.now(),
-            updated_at=datetime.now()
+            item_description=data.get('item_description')
         )
         db.session.add(media)
         db.session.commit()
@@ -40,25 +54,17 @@ def add_media():
 
     except SQLAlchemyError as e:
         db.session.rollback()
+        logging.error(f"Database Error: {str(e)}")
         return jsonify({'message': f'Database error: {str(e)}'}), 500
     except Exception as e:
-        return jsonify({'message': f'Error adding media item: {str(e)}'}), 500
-
-@media_bp.route('/categories', methods=['GET'])
-def get_categories():
-    """
-    Fetch all media categories with cache refresh.
-    """
-    try:
-        db.session.execute(text('SELECT 1'))  # Refresh connection
-        db.metadata.clear()  # Clear metadata cache
-
-        categories = MediaCategories.query.all()
-        return jsonify([{
-            'category_id': category.category_id,
-            'category_name': category.category_name,
-            'category_description': category.category_description
-        } for category in categories]), 200
-    except Exception as e:
-        print(f"Error fetching categories: {e}")
-        return jsonify({'message': f'Error fetching categories: {str(e)}'}), 500
+        logging.error(f"Error Adding Media: {str(e)}")
+        return jsonify({'message': f'Error adding media: {str(e)}'}), 500
+    
+@media_bp.route('/', methods=['OPTIONS'])
+def options_media():
+    response = jsonify({'message': 'CORS preflight successful'})
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
+    response.headers.add('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    return response, 200
