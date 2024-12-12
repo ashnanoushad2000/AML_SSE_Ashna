@@ -7,7 +7,8 @@ class Users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.String(255))
     email = db.Column(db.String(100))
-    full_name = db.Column(db.String(100))
+    first_name = db.Column(db.String(100))
+    last_name = db.Column(db.String(100))
     date_of_birth = db.Column(db.Date)
     address = db.Column(db.Text)
     phone = db.Column(db.String(20))
@@ -17,21 +18,24 @@ class Users(db.Model):
 
 # Media Items Model
 class MediaItems(db.Model):
+    __bind_key__ = 'media_db'
     __tablename__ = 'media_items'
-    media_id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255))
+    media_id = db.Column(db.String(36), primary_key=True)  # UUID
+    title = db.Column(db.String(255), nullable=False)
     author = db.Column(db.String(100))
-    category_id = db.Column(db.Integer, db.ForeignKey('media_categories.category_id'))
+    isbn = db.Column(db.String(20), unique=True)
+    category_id = db.Column(db.String(36), db.ForeignKey('media_categories.category_id'))
     publication_date = db.Column(db.Date)
     publisher = db.Column(db.String(100))
-    description = db.Column(db.Text)
+    item_description = db.Column(db.Text)
 
 # Media Categories Model
 class MediaCategories(db.Model):
+    __bind_key__ = 'media_db'
     __tablename__ = 'media_categories'
-    category_id = db.Column(db.Integer, primary_key=True)
-    category_name = db.Column(db.String(50))
-    description = db.Column(db.Text)
+    category_id = db.Column(db.String(36), primary_key=True)
+    category_name = db.Column(db.String(50), nullable=False)
+    category_description = db.Column(db.Text)
 
 # Loans Model
 class Loans(db.Model):
