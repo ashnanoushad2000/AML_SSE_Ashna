@@ -1,0 +1,24 @@
+<!-- inventory-management.component.html -->
+<div class="inventory-management">
+    <app-header arrowColor="#E0E0E0" [route]="goBack()" profileColor="#E0E0E0"></app-header>
+        <h1>Inventory Management</h1>
+    <input type="text" placeholder="Search Media" class="search-media" [(ngModel)]="searchQuery" (input)="filterMedia()">
+
+    <div class="media-list">
+        <ul>
+            <li *ngFor="let media of filteredMediaList">
+                <span class="media-name">{{ media.name }}</span>
+                <div class="action-icons">
+                    <button (click)="editMedia(media.id)">✏️</button>
+                    <button (click)="deleteMedia(media.id)">❌</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="footer-navigation">
+        <button>Add New Media</button>
+        <a routerLink="/transfer_management"><button>Manage Transfers</button></a>
+    </div>
+    <app-footer-admin></app-footer-admin>
+</div>

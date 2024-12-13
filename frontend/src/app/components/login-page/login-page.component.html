@@ -1,0 +1,49 @@
+<div class="centered-container">
+  <h1>Advanced Media Library</h1>
+
+  <div class="logo-container">
+      <img src="/ADML_Logo.ico" alt="Logo" class="logo-image">
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="add-form">
+      <div class="form-control">
+          <label for="email">Email:</label>
+          <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              [(ngModel)]="email" 
+              required 
+              placeholder="Enter your email">
+      </div>
+
+      <div class="form-control">
+          <label for="password">Password:</label>
+          <input 
+              [type]="showPassword ? 'text' : 'password'"
+              id="password" 
+              name="password" 
+              [(ngModel)]="password" 
+              required 
+              placeholder="Enter your password">
+      </div>
+
+      <div class="message-container">
+          <div *ngIf="successMessage" class="success-message">
+              {{ successMessage }}
+          </div>
+          <div *ngIf="error" class="error-message">
+              {{ error }}
+          </div>
+      </div>
+
+      <button type="submit" class="btn" [disabled]="isLoading">
+          {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
+  </form>
+
+  <p>
+      Don't have an Account? 
+      <a class="signup-link" routerLink="/registration-page">Sign up</a>
+  </p>
+</div>
