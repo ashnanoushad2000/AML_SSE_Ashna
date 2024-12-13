@@ -4,6 +4,7 @@ import { HeaderComponent } from "../header/header.component";
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { FooterAdminComponent } from "../footer-admin/footer-admin.component";
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-inventory-management',
@@ -23,7 +24,7 @@ export class InventoryManagementComponent {
   ];
   filteredMediaList = this.mediaList;
   searchQuery: string = '';
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   editMedia(mediaId: number): void {
     alert(`This will take you to edit media page`);
@@ -41,5 +42,18 @@ export class InventoryManagementComponent {
     this.filteredMediaList = this.mediaList.filter(media =>
       media.name.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
+  }
+
+  goBack(): string{
+    if (this.authService.getRole() === 'STAFF'){
+      return "/staff_homepage"
+    }
+    else if (this.authService.getRole() === 'ADMIN'){
+      this.router.navigate(['/admin_homepage'])
+      return "/admin_homepage"
+    }
+    else{
+      return "/admin_homepage"
+    }
   }
 }

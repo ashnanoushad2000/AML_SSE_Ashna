@@ -3,13 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
   imports: [FormsModule, RouterModule, CommonModule, HttpClientModule],
   templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.css'
+  styleUrl: './login-page.component.css',
 })
 export class LoginPageComponent {
   email: string = '';
@@ -21,7 +22,8 @@ export class LoginPageComponent {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   onSubmit(): void {
@@ -36,31 +38,34 @@ export class LoginPageComponent {
 
     const payload = {
       email: this.email,
-      password: this.password
+      password: this.password,
     };
 
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
 
-    this.http.post('http://localhost:5000/api/auth/login', payload, { 
-      headers, 
-      withCredentials: true 
+    this.http.post('http://localhost:5000/api/auth/login', payload, {
+      headers,
+      withCredentials: true,
     }).subscribe({
       next: (response: any) => {
         console.log('Login response:', response);
         this.isLoading = false;
         if (response.access_token) {
-          localStorage.setItem('token', response.access_token);
+          // Store the token and user details
+          this.authService.login(response.access_token, 'MEMBER');
+
           localStorage.setItem('user_type', response.user_type);
           localStorage.setItem('user_id', response.user_id.toString());
-          if (response.full_name) {
+          if (response.first_name) {
             localStorage.setItem('first_name', response.first_name);
           }
-          
+
           this.successMessage = 'Login successful';
-          
+
           setTimeout(() => {
+            // Redirect based on user type
             switch (response.user_type) {
               case 'ADMIN':
                 this.router.navigate(['/admin_homepage']);
@@ -77,8 +82,8 @@ export class LoginPageComponent {
       error: (error) => {
         console.error('Login error:', error);
         this.isLoading = false;
-        this.error = error.error.message || 'Login failed. Please try again.';
-      }
+        this.error = error.error?.message || 'Login failed. Please try again.';
+      },
     });
   }
 }

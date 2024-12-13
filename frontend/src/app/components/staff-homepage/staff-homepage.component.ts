@@ -6,6 +6,7 @@ import { faCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FooterStaffComponent } from '../footer-staff/footer-staff.component';
 import { MediaAdditionMethodComponent } from '../media-addition-method/media-addition-method.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 interface UserResponse {
   first_name: string;
@@ -26,7 +27,7 @@ export class StaffHomepageComponent {
   faCircle = faCircle;
   showMediaAddition = false;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -98,6 +99,10 @@ export class StaffHomepageComponent {
 
   toggleMediaAdditionModal(): void {
     this.showMediaAddition = !this.showMediaAddition;
+  }
+
+  logout(): void {
+    this.authService.logoutStaff();
   }
   
 }
