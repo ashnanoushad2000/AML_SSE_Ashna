@@ -5,6 +5,7 @@ import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-staff-login',
@@ -23,7 +24,8 @@ export class StaffLoginComponent {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   onSubmit(): void {
@@ -53,6 +55,7 @@ export class StaffLoginComponent {
         console.log('Login response:', response);
         this.isLoading = false;
         if (response.access_token) {
+          this.authService.login(response.access_token, 'STAFF');
           localStorage.setItem('token', response.access_token);
           localStorage.setItem('user_type', response.user_type);
           localStorage.setItem('user_id', response.user_id.toString());

@@ -5,9 +5,10 @@ import { FooterComponent } from '../footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 interface UserResponse {
-  full_name: string;
+  first_name: string;
   user_type: string;
   user_id: number;
 }
@@ -29,7 +30,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -39,7 +41,7 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    const storedFullName = localStorage.getItem('fullName');
+    const storedFullName = localStorage.getItem('first_Name');
     if (storedFullName) {
       this.userName = storedFullName.split(' ')[0];
     }
@@ -54,10 +56,10 @@ export class HomeComponent implements OnInit {
       withCredentials: true 
     }).subscribe({
       next: (response) => {
-        if (response.full_name) {
-          this.userName = response.full_name.split(' ')[0];
-          if (response.full_name !== storedFullName) {
-            localStorage.setItem('fullName', response.full_name);
+        if (response.first_name) {
+          this.userName = response.first_name.split(' ')[0];
+          if (response.first_name !== storedFullName) {
+            localStorage.setItem('fullName', response.first_name);
           }
         }
       },
@@ -106,5 +108,9 @@ export class HomeComponent implements OnInit {
 
   profileAlert(){
     alert("This icon opens profile settings")
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

@@ -1,6 +1,6 @@
 <!-- inventory-management.component.html -->
 <div class="inventory-management">
-    <app-header arrowColor="#E0E0E0" route="/admin_homepage" profileColor="#E0E0E0"></app-header>
+    <app-header arrowColor="#E0E0E0" [route]="goBack()" profileColor="#E0E0E0"></app-header>
         <h1>Inventory Management</h1>
     <input type="text" placeholder="Search Media" class="search-media" [(ngModel)]="searchQuery" (input)="filterMedia()">
 

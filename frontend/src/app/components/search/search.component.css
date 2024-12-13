@@ -1,7 +1,7 @@
 .search-container {
     max-width: 480px;
     margin: 0 auto;
-    min-height: 100vh;
+    height: 100%;
     background: white;
     padding: 20px;
     padding-bottom: 70px;

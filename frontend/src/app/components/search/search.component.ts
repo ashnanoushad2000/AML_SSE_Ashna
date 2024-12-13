@@ -17,8 +17,4 @@ export class SearchComponent {
   isOnHold: boolean = false;
 
   constructor(private router: Router) {}
-
-  goBack() {
-    this.router.navigate(['/home']);
-  }
 }

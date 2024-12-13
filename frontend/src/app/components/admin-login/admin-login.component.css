@@ -68,3 +68,20 @@ h1 {
 .login-button:hover {
     background-color: rgb(45, 1, 1);
 }
+
+.message-container {
+    margin: 10px 0;
+    min-height: 20px;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.success-message {
+    color: #28a745;
+    font-size: 0.9rem;
+    text-align: center;
+}

@@ -1,13 +1,16 @@
 <div class="organizer">
     <div class="admin-dashboard">
         <div class="dashboard-header">
-            <h1>Hello {{ firstName }}!</h1>
-            <div class="profile-container" (click)="profileAlert()">
-                <a><span class="fa-stack fa-2x">
-                <fa-icon [icon]="faCircle" class="fa-stack-2x" style="font-size: 2rem; color: black"></fa-icon>
-                <fa-icon [icon]="faUser" class="fa-stack-1x" style="color: gray; font-size: 1.0rem;"></fa-icon>
-              </span></a>
+            <h1 class="welcome-message">Hello {{ firstName }}!</h1>
+            <div class="header-right">
+                <h1 class="logout-btn" (click)="logout()">Logout</h1>
+                <div class="profile-container" (click)="profileAlert()">
+                    <a><span class="fa-stack fa-2x">
+                        <fa-icon [icon]="faCircle" class="fa-stack-2x" style="font-size: 2rem; color: black"></fa-icon>
+                        <fa-icon [icon]="faUser" class="fa-stack-1x" style="color: gray; font-size: 1.0rem;"></fa-icon>
+                    </span></a>
                 </div>
+            </div>
         </div>
         <div class="dashboard-tiles">
             <div class="tile larger alert-tile" (click)="handleTileClick('Alerts and Notifications')">Alerts and Notifications</div>

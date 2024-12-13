@@ -190,14 +190,13 @@
 }
 
 .books-section h2{
-  margin-bottom: 10px;
+  font-size: larger;
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
 }
 
 .more-icon {
@@ -304,4 +303,10 @@ app-footer{
   color: #228be6;
   font-size: 1.1rem;
   padding: 0 16px;
+}
+
+.logout-btn{
+  position: relative;
+  left: 100px;
+  cursor: pointer;
 }
