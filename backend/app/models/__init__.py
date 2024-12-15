@@ -49,3 +49,18 @@ class Loans(db.Model):
     renewed_count = db.Column(db.Integer)
     status = db.Column(db.String(20))
     created_by = db.Column(db.Integer)
+
+class Inventory(db.Model):
+    __bind_key__ = 'inventory_db'  # Specify the database this model is bound to
+    __tablename__ = 'inventory'
+
+    inventory_id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    media_id = db.Column(db.String(36), nullable=False)
+    branch_id = db.Column(db.String(36), db.ForeignKey('branches.branch_id'), nullable=False)
+    total_copies = db.Column(db.Integer, nullable=False, default=0)
+    available_copies = db.Column(db.Integer, nullable=False, default=0)
+    last_updated = db.Column(
+        db.TIMESTAMP,
+        server_default=db.func.now(),
+        onupdate=db.func.now()
+    )

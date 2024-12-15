@@ -79,6 +79,9 @@ def create_app():
     from app.routes.media import media_bp
     app.register_blueprint(media_bp, url_prefix='/api/media')
 
+    from app.routes.media import inventory_bp
+    app.register_blueprint(inventory_bp, url_prefix='/api/inventory')
+
     return app
 
 # Import models after db is defined

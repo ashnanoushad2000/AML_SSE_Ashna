@@ -1,7 +1,7 @@
 # ADR 0007: Use of API Gateway
 
 ## Status
-- **Approved**
+- Approved
 
 ## Context
 Our service-oriented architecture (SOA) comprises multiple backend services like user management, inventory management, and payment processing. Managing these services efficiently is critical for ensuring seamless communication, security, and scalability. Without a centralized mechanism, direct communication between client applications and backend services can lead to several challenges:
