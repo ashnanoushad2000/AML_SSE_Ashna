@@ -1,0 +1,92 @@
+<div class="edit-media-container">
+    <h1>Edit Media</h1>
+  
+    <form class="edit-form" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-control">
+          <label for="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            [(ngModel)]="mediaDetails.title"
+            name="title"
+            required
+          />
+        </div>
+        <div class="form-control">
+          <label for="author">Author:</label>
+          <input
+            type="text"
+            id="author"
+            [(ngModel)]="mediaDetails.author"
+            name="author"
+            required
+          />
+        </div>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-control">
+          <label for="isbn">ISBN:</label>
+          <input
+            type="text"
+            id="isbn"
+            [(ngModel)]="mediaDetails.isbn"
+            name="isbn"
+            required
+          />
+        </div>
+        <div class="form-control">
+            <label for="categoryId">Category</label>
+            <select id="categoryId" [(ngModel)]="mediaDetails.categoryId" name="categoryId" required>
+              <option *ngFor="let category of categories" [value]="category.category_id">
+                {{ category.category_name }}
+              </option>
+            </select>
+          </div>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-control">
+          <label for="publication-date">Publication Date:</label>
+          <input
+            type="date"
+            id="publication-date"
+            [(ngModel)]="mediaDetails.publicationDate"
+            name="publicationDate"
+            required
+          />
+        </div>
+        <div class="form-control">
+          <label for="publisher">Publisher:</label>
+          <input
+            type="text"
+            id="publisher"
+            [(ngModel)]="mediaDetails.publisher"
+            name="publisher"
+            required
+          />
+        </div>
+      </div>
+  
+      <div class="form-control">
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          rows="4"
+          [(ngModel)]="mediaDetails.item_description"
+          name="item_description"
+        ></textarea>
+      </div>
+  
+      <div *ngIf="feedbackMessage" class="feedback" [class]="feedbackClass">
+        {{ feedbackMessage }}
+      </div>
+  
+      <div class="actions">
+        <button type="submit" class="btn-submit">Update Media</button>
+        <button type="button" (click)="goBack()" class="btn-cancel">Cancel</button>
+      </div>
+    </form>
+  </div>
+  

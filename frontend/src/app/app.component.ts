@@ -25,6 +25,9 @@ export class AppComponent {
 
   isAdminOrLibrarianRoute(): boolean {
     const currentUrl = this.router.url;
-    return currentUrl === '/staff' || currentUrl === '/admin' || currentUrl === '/admin_homepage' || currentUrl === '/inventory_management' || currentUrl === '/transfer_management' || currentUrl === '/transfer_initiation' || currentUrl === '/staff_homepage' || currentUrl === '/single_media_addition';
+    if (currentUrl.includes('/edit_media')) {
+      return true;
+  }
+    return currentUrl === '/staff' || currentUrl === '/admin' || currentUrl === '/admin_homepage' || currentUrl === '/inventory_management'|| currentUrl === '/single_media_addition' ||  currentUrl === '/staff_homepage';
   }
 }
