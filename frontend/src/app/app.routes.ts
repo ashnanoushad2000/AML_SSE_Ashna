@@ -18,6 +18,7 @@ import { StaffHomepageComponent } from './components/staff-homepage/staff-homepa
 import { AuthGuard } from './Route-Guards/auth.guard';
 import { StaffGuard } from './Route-Guards/staff.guard';
 import { AdminGuard } from './Route-Guards/admin.guard';
+import { EditMediaComponent } from './components/edit-media/edit-media.component';
 
 export const routes: Routes = [{
     path: '', component: LoginPageComponent, canActivate: [AuthGuard]
@@ -60,6 +61,9 @@ export const routes: Routes = [{
     },
     {
         path: 'staff_homepage', component: StaffHomepageComponent, canActivate: [StaffGuard]
+    },
+    {
+        path: 'edit_media/:mediaId', component: EditMediaComponent
     }
 ];
 
