@@ -28,6 +28,6 @@ export class AppComponent {
     if (currentUrl.includes('/edit_media')) {
       return true;
   }
-    return currentUrl === '/staff' || currentUrl === '/admin' || currentUrl === '/admin_homepage' || currentUrl === '/inventory_management'|| currentUrl === '/single_media_addition' ||  currentUrl === '/staff_homepage';
+    return currentUrl === '/staff' || currentUrl === '/admin' || currentUrl === '/admin_homepage' || currentUrl === '/inventory_management'|| currentUrl === '/single_media_addition' ||  currentUrl === '/staff_homepage' || currentUrl === '/transfer_management' || currentUrl === '/transfer_initiation';
   }
 }
