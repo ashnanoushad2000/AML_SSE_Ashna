@@ -69,7 +69,7 @@ export class AdminHomepageComponent {
 
   handleTileClick(tileName: string): void {
     if (tileName === 'Manage Inventory') {
-      this.router.navigate(['/inventory_management']); 
+      this.router.navigate(['/inventory_management']);
     } else {
       alert(`This will take you to ${tileName}`);
     }
