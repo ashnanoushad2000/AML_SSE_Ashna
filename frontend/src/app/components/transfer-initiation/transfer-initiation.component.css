@@ -2,18 +2,21 @@
     font-family: 'Arial', sans-serif;
     color: #E0E0E0;
     background-color: #282c34;
-    padding-bottom: 0;;
     display: flex;
     flex-direction: column;
-    min-width: 100vw;
-    min-height: 100vh;
-    padding-bottom: 0;
-    overflow: hidden;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Prevent horizontal scroll */
+    width: 100vw;
+}
+
+form {
+    flex: 1; /* Take up remaining space */
+    overflow-y: auto; /* Make form scrollable if content overflows */
+    padding: 0 40px; /* Add side padding */
 }
 
 .form-group {
     margin-bottom: 20px;
-    padding: 0 40px 0 40px;
 }
 
 .form-group label {
@@ -21,7 +24,9 @@
     margin-bottom: 5px;
 }
 
-.form-group select, .form-group input, .form-group textarea {
+.form-group select,
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
@@ -42,32 +47,45 @@ button {
     color: white;
     cursor: pointer;
     margin-top: 20px;
-    width: 90%;
-    margin-left: 40px;
-    margin-right: 40px;
+    width: calc(100% - 80px); /* Ensure button does not exceed form padding */
 }
 
-app-header{
+app-header {
     position: relative;
     padding-left: 40px;
     padding-right: 40px;
-    top: 20px;
+    flex-shrink: 0; /* Prevent header from shrinking */
+    overflow-y: auto; /* Enable vertical scroll if content overflows */
 }
 
 h1 {
-    font-size: 2rem; 
+    font-size: 2rem;
     text-align: center;
-    margin-bottom: 20px;
-    margin-top: -20px;
-    margin-bottom: 50px;
-    color: #ABB2BF; 
+    margin: 0;
+    color: #ABB2BF;
+    padding: 20px 0;
 }
 
-app-footer-admin{
+app-footer-admin {
     position: relative;
     margin-top: auto;
+    flex-shrink: 0; /* Prevent footer from shrinking */
+    overflow-y: auto; /* Allow scrolling if needed */
 }
 
 .align-center{
     text-align: center;
 }
+
+.has-error select,
+.has-error input {
+    border-color: red;
+    outline: none;
+}
+  
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+  

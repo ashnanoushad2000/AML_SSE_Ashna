@@ -66,8 +66,7 @@ export class InventoryManagementComponent implements OnInit {
     if (this.authService.getRole() === 'STAFF') {
       return "/staff_homepage";
     } else if (this.authService.getRole() === 'ADMIN') {
-      this.router.navigate(['/admin_homepage']);
-      return "/admin_homepage";
+      return "/staff_homepage";
     } else {
       return "/admin_homepage";
     }

@@ -3,11 +3,11 @@
     color: #E0E0E0;
     background-color: #282c34;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    min-width: 100vw;
-    min-height: 100vh; /* Ensures the container is at least the height of the viewport */
+    width: 100vw; /* Fixes the width to prevent horizontal scroll */
+    height: 100vh; /* Ensures the container fills the viewport height */
     display: flex;
-    flex-direction: column; /* Organizes children in a column */
-    overflow: hidden;
+    flex-direction: column;
+    overflow: hidden; /* Prevents scrolling on the main page */
 }
 
 .search-media {
@@ -16,12 +16,12 @@
     border: 2px solid #646e82;
     background-color: #3a3f4b;
     color: #E0E0E0;
-    margin-bottom: 30px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 10px 20px;
 }
 
-.transfer-history{
+.transfer-history {
+    flex: 1; /* Allows this element to expand */
+    overflow-y: auto; /* Adds vertical scroll for the transfer history */
     padding: 20px;
 }
 
@@ -75,10 +75,8 @@
 
 .footer-buttons {
     display: flex;
-    justify-content: space-around;
-    padding-top: 30px;
-    flex: 1;
-    
+    justify-content: center;
+    padding: 20px;
 }
 
 .footer-buttons button {
@@ -90,21 +88,20 @@
     cursor: pointer;
 }
 
-app-header{
+app-header {
     display: block;
-    margin: 0;
-    padding: 40px;
+    padding: 20px;
+    height: 10%; /* Set a fixed height or percentage for the header */
+    overflow-y: auto; /* Makes the header scrollable vertically */
+    color: #E0E0E0;
 }
 
 h1 {
     font-size: 2rem; 
     text-align: center;
-    margin-bottom: 20px;
-    margin-top: -20px;
-    margin-bottom: 50px;
+    margin: 0;
+    padding: 20px 0;
     color: #ABB2BF; 
-    padding: 40px;
-    padding-bottom: 20px;
 }
 
 .transfer-history {

@@ -85,7 +85,9 @@ export class AuthService {
   }
 
   getRole(): string | null {
-    return localStorage.getItem(this.USER_TYPE_KEY);
+    const role = localStorage.getItem(this.USER_TYPE_KEY);
+    console.log('AuthService: Retrieved role from localStorage:', role);
+    return role;
   }
 
   getUserId(): string | null {

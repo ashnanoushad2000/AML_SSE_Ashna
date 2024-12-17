@@ -1,24 +1,28 @@
 .inventory-management {
     font-family: 'Arial', sans-serif;
-    color: #E0E0E0;  /* Soft white for text */
-    background-color: #171d2b;  /* Dark grey background */
-    min-width: 100vw;
+    color: #E0E0E0; /* Soft white for text */
+    background-color: #171d2b; /* Dark grey background */
     min-height: 100vh;
-    padding: 40px;
-    padding-bottom: 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    min-width: 100vw;
     display: flex;
     flex-direction: column;
+    overflow: hidden; /* Prevent horizontal scrolling */
 }
 
 .search-media {
-    width: 100%;
+    width: calc(100% - 80px); /* Account for padding */
     padding: 12px;
+    margin: 0 40px 20px 40px;
     border-radius: 5px;
-    border: 2px solid #646e82;  /* Darker grey for input border */
-    background-color: #3a3f4b;  /* Slightly lighter grey for input field */
-    color: #E0E0E0;  /* Maintaining soft white for input text */
-    margin-bottom: 30px;
+    border: 2px solid #646e82;
+    background-color: #3a3f4b;
+    color: #E0E0E0;
+}
+
+.media-list {
+    flex: 1; /* Allow the list to take up remaining space */
+    overflow-y: auto; /* Add scroll to the media list */
+    margin: 0 40px 20px 40px;
 }
 
 .media-list ul {
@@ -28,7 +32,7 @@
 }
 
 .media-list li {
-    background-color: #3a3f4b;  /* Consistent with input field color */
+    background-color: #3a3f4b;
     padding: 15px;
     margin-bottom: 15px;
     display: flex;
@@ -40,15 +44,21 @@
 .media-list button {
     border: none;
     background: none;
-    color: #e06c75;  /* Soft red for icons */
+    color: #e06c75; /* Soft red for icons */
     cursor: pointer;
     font-size: 16px;
+}
+
+.media-list button:hover {
+    color: #f48b9b; /* Slight hover effect for buttons */
 }
 
 .footer-navigation {
     display: flex;
     justify-content: space-around;
-    padding-top: 30px;
+    padding: 20px 40px;
+    flex-shrink: 0; /* Prevent shrinking */
+    background-color: #1e2637; /* Consistent with header */
 }
 
 .footer-navigation button {
@@ -64,20 +74,22 @@
     background-color: #4a91d4;
 }
 
-app-header{
-    display: block;
-    margin: 0;
+app-header {
+    flex-shrink: 0; /* Prevent the header from shrinking */
+    position: absolute; /* Make the header fixed */
+    width: 100%;
+    top: 0;
+    z-index: 1000;
 }
 
 h1 {
-    font-size: 2rem; 
+    font-size: 2rem;
     text-align: center;
-    margin-bottom: 20px;
-    margin-top: -20px;
-    margin-bottom: 50px;
-    color: #ABB2BF; 
+    margin: 80px 0 20px; /* Add space for the fixed header */
+    color: #ABB2BF;
 }
 
-app-footer-admin{
+app-footer-admin {
     margin-top: auto;
+    background-color: #1e2637; /* Consistent footer background */
 }
