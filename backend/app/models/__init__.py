@@ -1,10 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
 from app import db
+from datetime import datetime
 
 # User Model
 class Users(db.Model):
+    __bind_key__ = 'auth_db'  # Add binding key
     __tablename__ = 'users'
-    user_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(36), primary_key=True)  # Changed to String for UUID
     password_hash = db.Column(db.String(255))
     email = db.Column(db.String(100))
     first_name = db.Column(db.String(100))
@@ -39,28 +41,34 @@ class MediaCategories(db.Model):
 
 # Loans Model
 class Loans(db.Model):
+    __bind_key__ = 'loan_db'  # Ensure this matches your database
     __tablename__ = 'loans'
-    loan_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    inventory_id = db.Column(db.Integer, db.ForeignKey('inventory.inventory_id'))
-    checkout_date = db.Column(db.TIMESTAMP)
-    due_date = db.Column(db.TIMESTAMP)
+    loan_id = db.Column(db.String(36), primary_key=True)
+    user_id = db.Column(db.String(36), nullable=False)
+    media_id = db.Column(db.String(36), nullable=False)
+    issue_date = db.Column(db.TIMESTAMP, nullable=False, default=datetime.utcnow)
+    due_date = db.Column(db.TIMESTAMP, nullable=False)
     return_date = db.Column(db.TIMESTAMP)
-    renewed_count = db.Column(db.Integer)
-    status = db.Column(db.String(20))
-    created_by = db.Column(db.Integer)
+    status = db.Column(db.Enum('ACTIVE', 'RETURNED', 'OVERDUE'), nullable=False, default='ACTIVE')
+    renewals_count = db.Column(db.Integer, nullable=False, default=0)
+
+# Holds Model
+class Holds(db.Model):
+    __bind_key__ = 'loan_db'  # This should match your database structure
+    __tablename__ = 'holds'
+    hold_id = db.Column(db.String(36), primary_key=True)
+    user_id = db.Column(db.String(36), nullable=False)
+    media_id = db.Column(db.String(36), nullable=False)
+    request_date = db.Column(db.TIMESTAMP, nullable=False, default=datetime.utcnow)
+    status = db.Column(db.Enum('PENDING', 'READY', 'CANCELLED', 'FULFILLED'), nullable=False, default='PENDING')
+    notification_sent = db.Column(db.Boolean, nullable=False, default=False)
 
 class Inventory(db.Model):
-    __bind_key__ = 'inventory_db'  # Specify the database this model is bound to
+    __bind_key__ = 'inventory_db'  
     __tablename__ = 'inventory'
-
-    inventory_id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    inventory_id = db.Column(db.String(36), primary_key=True)
     media_id = db.Column(db.String(36), nullable=False)
     branch_id = db.Column(db.String(36), db.ForeignKey('branches.branch_id'), nullable=False)
     total_copies = db.Column(db.Integer, nullable=False, default=0)
     available_copies = db.Column(db.Integer, nullable=False, default=0)
-    last_updated = db.Column(
-        db.TIMESTAMP,
-        server_default=db.func.now(),
-        onupdate=db.func.now()
-    )
+    last_updated = db.Column(db.TIMESTAMP, server_default=db.func.now(), onupdate=db.func.now())
