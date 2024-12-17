@@ -123,5 +123,27 @@ def logout():
         return jsonify({'message': 'Logout error'}), 500
     
 @auth_bp.route('/validate', methods=['GET'])
+@validate_session
 def validate_token():
-    return jsonify({"message": "Validation successful"}), 200
+    """
+    Validate the token and optionally return user details.
+    """
+    try:
+        include_user = request.args.get('include_user', 'false').lower() == 'true'
+        response = {"message": "Validation successful"}
+
+        if include_user:
+            user_id = session.get('user_id')
+            user = Users.query.filter_by(user_id=user_id).first()
+            if not user:
+                return jsonify({"message": "User not found"}), 404
+            response.update({
+                "first_name": user.first_name,
+                "last_name": user.last_name
+            })
+
+        return jsonify(response), 200
+
+    except Exception as e:
+        print("Error during validation:", str(e))
+        return jsonify({"message": f"Error during validation: {str(e)}"}), 500

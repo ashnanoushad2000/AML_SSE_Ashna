@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify
-from app.models import MediaItems, MediaCategories, db
 from app.models import MediaItems, MediaCategories, Inventory, db
 from sqlalchemy.exc import SQLAlchemyError
 from uuid import uuid4

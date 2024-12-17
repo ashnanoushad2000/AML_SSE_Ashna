@@ -1,0 +1,35 @@
+<div *ngIf="showModal" class="media-addition-modal-container">
+  <div class="media-addition-modal">
+    <button class="close-button" (click)="closeModal()">×</button>
+    <h2>Transfer Details</h2>
+
+    <!-- Transfer Details -->
+    <p><strong>Transfer ID:</strong> {{ transferDetails?.transfer_id }}</p>
+    <p><strong>Media ID:</strong> {{ transferDetails?.media_id }}</p>
+    <p><strong>Quantity:</strong> {{ transferDetails?.quantity }}</p>
+    <p><strong>Source Branch:</strong> {{ transferDetails?.source_branch }}</p> <!-- Updated -->
+    <p><strong>Destination Branch:</strong> {{ transferDetails?.destination_branch }}</p> <!-- Updated -->
+    <p><strong>Status:</strong> {{ transferDetails?.status }}</p>
+    <p><strong>Initiated At:</strong> {{ transferDetails?.initiated_at }}</p>
+    <p><strong>Completed At:</strong> {{ transferDetails?.completed_at || 'N/A' }}</p>
+
+    <!-- Buttons -->
+    <div class="button-container">
+      <button 
+        *ngIf="transferDetails.status === 'PENDING'" 
+        class="cancel-button" 
+        (click)="cancelTransfer()">
+        Cancel
+      </button>
+      <button (click)="closeModal()" class="close-btn">
+        Close
+      </button>
+      <button 
+        *ngIf="transferDetails.status === 'IN_TRANSIT'" 
+        class="complete-button" 
+        (click)="completeTransfer()">
+        Mark as Completed
+      </button>
+    </div>
+  </div>
+</div>

@@ -30,7 +30,7 @@ export const routes: Routes = [{
         path: 'payments', component: PaymentsComponent, canActivate: [AuthGuard]
     },
     {
-        path: 'staff', component: StaffLoginComponent
+        path: 'staff', component: StaffLoginComponent, canActivate: [StaffGuard]
     },
     {
         path: 'single_media_addition', component: SingleMediaAdditionComponent
@@ -39,7 +39,7 @@ export const routes: Routes = [{
         path: 'home', component: HomeComponent, canActivate: [AuthGuard]
     },
     {
-        path: 'admin', component: AdminLoginComponent
+        path: 'admin', component: AdminLoginComponent, canActivate: [AdminGuard]
     },
    {
     path: 'search', component: SearchComponent, canActivate: [AuthGuard]
@@ -51,19 +51,19 @@ export const routes: Routes = [{
         path: 'admin_homepage', component: AdminHomepageComponent, canActivate: [AdminGuard]
     },
     {
-        path: 'inventory_management', component: InventoryManagementComponent
+        path: 'inventory_management', component: InventoryManagementComponent, canActivate: [AdminGuard, StaffGuard]
     },
     {
-        path: 'transfer_management', component: TransferManagementComponent
+        path: 'transfer_management', component: TransferManagementComponent, canActivate: [StaffGuard, AdminGuard]
     },
     {
-        path: 'transfer_initiation', component: TransferInitiationComponent
+        path: 'transfer_initiation', component: TransferInitiationComponent, canActivate: [StaffGuard, AdminGuard]
     },
     {
         path: 'staff_homepage', component: StaffHomepageComponent, canActivate: [StaffGuard]
     },
     {
-        path: 'edit_media/:mediaId', component: EditMediaComponent
+        path: 'edit_media/:mediaId', component: EditMediaComponent, canActivate: [StaffGuard, AdminGuard]
     }
 ];
 

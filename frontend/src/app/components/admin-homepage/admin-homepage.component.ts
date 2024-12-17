@@ -69,19 +69,17 @@ export class AdminHomepageComponent {
 
   handleTileClick(tileName: string): void {
     if (tileName === 'Manage Inventory') {
-      this.router.navigate(['/inventory_management']); 
-    } else {
+      this.router.navigate(['/inventory_management']);
+    }
+    else if(tileName === 'Add New Media'){
+      this.router.navigate(['/media-addition-method'])
+    }
+    else {
       alert(`This will take you to ${tileName}`);
     }
   }
 
-  handleLinkClick(linkName: string): void {
-    if (linkName === 'Inventory') {
-      this.router.navigate(['/inventory_management']); 
-    } else {
-      alert(`This will take you to ${linkName}`);
-    }
-  }
+
 
   onClickingSettings(){
     alert(`This will take you to Settings`)
