@@ -25,6 +25,7 @@ export class EditMediaComponent implements OnInit {
   categories: any[] = [];
   feedbackMessage: string = '';
   feedbackClass: string = '';
+  isbnError: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -86,6 +87,12 @@ export class EditMediaComponent implements OnInit {
 
   onSubmit(): void {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // Validate ISBN first
+    if (!this.validateISBN()) {
+      return;
+    }
+
     this.http
       .put(`http://localhost:5000/api/media/update/${this.mediaId}`, this.mediaDetails, {
         headers,
@@ -106,5 +113,22 @@ export class EditMediaComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/inventory_management']);
+  }
+  validateISBN(): boolean {
+    // Regex to match ISBN format: 10-17 characters, only digits and hyphens
+    const isbnRegex = /^[0-9-]{10,17}$/;
+    
+    if (!this.mediaDetails.isbn) {
+      this.isbnError = 'ISBN is required.';
+      return false;
+    }
+  
+    if (!isbnRegex.test(this.mediaDetails.isbn)) {
+      this.isbnError = 'ISBN must be 10-17 characters long and contain only digits and hyphens.';
+      return false;
+    }
+  
+    this.isbnError = '';
+    return true;
   }
 }
