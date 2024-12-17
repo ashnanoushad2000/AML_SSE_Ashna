@@ -62,11 +62,41 @@
 
   <!-- Search Results -->
   <div class="search-results" *ngIf="searchResults.length > 0">
-    <div class="result-item" *ngFor="let result of searchResults">
+    <div class="result-item" *ngFor="let result of searchResults" (click)="showDetails(result)">
       <h3>{{result.title}}</h3>
       <p *ngIf="result.author">By: {{result.author}}</p>
     </div>
   </div>
 
+
+  <div class="overlay" *ngIf="selectedMedia" (click)="closeDetails($event)">
+    <div class="overlay-content">
+      <button class="close-overlay" (click)="closeDetails($event)">✕</button>
+      <div class="media-details">
+        <h3>{{selectedMedia.title}}</h3>
+        <p *ngIf="selectedMedia.author"><strong>Author:</strong> {{selectedMedia.author}}</p>
+        <p *ngIf="selectedMedia.isbn"><strong>ISBN:</strong> {{selectedMedia.isbn}}</p>
+        <p *ngIf="selectedMedia.publisher"><strong>Publisher:</strong> {{selectedMedia.publisher}}</p>
+        <p *ngIf="selectedMedia.publication_date"><strong>Publication Date:</strong> {{selectedMedia.publication_date | date}}</p>
+        
+        <div class="availability-status">
+          <p *ngIf="selectedMedia.inventory">
+            <strong>Available Copies:</strong> {{selectedMedia.inventory.available_copies}} / {{selectedMedia.inventory.total_copies}}
+          </p>
+          <p *ngIf="selectedMedia.inventory?.branch">
+            <strong>Branch:</strong> {{selectedMedia.inventory.branch.branch_name}}
+          </p>
+        </div>
+        
+        <p *ngIf="selectedMedia.category">
+          <strong>Category:</strong> {{selectedMedia.category.category_name}}
+        </p>
+        <p *ngIf="selectedMedia.item_description">
+          <strong>Description:</strong> {{selectedMedia.item_description}}
+        </p>
+      </div>
+    </div>
+  </div>
+  
 </div>
 <app-footer></app-footer>

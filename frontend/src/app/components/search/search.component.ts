@@ -24,6 +24,7 @@ export class SearchComponent implements OnInit {
   errorMessage: string = '';
   searchResults: MediaSearchResult[] = [];
   branches: Branch[] = [];
+  selectedMedia: MediaSearchResult | null = null;
 
   constructor(
     private router: Router,
@@ -96,5 +97,22 @@ export class SearchComponent implements OnInit {
         }
       }
     });
+  }
+
+  showDetails(media: MediaSearchResult) {
+    console.log('Showing details for:', media.title);
+    this.selectedMedia = media;
+  }
+
+  closeDetails(event: MouseEvent) {
+    // Close only if clicking overlay background or close button
+    if (
+      (event.target as HTMLElement).className === 'overlay' ||
+      (event.target as HTMLElement).className === 'close-overlay'
+    ) {
+      console.log('Closing media details');
+      this.selectedMedia = null;
+      event.stopPropagation();
+    }
   }
 }
