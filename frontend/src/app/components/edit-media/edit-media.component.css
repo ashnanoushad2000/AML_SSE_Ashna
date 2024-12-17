@@ -2,36 +2,41 @@
     font-family: 'Arial', sans-serif;
     color: #333;
     background-color: #f8f9fa;
-    padding: 40px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    width: 100vw;
     max-width: 1200px;
+    width: 1200px;
     margin: 0 auto;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
+    overflow: hidden; /* Prevent horizontal scroll */
 }
 
 h1 {
     text-align: center;
     font-size: 2rem;
     color: #333;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     font-weight: bold;
 }
 
 .form-control {
     flex: 1;
-    margin: 0 20px 20px 20px;
+    margin: 10px;
 }
 
 .form-row {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+}
+
+.form-row .form-control {
+    min-width: 45%;
 }
 
 input[type="submit"] {
@@ -60,6 +65,8 @@ input[type="submit"]:hover {
 
 form {
     width: 100%;
+    overflow-y: auto; /* Scrollable content when necessary */
+    padding: 10px;
 }
 
 label {
@@ -94,7 +101,7 @@ label {
 .feedback-message {
     text-align: center;
     margin-top: 20px;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 .feedback-success {
@@ -106,19 +113,22 @@ label {
 }
 
 .header {
-    position: relative;
     display: flex;
     align-items: center;
-    gap: 16px;
     margin-bottom: 20px;
-    top: -100px;
+    gap: 10px;
 }
 
 .back-btn {
-    border: none;
     background: none;
-    font-size: 30px;
+    border: none;
+    font-size: 1.5rem;
     cursor: pointer;
+    color: #007bff;
+}
+
+.back-btn:hover {
+    color: #0056b3;
 }
 
 .edit-media-container input,
@@ -137,4 +147,46 @@ label {
     border-color: #80bdff;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.actions .btn-submit {
+    background-color: #28a745;
+    color: white;
+}
+
+.actions .btn-submit:hover {
+    background-color: #218838;
+}
+
+.actions .btn-cancel {
+    background-color: #dc3545;
+    color: white;
+}
+
+.actions .btn-cancel:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+    .form-row .form-control {
+        min-width: 100%;
+    }
 }

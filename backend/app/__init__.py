@@ -79,8 +79,10 @@ def create_app():
     from app.routes.media import media_bp
     app.register_blueprint(media_bp, url_prefix='/api/media')
 
-    from app.routes.media import inventory_bp
-    app.register_blueprint(inventory_bp, url_prefix='/api/inventory')
+    from app.routes.transfers import transfers_bp
+    app.register_blueprint(transfers_bp, url_prefix='/api/transfers')
+
+    
 
     return app
 
