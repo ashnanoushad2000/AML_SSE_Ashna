@@ -1,88 +1,77 @@
-from flask import Flask, jsonify, session, request
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
+from datetime import timedelta
+import os
 from flask_session import Session
-from config import Config
-from sqlalchemy import text
-from datetime import datetime
+import pymysql
 
+# Replace MySQLdb with PyMySQL
+pymysql.install_as_MySQLdb()
+
+# Initialize SQLAlchemy
 db = SQLAlchemy()
-jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(Config)
     
+    # Configure Flask app
+    app.config['SECRET_KEY'] = 'your-secret-key-here'
+    app.config['JWT_SECRET_KEY'] = 'your-jwt-secret-key'
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
+    
+    # CORS Configuration
+    app.config['CORS_HEADERS'] = 'Content-Type'
+    CORS(app, 
+         origins=["http://localhost:4200"],
+         allow_credentials=True,
+         supports_credentials=True,
+         expose_headers=["Content-Type", "Authorization"],
+         headers=['Content-Type', 'Authorization'])
+    
+    # Database configuration with PyMySQL and correct credentials
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:bibin9019@localhost/auth_db?charset=utf8mb4'
+    app.config['SQLALCHEMY_BINDS'] = {
+        'auth_db': 'mysql+pymysql://root:bibin9019@localhost/auth_db?charset=utf8mb4',
+        'loan_db': 'mysql+pymysql://root:bibin9019@localhost/loan_db?charset=utf8mb4',
+        'media_db': 'mysql+pymysql://root:bibin9019@localhost/media_db?charset=utf8mb4',
+        'inventory_db': 'mysql+pymysql://root:bibin9019@localhost/inventory_db?charset=utf8mb4',
+        'payment_db': 'mysql+pymysql://root:bibin9019@localhost/payment_db?charset=utf8mb4'
+    }
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+        'pool_pre_ping': True,
+        'pool_recycle': 300,
+        'connect_args': {
+            'ssl': False
+        }
+    }
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
+    # Session configuration
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.config['SESSION_COOKIE_SECURE'] = False
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+
     # Initialize extensions
     db.init_app(app)
-    jwt.init_app(app)
-    
-    # Initialize Session
+    JWTManager(app)
     Session(app)
-    
-    # Configure CORS
-    CORS(app, 
-         resources={
-             r"/api/*": {
-                 "origins": app.config['CORS_ORIGINS'],
-                 "supports_credentials": True,
-                 "allow_headers": app.config['CORS_HEADERS']
-             }
-         })
-    
-    # Session activity tracker
-    @app.before_request
-    def before_request():
-        if 'user_id' in session:
-            session['last_activity'] = datetime.now().isoformat()
-            if 'created_at' not in session:
-                session['created_at'] = datetime.now().isoformat()
 
-    def handle_options_requests():
-        if request.method == 'OPTIONS':
-           response = jsonify({'message': 'CORS preflight successful'})
-           response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
-           response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-           response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-           response.headers.add('Access-Control-Allow-Credentials', 'true')
-           return response, 200            
-        
-    @app.after_request
-    def after_request(response):
-        print(f"Request Method: {request.method}")
-        print(f"Request Headers: {request.headers}")
-        print(f"Response Headers: {response.headers}")
-        return response
-
-
-    # Test route for database connection
-    @app.route('/test-db')
-    def test_db():
-        try:
-            db.session.execute(text('SELECT 1'))
-            return jsonify({
-                'message': 'Database connection successful!',
-                'status': 'success',
-                'database_url': app.config['SQLALCHEMY_DATABASE_URI']
-            })
-        except Exception as e:
-            return jsonify({
-                'message': f'Database connection failed: {str(e)}',
-                'status': 'error'
-            }), 500
-    
     # Register blueprints
     from app.routes.auth import auth_bp
-    app.register_blueprint(auth_bp, url_prefix='/api/auth')
-
     from app.routes.media import media_bp
-    app.register_blueprint(media_bp, url_prefix='/api/media')
-
+    from app.routes.loans import loans_bp
+    from app.routes.holds import holds_bp
     from app.routes.transfers import transfers_bp
-    app.register_blueprint(transfers_bp, url_prefix='/api/transfers')
 
-    
+    app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    app.register_blueprint(media_bp, url_prefix='/api/media')
+    app.register_blueprint(loans_bp, url_prefix='/api/loans')
+    app.register_blueprint(holds_bp, url_prefix='/api/holds')
+    app.register_blueprint(transfers_bp, url_prefix='/api/transfers')
 
     return app
 

@@ -1,0 +1,47 @@
+<div class="loans-container">
+    <!-- Header -->
+    <div class="header">
+      <button class="back-btn" (click)="goBack()">←</button>
+      <h1>Current Loans</h1>
+    </div>
+  
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input 
+        type="text" 
+        placeholder="Search Books" 
+        class="search-input"
+        [value]="searchTerm"
+        (input)="onSearchInput($event)">
+    </div>
+  
+    <!-- Book List -->
+    <div class="book-list">
+      @for (book of filteredBooks; track book.id) {
+        <div class="book-item" (click)="showDetails(book)">
+          <div class="book-icon">📚</div>
+          <div class="book-info">
+            <span class="book-title">{{ book.title }}</span>
+            <span class="book-status" [class.overdue]="book.status === 'Overdue'">
+              {{ book.status }}
+            </span>
+            <span class="due-date">Due: {{ book.dueDate }}</span>
+            @if (book.renewals > 0) {
+              <span class="renewals">Renewed {{ book.renewals }} times</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  
+    <!-- Loan Details Overlay -->
+    <app-loan-details
+      [show]="showOverlay"
+      [mediaId]="selectedMediaId"
+      [dueDate]="selectedDueDate"
+      [status]="selectedStatus"
+      [renewalsCount]="selectedRenewals"
+      (closeOverlay)="closeDetails()"
+    ></app-loan-details>
+  </div>
+  <app-footer></app-footer>

@@ -1,4 +1,3 @@
-
 import { Routes, RouterModule} from '@angular/router';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegistrationPageComponent } from './components/registration-page/registration-page.component';
@@ -9,6 +8,7 @@ import { SingleMediaAdditionComponent } from './components/single-media-addition
 import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
 import { HoldsComponent } from './components/holds/holds.component';
+import { LoansComponent } from './components/loans/loans.component';  // Add this import
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminHomepageComponent } from './components/admin-homepage/admin-homepage.component';
 import { InventoryManagementComponent } from './components/inventory-management/inventory-management.component';
@@ -46,6 +46,9 @@ export const routes: Routes = [{
    },
    {
     path: 'holds', component: HoldsComponent, canActivate: [AuthGuard]
+   },
+   {
+    path: 'loans', component: LoansComponent, canActivate: [AuthGuard]  // Add this route
    },
     {
         path: 'admin_homepage', component: AdminHomepageComponent, canActivate: [AdminGuard]

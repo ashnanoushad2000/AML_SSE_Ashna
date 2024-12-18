@@ -1,9 +1,10 @@
 from flask import Blueprint, request, jsonify, session, current_app
 from flask_jwt_extended import create_access_token
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from app.models import Users, db
 from datetime import timedelta, datetime
 from functools import wraps
+from uuid import uuid4
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -147,3 +148,81 @@ def validate_token():
     except Exception as e:
         print("Error during validation:", str(e))
         return jsonify({"message": f"Error during validation: {str(e)}"}), 500
+    
+
+@auth_bp.route('/register/check-email', methods=['POST'])
+def check_email():
+    """
+    Check if an email already exists in the database
+    """
+    try:
+        data = request.get_json()
+        print("Checking email existence for:", data.get('email'))
+        
+        if not data or not data.get('email'):
+            return jsonify({'message': 'Email is required'}), 400
+            
+        user = Users.query.filter_by(email=data['email']).first()
+        print("Email exists:", bool(user))
+        
+        return jsonify({'exists': bool(user)}), 200
+        
+    except Exception as e:
+        print("Email check error:", str(e))
+        return jsonify({'message': f'Error checking email: {str(e)}'}), 500
+
+@auth_bp.route('/register', methods=['POST'])
+def register():
+    """
+    Register a new user
+    """
+    try:
+        data = request.get_json()
+        print("Registration attempt for email:", data.get('email'))
+        
+        # Validate required fields
+        required_fields = ['email', 'password', 'first_name', 'last_name', 
+                         'date_of_birth', 'address', 'post_code']
+        for field in required_fields:
+            if not data.get(field):
+                return jsonify({'message': f'Missing required field: {field}'}), 400
+        
+        # Check if user already exists
+        existing_user = Users.query.filter_by(email=data['email']).first()
+        if existing_user:
+            print("User already exists with email:", data['email'])
+            return jsonify({'message': 'Email already registered'}), 400
+            
+        # Create new user
+        try:
+            new_user = Users(
+                user_id=str(uuid4()),
+                email=data['email'],
+                password_hash=generate_password_hash(data['password']),
+                first_name=data['first_name'],
+                last_name=data['last_name'],
+                date_of_birth=datetime.strptime(data['date_of_birth'], '%Y-%m-%d').date(),
+                address=data['address'],
+                post_code=data['post_code'],
+                user_type='MEMBER',
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow()
+            )
+            
+            db.session.add(new_user)
+            db.session.commit()
+            print("Successfully registered user:", new_user.email)
+            
+            return jsonify({
+                'message': 'Registration successful',
+                'user_id': new_user.user_id
+            }), 201
+            
+        except ValueError as ve:
+            print("Validation error during user creation:", str(ve))
+            return jsonify({'message': f'Invalid data format: {str(ve)}'}), 400
+            
+    except Exception as e:
+        db.session.rollback()
+        print("Registration error:", str(e))
+        return jsonify({'message': f'Error during registration: {str(e)}'}), 500
