@@ -17,7 +17,9 @@
                 id="first-name" 
                 placeholder="First Name" 
                 [(ngModel)]="formData.first_name" 
+                (ngModelChange)="onFieldChange('first_name', $event)"
                 required>
+            <div class="field-error" *ngIf="fieldErrors['first_name']">{{ fieldErrors['first_name'] }}</div>
         </div>
 
         <div class="form-control">
@@ -28,7 +30,9 @@
                 id="last-name" 
                 placeholder="Last Name" 
                 [(ngModel)]="formData.last_name" 
+                (ngModelChange)="onFieldChange('last_name', $event)"
                 required>
+            <div class="field-error" *ngIf="fieldErrors['last_name']">{{ fieldErrors['last_name'] }}</div>
         </div>
 
         <div class="form-control">
@@ -38,7 +42,9 @@
                 name="date_of_birth" 
                 id="dob" 
                 [(ngModel)]="formData.date_of_birth" 
+                (ngModelChange)="onFieldChange('date_of_birth', $event)"
                 required>
+            <div class="field-error" *ngIf="fieldErrors['date_of_birth']">{{ fieldErrors['date_of_birth'] }}</div>
         </div>
 
         <div class="form-control">
@@ -49,7 +55,9 @@
                 id="email" 
                 placeholder="Email" 
                 [(ngModel)]="formData.email" 
+                (ngModelChange)="onFieldChange('email', $event)"
                 required>
+            <div class="field-error" *ngIf="fieldErrors['email']">{{ fieldErrors['email'] }}</div>
         </div>
 
         <div class="form-control">
@@ -60,7 +68,9 @@
                 id="street" 
                 placeholder="Street Address" 
                 [(ngModel)]="formData.address" 
+                (ngModelChange)="onFieldChange('address', $event)"
                 required>
+            <div class="field-error" *ngIf="fieldErrors['address']">{{ fieldErrors['address'] }}</div>
         </div>
 
         <div class="form-control">
@@ -71,7 +81,9 @@
                 id="postal-code" 
                 placeholder="Postal Code" 
                 [(ngModel)]="formData.post_code" 
+                (ngModelChange)="onFieldChange('post_code', $event)"
                 required>
+            <div class="field-error" *ngIf="fieldErrors['post_code']">{{ fieldErrors['post_code'] }}</div>
         </div>
 
         <div class="form-control">
@@ -82,8 +94,9 @@
                 id="password" 
                 placeholder="Password" 
                 [(ngModel)]="formData.password" 
+                (ngModelChange)="onFieldChange('password', $event)"
                 required>
-            <div class="field-error" *ngIf="passwordError">{{ passwordError }}</div>
+            <div class="field-error" *ngIf="fieldErrors['password']">{{ fieldErrors['password'] }}</div>
         </div>
 
         <div class="form-control">
@@ -95,6 +108,7 @@
                 placeholder="Confirm Password" 
                 [(ngModel)]="confirmPassword" 
                 required>
+            <div class="field-error" *ngIf="passwordError">{{ passwordError }}</div>
         </div>
 
         <button type="submit" class="btn">Sign Up</button>

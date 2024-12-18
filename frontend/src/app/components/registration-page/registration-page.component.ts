@@ -1,4 +1,4 @@
-// registration-page.component.ts
+
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,12 +21,13 @@ export class RegistrationPageComponent {
     date_of_birth: '',
     email: '',
     address: '',
-    post_code: '',  // Changed to post_code to match backend expectation
+    post_code: '',
     password: ''
   };
   
   confirmPassword: string = '';
   registrationError: string = '';
+  fieldErrors: { [key: string]: string } = {};
   passwordError: string = '';
   showSuccessPopup: boolean = false;
 
@@ -35,40 +36,101 @@ export class RegistrationPageComponent {
     private router: Router
   ) {}
 
-  handleSubmit(event: Event): void {
-    event.preventDefault();
-    console.log('Form submitted', this.formData);
-    this.registrationError = '';
-    this.passwordError = '';
-
-    // Validate passwords
-    if (!this.formData.password || !this.confirmPassword) {
-      this.passwordError = "Both password fields are required";
-      return;
+  validateField(field: string, value: string): string {
+    switch (field) {
+      case 'first_name':
+      case 'last_name':
+        if (!value.trim()) return 'This field is required';
+        if (value.length < 2) return 'Must be at least 2 characters';
+        if (!/^[a-zA-Z\s-']+$/.test(value)) return 'Only letters, spaces, hyphens and apostrophes allowed';
+        break;
+      
+      case 'email':
+        if (!value) return 'Email is required';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Invalid email format';
+        break;
+      
+      case 'date_of_birth':
+        if (!value) return 'Date of birth is required';
+        const dob = new Date(value);
+        const today = new Date();
+        const age = today.getFullYear() - dob.getFullYear();
+        if (age < 13) return 'Must be at least 13 years old';
+        if (age > 120) return 'Invalid date of birth';
+        break;
+      
+      case 'address':
+        if (!value.trim()) return 'Address is required';
+        if (value.length < 5) return 'Please enter a valid address';
+        break;
+      
+      case 'post_code':
+        if (!value.trim()) return 'Postal code is required';
+        // UK post code format - can be adjusted for other countries
+        if (!/^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i.test(value.trim())) 
+          return 'Invalid postal code format';
+        break;
+      
+      case 'password':
+        if (!value) return 'Password is required';
+        if (value.length < 8) return 'Password must be at least 8 characters';
+        if (!/(?=.*[a-z])/.test(value)) return 'Password must include lowercase letters';
+        if (!/(?=.*[A-Z])/.test(value)) return 'Password must include uppercase letters';
+        if (!/(?=.*\d)/.test(value)) return 'Password must include numbers';
+        break;
     }
+    return '';
+  }
 
+  validateForm(): boolean {
+    this.fieldErrors = {};
+    let isValid = true;
+
+    // Validate each field
+    Object.keys(this.formData).forEach(field => {
+      const error = this.validateField(field, this.formData[field as keyof typeof this.formData]);
+      if (error) {
+        this.fieldErrors[field] = error;
+        isValid = false;
+      }
+    });
+
+    // Validate confirm password
     if (this.formData.password !== this.confirmPassword) {
       this.passwordError = "Passwords do not match";
-      return;
+      isValid = false;
+    } else {
+      this.passwordError = "";
     }
 
-    // Check all required fields
-    const requiredFields = ['first_name', 'last_name', 'date_of_birth', 'email', 'address', 'post_code', 'password'];
-    for (const field of requiredFields) {
-      if (!this.formData[field as keyof typeof this.formData]) {
-        this.registrationError = 'All fields are required';
-        return;
-      }
+    return isValid;
+  }
+
+  handleSubmit(event: Event): void {
+    event.preventDefault();
+    this.registrationError = '';
+    this.passwordError = '';
+    
+    if (!this.validateForm()) {
+      this.registrationError = 'Please correct the errors before submitting';
+      return;
     }
 
     this.submitRegistration();
+  }
+
+  onFieldChange(field: string, value: string) {
+    if (field in this.formData) {
+      this.fieldErrors[field] = this.validateField(field, value);
+    }
   }
 
   private submitRegistration(): void {
     console.log('Submitting registration:', this.formData);
     this.registrationService.register({
       ...this.formData,
-      date_of_birth: new Date(this.formData.date_of_birth).toISOString().split('T')[0]
+      date_of_birth: new Date(this.formData.date_of_birth).toISOString().split('T')[0],
+      post_code: this.formData.post_code.toUpperCase().replace(/\s+/g, ' ').trim()
     })
     .subscribe({
       next: (response) => {
