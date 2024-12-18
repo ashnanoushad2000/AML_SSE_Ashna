@@ -116,3 +116,59 @@ class InventoryTransfers(db.Model):
         db.CheckConstraint("source_branch_id != destination_branch_id", name="chk_different_branches"),
         db.CheckConstraint("quantity > 0", name="chk_positive_quantity"),
     )
+
+class Payments(db.Model):
+    __bind_key__ = 'payments_db'  # Binding key for payments database
+    __tablename__ = 'payments'
+
+    payment_id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid4()))
+    user_id = db.Column(db.String(36), db.ForeignKey('auth_db.users.user_id'), nullable=False)
+    category = db.Column(db.Enum('Fees', 'Fines', 'Subscriptions'), nullable=False)
+    amount = db.Column(db.Numeric(10, 2), nullable=False)
+    status = db.Column(db.Enum('Pending', 'Completed', 'Failed'), default='Pending', nullable=False)
+    transaction_reference = db.Column(db.String(100))
+    created_at = db.Column(db.TIMESTAMP, server_default=db.func.now())
+    processed_at = db.Column(db.TIMESTAMP)
+    processed_by = db.Column(db.String(36), db.ForeignKey('auth_db.users.user_id'))
+
+    # Constraints
+    __table_args__ = (
+        db.CheckConstraint('amount > 0', name='chk_payment_amount_positive'),
+    )
+
+
+class Fines(db.Model):
+    __bind_key__ = 'payments_db'  # Binding key for payments database
+    __tablename__ = 'fines'
+
+    fine_id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid4()))
+    user_id = db.Column(db.String(36), db.ForeignKey('auth_db.users.user_id'), nullable=False)
+    loan_id = db.Column(db.String(36), db.ForeignKey('loan_db.loans.loan_id'), nullable=False)
+    amount = db.Column(db.Numeric(10, 2), nullable=False)
+    reason = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.Enum('Pending', 'Paid', 'Waived'), default='Pending', nullable=False)
+    created_at = db.Column(db.TIMESTAMP, server_default=db.func.now())
+    paid_at = db.Column(db.TIMESTAMP)
+
+    # Constraints
+    __table_args__ = (
+        db.CheckConstraint('amount > 0', name='chk_fine_amount_positive'),
+    )
+
+
+class Subscriptions(db.Model):
+    __bind_key__ = 'payments_db'  # Binding key for payments database
+    __tablename__ = 'subscriptions'
+
+    subscription_id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid4()))
+    user_id = db.Column(db.String(36), db.ForeignKey('auth_db.users.user_id'), nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
+    amount = db.Column(db.Numeric(10, 2), nullable=False)
+    status = db.Column(db.Enum('Active', 'Expired', 'Cancelled'), default='Active', nullable=False)
+
+    # Constraints
+    __table_args__ = (
+        db.CheckConstraint('amount > 0', name='chk_subscription_amount_positive'),
+        db.CheckConstraint('start_date < end_date', name='chk_subscription_dates_valid'),
+    )

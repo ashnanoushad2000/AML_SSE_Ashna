@@ -19,6 +19,8 @@ import { AuthGuard } from './Route-Guards/auth.guard';
 import { StaffGuard } from './Route-Guards/staff.guard';
 import { AdminGuard } from './Route-Guards/admin.guard';
 import { EditMediaComponent } from './components/edit-media/edit-media.component';
+import { PaymentOptionsComponent } from './components/payment-options/payment-options.component';
+import { PayByCardComponent } from './components/pay-by-card/pay-by-card.component';
 
 export const routes: Routes = [{
     path: '', component: LoginPageComponent, canActivate: [AuthGuard]
@@ -67,6 +69,12 @@ export const routes: Routes = [{
     },
     {
         path: 'edit_media/:mediaId', component: EditMediaComponent, canActivate: [StaffGuard, AdminGuard]
+    },
+    {
+        path: 'payment_options', component: PaymentOptionsComponent, canActivate: [AuthGuard]
+    },
+    {
+        path: 'pay_by_card', component: PayByCardComponent, canActivate: [AuthGuard]
     }
 ];
 

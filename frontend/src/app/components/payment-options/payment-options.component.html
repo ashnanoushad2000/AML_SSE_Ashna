@@ -1,0 +1,12 @@
+<div class="header">
+    <button class="back-btn" (click)="goBack()">←</button>
+</div>
+<div class="organizer">
+    <div class="payment-options">
+      <h1>Payment Options</h1>
+      <p><strong>Total Amount:</strong> £{{ totalAmount }}</p>
+      <button class="card-button" (click)="payByCard()">Pay by Card</button>
+      <button class="paypal-button" (click)="payByPayPal()">Pay by PayPal</button>
+    </div>
+  </div>
+  

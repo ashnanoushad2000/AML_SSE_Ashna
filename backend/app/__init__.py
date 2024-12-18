@@ -31,13 +31,13 @@ def create_app():
          headers=['Content-Type', 'Authorization'])
     
     # Database configuration with PyMySQL and correct credentials
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:bibin9019@localhost/auth_db?charset=utf8mb4'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:ChessFun%402@localhost/auth_db?charset=utf8mb4'
     app.config['SQLALCHEMY_BINDS'] = {
-        'auth_db': 'mysql+pymysql://root:bibin9019@localhost/auth_db?charset=utf8mb4',
-        'loan_db': 'mysql+pymysql://root:bibin9019@localhost/loan_db?charset=utf8mb4',
-        'media_db': 'mysql+pymysql://root:bibin9019@localhost/media_db?charset=utf8mb4',
-        'inventory_db': 'mysql+pymysql://root:bibin9019@localhost/inventory_db?charset=utf8mb4',
-        'payment_db': 'mysql+pymysql://root:bibin9019@localhost/payment_db?charset=utf8mb4'
+        'auth_db': 'mysql+pymysql://root:ChessFun%402@localhost/auth_db?charset=utf8mb4',
+        'loan_db': 'mysql+pymysql://root:ChessFun%402@localhost/loan_db?charset=utf8mb4',
+        'media_db': 'mysql+pymysql://root:ChessFun%402@localhost/media_db?charset=utf8mb4',
+        'inventory_db': 'mysql+pymysql://root:ChessFun%402@localhost/inventory_db?charset=utf8mb4',
+        'payments_db': 'mysql+pymysql://root:ChessFun%402@localhost/payments_db?charset=utf8mb4'
     }
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
         'pool_pre_ping': True,
@@ -66,12 +66,14 @@ def create_app():
     from app.routes.loans import loans_bp
     from app.routes.holds import holds_bp
     from app.routes.transfers import transfers_bp
+    from app.routes.payments import payments_bp
 
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(media_bp, url_prefix='/api/media')
     app.register_blueprint(loans_bp, url_prefix='/api/loans')
     app.register_blueprint(holds_bp, url_prefix='/api/holds')
     app.register_blueprint(transfers_bp, url_prefix='/api/transfers')
+    app.register_blueprint(payments_bp, url_prefix='/api/payments')
 
     return app
 

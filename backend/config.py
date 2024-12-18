@@ -8,9 +8,10 @@ class Config:
     DEBUG = True
     
     # Database config
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:bibin9019@localhost/auth_db'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ChessFun%402@localhost/auth_db'
     SQLALCHEMY_BINDS = {
-        'media_db': 'mysql+pymysql://root:bibin9019@localhost/media_db'
+        'media_db': 'mysql+pymysql://root:ChessFun%402@localhost/media_db',
+        'payments_db': 'mysql+pymysql://root:ChessFun%402@localhost/payments_db'
     }
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True
