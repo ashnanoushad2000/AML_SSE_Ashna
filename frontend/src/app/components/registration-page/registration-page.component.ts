@@ -1,4 +1,4 @@
-
+// registration-page.component.ts
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -66,7 +66,6 @@ export class RegistrationPageComponent {
       
       case 'post_code':
         if (!value.trim()) return 'Postal code is required';
-        // UK post code format - can be adjusted for other countries
         if (!/^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i.test(value.trim())) 
           return 'Invalid postal code format';
         break;
@@ -82,6 +81,27 @@ export class RegistrationPageComponent {
     return '';
   }
 
+  validatePasswordMatch(): void {
+    if (!this.confirmPassword) {
+      this.passwordError = 'Please confirm your password';
+    } else if (this.formData.password !== this.confirmPassword) {
+      this.passwordError = 'Passwords do not match';
+    } else {
+      this.passwordError = '';
+    }
+  }
+
+  onPasswordChange(): void {
+    this.fieldErrors['password'] = this.validateField('password', this.formData.password);
+    if (this.confirmPassword) {
+      this.validatePasswordMatch();
+    }
+  }
+
+  onConfirmPasswordChange(): void {
+    this.validatePasswordMatch();
+  }
+
   validateForm(): boolean {
     this.fieldErrors = {};
     let isValid = true;
@@ -95,12 +115,10 @@ export class RegistrationPageComponent {
       }
     });
 
-    // Validate confirm password
-    if (this.formData.password !== this.confirmPassword) {
-      this.passwordError = "Passwords do not match";
+    // Validate password match
+    this.validatePasswordMatch();
+    if (this.passwordError) {
       isValid = false;
-    } else {
-      this.passwordError = "";
     }
 
     return isValid;
@@ -109,7 +127,6 @@ export class RegistrationPageComponent {
   handleSubmit(event: Event): void {
     event.preventDefault();
     this.registrationError = '';
-    this.passwordError = '';
     
     if (!this.validateForm()) {
       this.registrationError = 'Please correct the errors before submitting';

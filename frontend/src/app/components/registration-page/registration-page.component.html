@@ -94,11 +94,11 @@
                 id="password" 
                 placeholder="Password" 
                 [(ngModel)]="formData.password" 
-                (ngModelChange)="onFieldChange('password', $event)"
+                (ngModelChange)="onPasswordChange()"
                 required>
             <div class="field-error" *ngIf="fieldErrors['password']">{{ fieldErrors['password'] }}</div>
         </div>
-
+        
         <div class="form-control">
             <label for="confirm-password">*Confirm Password: </label>
             <input 
@@ -107,6 +107,7 @@
                 id="confirm-password" 
                 placeholder="Confirm Password" 
                 [(ngModel)]="confirmPassword" 
+                (ngModelChange)="onConfirmPasswordChange()"
                 required>
             <div class="field-error" *ngIf="passwordError">{{ passwordError }}</div>
         </div>
