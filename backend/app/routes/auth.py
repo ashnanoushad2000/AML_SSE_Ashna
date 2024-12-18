@@ -148,7 +148,6 @@ def validate_token():
     except Exception as e:
         print("Error during validation:", str(e))
         return jsonify({"message": f"Error during validation: {str(e)}"}), 500
-    
 
 @auth_bp.route('/register/check-email', methods=['POST'])
 def check_email():
@@ -226,3 +225,40 @@ def register():
         db.session.rollback()
         print("Registration error:", str(e))
         return jsonify({'message': f'Error during registration: {str(e)}'}), 500
+
+@auth_bp.route('/profile/<user_id>/password', methods=['PUT'])
+@validate_session
+def change_password(user_id):
+    """Change user password"""
+    try:
+        # Verify the requesting user matches the profile being updated
+        current_user_id = session.get('user_id')
+        if current_user_id != user_id:
+            return jsonify({'message': 'Unauthorized access'}), 403
+
+        user = Users.query.filter_by(user_id=user_id).first()
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+
+        data = request.get_json()
+        current_password = data.get('current_password')
+        new_password = data.get('new_password')
+
+        if not current_password or not new_password:
+            return jsonify({'message': 'Current and new password are required'}), 400
+
+        # Modified password verification to handle both plain text and hashed passwords
+        if user.password_hash != current_password and not check_password_hash(user.password_hash, current_password):
+            print("Password verification failed for user:", user_id)
+            return jsonify({'message': 'Current password is incorrect'}), 401
+
+        # Update password (always hash the new password)
+        user.password_hash = generate_password_hash(new_password)
+        db.session.commit()
+
+        return jsonify({'message': 'Password changed successfully'}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        print("Error changing password:", str(e))
+        return jsonify({'message': f'Error changing password: {str(e)}'}), 500
