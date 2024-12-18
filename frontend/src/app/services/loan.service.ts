@@ -117,4 +117,21 @@ export class LoanService {
       })
     );
   }
+
+  // New method for renewing loans
+  renewLoan(loanId: string): Observable<any> {
+    const url = `${this.apiUrl}/${loanId}/renew`;
+    console.log('LoanService: Renewing loan:', loanId);
+    
+    return this.http.put(url, {}, {
+      headers: this.getHeaders(),
+      withCredentials: true
+    }).pipe(
+      tap(response => console.log('LoanService: Loan renewed:', response)),
+      catchError((error: HttpErrorResponse) => {
+        console.error('LoanService: Error renewing loan:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 }

@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { SearchService } from '../../services/search.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { LoanDetailsComponent } from './loan-details.component'; // Updated import path
+import { LoanDetailsComponent } from './loan-details.component';
 
 interface DisplayBook {
   id: string;
@@ -67,7 +67,9 @@ interface DisplayBook {
         [dueDate]="selectedDueDate"
         [status]="selectedStatus"
         [renewalsCount]="selectedRenewals"
+        [loanId]="selectedLoanId"
         (closeOverlay)="closeDetails()"
+        (loanRenewed)="onLoanRenewed()"
       ></app-loan-details>
     </div>
     <app-footer></app-footer>
@@ -84,6 +86,7 @@ export class LoansComponent implements OnInit {
   selectedDueDate: string = '';
   selectedStatus: string = '';
   selectedRenewals: number = 0;
+  selectedLoanId: string = ''; // Added missing property declaration
   mediaCache: Map<string, any> = new Map();
 
   constructor(
@@ -196,7 +199,14 @@ export class LoansComponent implements OnInit {
     this.selectedDueDate = book.dueDate;
     this.selectedStatus = book.status;
     this.selectedRenewals = book.renewals;
+    this.selectedLoanId = book.id;
     this.showOverlay = true;
+  }
+
+  onLoanRenewed() {
+    if (this.userId) {
+      this.fetchLoans();
+    }
   }
 
   closeDetails() {
@@ -205,6 +215,7 @@ export class LoansComponent implements OnInit {
     this.selectedDueDate = '';
     this.selectedStatus = '';
     this.selectedRenewals = 0;
+    this.selectedLoanId = '';  // Also clear the loan ID
   }
 
   goBack() {

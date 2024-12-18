@@ -6,6 +6,7 @@ import logging
 from datetime import datetime, timedelta
 from uuid import uuid4
 
+# First, create the Blueprint
 loans_bp = Blueprint('loans', __name__)
 
 @loans_bp.route('/user/<user_id>/active', methods=['GET'])
@@ -118,5 +119,50 @@ def create_loan():
         logging.error(f"Error creating loan: {str(e)}")
         return jsonify({'message': f"Error creating loan: {str(e)}"}), 500
 
-# Rest of your routes (return_loan, renew_loan) should follow the same pattern - 
-# remove CORS-specific code and keep the core functionality
+@loans_bp.route('/<loan_id>/renew', methods=['PUT'])
+@jwt_required()
+def renew_loan(loan_id):
+    """Renew a loan by extending its due date"""
+    print(f"\n=== PUT /{loan_id}/renew ===")
+    print(f"Headers: {dict(request.headers)}")
+    try:
+        # Get current user from JWT token
+        current_user = get_jwt_identity()
+        
+        # Find the loan
+        loan = Loans.query.filter_by(loan_id=loan_id).first()
+        if not loan:
+            print(f"Loan not found: {loan_id}")
+            return jsonify({'message': 'Loan not found'}), 404
+            
+        # Verify loan belongs to current user
+        if current_user != loan.user_id:
+            print(f"Unauthorized: JWT user {current_user} tried to renew loan {loan_id}")
+            return jsonify({'message': 'Unauthorized access'}), 403
+            
+        # Check if loan can be renewed
+        if loan.status != 'ACTIVE':
+            return jsonify({'message': 'Only active loans can be renewed'}), 400
+            
+        if loan.renewals_count >= 3:
+            return jsonify({'message': 'Maximum number of renewals reached'}), 400
+
+        # Extend due date by 10 days and increment renewal count
+        loan.due_date = loan.due_date + timedelta(days=10)
+        loan.renewals_count += 1
+        
+        # Update the database
+        db.session.commit()
+        print(f"Loan {loan_id} renewed successfully. New due date: {loan.due_date}")
+        
+        return jsonify({
+            'message': 'Loan renewed successfully',
+            'new_due_date': loan.due_date.isoformat(),
+            'renewals_count': loan.renewals_count
+        }), 200
+
+    except Exception as e:
+        print(f"Error in renew_loan: {str(e)}")
+        db.session.rollback()
+        logging.error(f"Error renewing loan: {str(e)}")
+        return jsonify({'message': f"Error renewing loan: {str(e)}"}), 500

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchService, MediaSearchResult } from '../../services/search.service';
+import { LoanService } from '../../services/loan.service';
 
 @Component({
   selector: 'app-loan-details',
@@ -28,7 +29,7 @@ import { SearchService, MediaSearchResult } from '../../services/search.service'
             </div>
             <div class="detail-item">
               <span class="label">Status:</span>
-              <span class="value">{{ status }}</span>
+              <span class="value" [class.overdue]="status === 'Overdue'">{{ status }}</span>
             </div>
             <div class="detail-item">
               <span class="label">Renewals:</span>
@@ -40,9 +41,20 @@ import { SearchService, MediaSearchResult } from '../../services/search.service'
             <h3>Description</h3>
             <p>{{ mediaDetails.item_description }}</p>
           </div>
+
+          <div class="actions">
+            <button 
+              class="btn-renew" 
+              *ngIf="canRenew" 
+              (click)="renewLoan()"
+              [disabled]="isRenewing">
+              {{ isRenewing ? 'Renewing...' : 'Renew Loan' }}
+            </button>
+            <div class="error-message" *ngIf="renewalError">{{ renewalError }}</div>
+          </div>
         </div>
         
-        <div class="loading" *ngIf="!mediaDetails">
+        <div class="loading" *ngIf="!mediaDetails && show">
           Loading details...
         </div>
 
@@ -121,6 +133,10 @@ import { SearchService, MediaSearchResult } from '../../services/search.service'
       font-size: 0.9rem;
     }
 
+    .value.overdue {
+      color: #e03131;
+    }
+
     .description h3 {
       font-size: 1.1rem;
       margin: 0 0 12px 0;
@@ -145,6 +161,39 @@ import { SearchService, MediaSearchResult } from '../../services/search.service'
       text-align: center;
       padding: 20px;
     }
+
+    .actions {
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .btn-renew {
+      background-color: #FFC107;
+      color: #333;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    .btn-renew:hover:not(:disabled) {
+      background-color: #e0a106;
+    }
+
+    .btn-renew:disabled {
+      background-color: #dee2e6;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      color: #fa5252;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      font-weight: bold;
+    }
   `]
 })
 export class LoanDetailsComponent {
@@ -153,12 +202,23 @@ export class LoanDetailsComponent {
   @Input() dueDate: string = '';
   @Input() status: string = '';
   @Input() renewalsCount: number = 0;
+  @Input() loanId: string = '';
   @Output() closeOverlay = new EventEmitter<void>();
+  @Output() loanRenewed = new EventEmitter<void>();
   
   mediaDetails: MediaSearchResult | null = null;
   error: string = '';
+  renewalError: string = '';
+  isRenewing: boolean = false;
 
-  constructor(private searchService: SearchService) {}
+  constructor(
+    private searchService: SearchService,
+    private loanService: LoanService
+  ) {}
+
+  get canRenew(): boolean {
+    return this.status === 'Active' && this.renewalsCount < 3;
+  }
 
   ngOnChanges() {
     if (this.show && this.mediaId) {
@@ -166,6 +226,7 @@ export class LoanDetailsComponent {
     } else if (!this.show) {
       this.mediaDetails = null;
       this.error = '';
+      this.renewalError = '';
     }
   }
 
@@ -182,6 +243,28 @@ export class LoanDetailsComponent {
         error: (error) => {
           console.error('Error loading media details:', error);
           this.error = 'Failed to load media details. Please try again later.';
+        }
+      });
+  }
+
+  renewLoan() {
+    if (!this.canRenew) return;
+
+    this.isRenewing = true;
+    this.renewalError = '';
+
+    this.loanService.renewLoan(this.loanId)
+      .subscribe({
+        next: (response) => {
+          console.log('Loan renewed successfully:', response);
+          this.isRenewing = false;
+          this.loanRenewed.emit();
+          this.close();
+        },
+        error: (error) => {
+          console.error('Error renewing loan:', error);
+          this.isRenewing = false;
+          this.renewalError = error.error?.message || 'Failed to renew loan. Please try again later.';
         }
       });
   }
