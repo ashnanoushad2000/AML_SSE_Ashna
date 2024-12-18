@@ -170,6 +170,13 @@ export class HomeComponent implements OnInit {
       .catch(err => console.error('Navigation failed:', err));
   }
 
+  navigateToLoans() {
+    console.log('Attempting to navigate to loans page');
+    this.router.navigate(['/loans'])
+      .then(() => console.log('Navigation successful'))
+      .catch(err => console.error('Navigation failed:', err));
+  }
+
   showBookNotification() {
     this.showNotification = true;
     this.hasNewNotification = true;

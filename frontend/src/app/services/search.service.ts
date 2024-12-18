@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 export interface Branch {
@@ -61,6 +61,19 @@ export class SearchService {
       catchError(error => {
         console.error('Error fetching branches:', error);
         return throwError(() => new Error('Failed to load branches'));
+      })
+    );
+  }
+
+  getMediaById(mediaId: string): Observable<MediaSearchResult> {
+    return this.http.get<MediaSearchResult>(`${this.API_URL}/${mediaId}`, {
+      headers: this.getHeaders(),
+      withCredentials: true
+    }).pipe(
+      tap(media => console.log('Fetched media details:', media)),
+      catchError(error => {
+        console.error('Error fetching media details:', error);
+        return throwError(() => new Error('Failed to load media details'));
       })
     );
   }

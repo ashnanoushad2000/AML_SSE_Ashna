@@ -79,4 +79,42 @@ export class LoanService {
       })
     );
   }
+
+  getAllLoans(userId: string): Observable<Loan[]> {
+    const url = `${this.apiUrl}/user/${userId}/all`;
+    console.log('LoanService: Fetching all loans for user:', userId);
+    
+    return this.http.get<Loan[]>(url, {
+      headers: this.getHeaders(),
+      withCredentials: true
+    }).pipe(
+      tap(loans => console.log('LoanService: Received all loans:', loans)),
+      catchError((error: HttpErrorResponse) => {
+        console.error('LoanService: Error fetching all loans:', error);
+        if (error.status === 401) {
+          this.authService.logout();
+        }
+        return throwError(() => error);
+      })
+    );
+  }
+
+  createLoan(userId: string, mediaId: string): Observable<any> {
+    const url = `${this.apiUrl}/create`;
+    const payload = {
+      user_id: userId,
+      media_id: mediaId
+    };
+
+    return this.http.post(url, payload, {
+      headers: this.getHeaders(),
+      withCredentials: true
+    }).pipe(
+      tap(response => console.log('LoanService: Loan created:', response)),
+      catchError((error: HttpErrorResponse) => {
+        console.error('LoanService: Error creating loan:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 }

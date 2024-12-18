@@ -2,35 +2,36 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
-import { HoldService, Hold } from '../../services/hold.service';
+import { LoanService, Loan } from '../../services/loan.service';
 import { AuthService } from '../../services/auth.service';
 import { SearchService } from '../../services/search.service';
-import { catchError, forkJoin } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { HoldDetailsComponent } from './hold-details.component';
+import { LoanDetailsComponent } from './loan-details.component'; // Updated import path
 
 interface DisplayBook {
   id: string;
   mediaId: string;
   title: string;
   status: string;
-  holdDate: string;
+  dueDate: string;
+  renewals: number;
 }
 
 @Component({
-  selector: 'app-holds',
+  selector: 'app-loans',
   standalone: true,
   imports: [
     CommonModule, 
     FooterComponent,
     RouterModule,
-    HoldDetailsComponent
+    LoanDetailsComponent
   ],
   template: `
-    <div class="holds-container">
+    <div class="loans-container">
       <div class="header">
         <button class="back-btn" (click)="goBack()">←</button>
-        <h1>Holds</h1>
+        <h1>Current Loans</h1>
       </div>
     
       <div class="search-bar">
@@ -48,120 +49,126 @@ interface DisplayBook {
             <div class="book-icon">📚</div>
             <div class="book-info">
               <span class="book-title">{{ book.title }}</span>
-              <span class="book-status" [class.available]="book.status === 'READY'">
+              <span class="book-status" [class.overdue]="book.status === 'Overdue'">
                 {{ book.status }}
               </span>
-              @if (book.holdDate) {
-                <span class="hold-date">Hold placed: {{ book.holdDate }}</span>
+              <span class="due-date">Due: {{ book.dueDate }}</span>
+              @if (book.renewals > 0) {
+                <span class="renewals">Renewed {{ book.renewals }} times</span>
               }
             </div>
           </div>
         }
       </div>
-
-      <app-hold-details
+    
+      <app-loan-details
         [show]="showOverlay"
         [mediaId]="selectedMediaId"
+        [dueDate]="selectedDueDate"
+        [status]="selectedStatus"
+        [renewalsCount]="selectedRenewals"
         (closeOverlay)="closeDetails()"
-      ></app-hold-details>
+      ></app-loan-details>
     </div>
     <app-footer></app-footer>
   `,
-  styleUrls: ['./holds.component.css']
+  styleUrls: ['./loans.component.css']
 })
-export class HoldsComponent implements OnInit {
+export class LoansComponent implements OnInit {
   books: DisplayBook[] = [];
   filteredBooks: DisplayBook[] = [];
   private userId: string | null = null;
   searchTerm: string = '';
   showOverlay: boolean = false;
   selectedMediaId: string = '';
+  selectedDueDate: string = '';
+  selectedStatus: string = '';
+  selectedRenewals: number = 0;
   mediaCache: Map<string, any> = new Map();
 
   constructor(
     private router: Router,
-    private holdService: HoldService,
+    private loanService: LoanService,
     private authService: AuthService,
     private searchService: SearchService
-  ) {}
+  ) {
+    console.log('LoansComponent: Constructor initialized');
+  }
 
   ngOnInit() {
-    console.log('HoldsComponent: Initializing');
+    console.log('LoansComponent: Initializing');
     
     if (!this.authService.isLoggedIn()) {
-      console.error('HoldsComponent: User not logged in');
+      console.error('LoansComponent: User not logged in');
       this.router.navigate(['/']);
       return;
     }
 
     this.userId = this.authService.getUserId();
-    console.log('HoldsComponent: Retrieved user ID:', this.userId);
+    console.log('LoansComponent: Retrieved user ID:', this.userId);
     
     if (this.userId) {
-      this.fetchHolds();
+      this.fetchLoans();
     } else {
-      console.warn('HoldsComponent: No user ID found, but user is logged in');
+      console.warn('LoansComponent: No user ID found, but user is logged in');
     }
   }
 
-  private fetchHolds() {
+  private fetchLoans() {
     if (!this.userId) return;
 
-    console.log('HoldsComponent: Fetching holds for user:', this.userId);
-    this.holdService.getUserHolds(this.userId)
+    console.log('LoansComponent: Fetching loans for user:', this.userId);
+    this.loanService.getUserActiveLoans(this.userId)
       .pipe(
         catchError(error => {
-          console.error('HoldsComponent: Error fetching holds:', error);
+          console.error('LoansComponent: Error fetching loans:', error);
           return of([]);
         })
       )
       .subscribe({
-        next: (holds: Hold[]) => {
-          console.log('HoldsComponent: Holds received:', holds);
-          // First create basic display books
-          this.books = holds.map(hold => ({
-            id: hold.hold_id,
-            mediaId: hold.media_id,
-            title: 'Loading...', // Temporary title while we fetch media details
-            status: this.getStatusDisplay(hold.status),
-            holdDate: new Date(hold.request_date).toLocaleDateString()
+        next: (loans: Loan[]) => {
+          console.log('LoansComponent: Loans received:', loans);
+          this.books = loans.map(loan => ({
+            id: loan.loan_id,
+            mediaId: loan.media_id,
+            title: 'Loading...',
+            status: this.getDisplayStatus(loan.status),
+            dueDate: new Date(loan.due_date).toLocaleDateString(),
+            renewals: loan.renewals_count
           }));
           this.filteredBooks = [...this.books];
           
-          // Then fetch media details for each hold
-          holds.forEach(hold => {
-            this.searchService.getMediaById(hold.media_id).subscribe({
+          loans.forEach(loan => {
+            this.searchService.getMediaById(loan.media_id).subscribe({
               next: (media) => {
-                // Update the book title once we have the media details
-                const bookIndex = this.books.findIndex(b => b.mediaId === hold.media_id);
+                const bookIndex = this.books.findIndex(b => b.mediaId === loan.media_id);
                 if (bookIndex !== -1) {
                   this.books[bookIndex].title = media.title;
-                  this.mediaCache.set(hold.media_id, media);
-                  this.filteredBooks = [...this.books]; // Update filtered books
+                  this.mediaCache.set(loan.media_id, media);
+                  this.filteredBooks = [...this.books];
                 }
               },
               error: (error) => {
-                console.error(`Error fetching media details for ${hold.media_id}:`, error);
-                const bookIndex = this.books.findIndex(b => b.mediaId === hold.media_id);
+                console.error(`Error fetching media details for ${loan.media_id}:`, error);
+                const bookIndex = this.books.findIndex(b => b.mediaId === loan.media_id);
                 if (bookIndex !== -1) {
-                  this.books[bookIndex].title = `Hold #${hold.hold_id.slice(0, 8)}`;
+                  this.books[bookIndex].title = `Loan #${loan.loan_id.slice(0, 8)}`;
                 }
               }
             });
           });
         },
         error: (error) => {
-          console.error('HoldsComponent: Error processing holds:', error);
+          console.error('LoansComponent: Error processing loans:', error);
         }
       });
   }
 
-  private getStatusDisplay(status: string): string {
+  private getDisplayStatus(status: string): string {
     const statusMap: { [key: string]: string } = {
-      'PENDING': 'On Hold',
-      'READY': 'Available',
-      'CANCELLED': 'Cancelled',
-      'FULFILLED': 'Fulfilled'
+      'ACTIVE': 'Active',
+      'OVERDUE': 'Overdue',
+      'RETURNED': 'Returned'
     };
     return statusMap[status] || status;
   }
@@ -186,12 +193,18 @@ export class HoldsComponent implements OnInit {
 
   showDetails(book: DisplayBook) {
     this.selectedMediaId = book.mediaId;
+    this.selectedDueDate = book.dueDate;
+    this.selectedStatus = book.status;
+    this.selectedRenewals = book.renewals;
     this.showOverlay = true;
   }
 
   closeDetails() {
     this.showOverlay = false;
     this.selectedMediaId = '';
+    this.selectedDueDate = '';
+    this.selectedStatus = '';
+    this.selectedRenewals = 0;
   }
 
   goBack() {
