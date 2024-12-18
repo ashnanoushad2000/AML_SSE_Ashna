@@ -8,14 +8,10 @@ class Config:
     DEBUG = True
     
     # Database config
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:bibin9019@localhost/auth_db'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ChessFun%402@localhost/auth_db'
     SQLALCHEMY_BINDS = {
-<<<<<<< HEAD
         'media_db': 'mysql+pymysql://root:ChessFun%402@localhost/media_db',
-        'inventory_db': 'mysql+pymysql://root:ChessFun%402@localhost/inventory_db'
-=======
-        'media_db': 'mysql+pymysql://root:bibin9019@localhost/media_db'
->>>>>>> 997d1133724a1887e70e7fdec006bc6d87a84439
+        'inventory_db': 'mysql+pymysql://root:ChessFun%402@localhost/inventory_db',
     }
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True

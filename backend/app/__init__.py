@@ -31,13 +31,13 @@ def create_app():
          headers=['Content-Type', 'Authorization'])
     
     # Database configuration with PyMySQL and correct credentials
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:bibin9019@localhost/auth_db?charset=utf8mb4'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:ChessFun%402@localhost/auth_db?charset=utf8mb4'
     app.config['SQLALCHEMY_BINDS'] = {
-        'auth_db': 'mysql+pymysql://root:bibin9019@localhost/auth_db?charset=utf8mb4',
-        'loan_db': 'mysql+pymysql://root:bibin9019@localhost/loan_db?charset=utf8mb4',
-        'media_db': 'mysql+pymysql://root:bibin9019@localhost/media_db?charset=utf8mb4',
-        'inventory_db': 'mysql+pymysql://root:bibin9019@localhost/inventory_db?charset=utf8mb4',
-        'payment_db': 'mysql+pymysql://root:bibin9019@localhost/payment_db?charset=utf8mb4'
+        'auth_db': 'mysql+pymysql://root:ChessFun%402@localhost/auth_db?charset=utf8mb4',
+        'loan_db': 'mysql+pymysql://root:ChessFun%402@localhost/loan_db?charset=utf8mb4',
+        'media_db': 'mysql+pymysql://root:ChessFun%402@localhost/media_db?charset=utf8mb4',
+        'inventory_db': 'mysql+pymysql://root:ChessFun%402@localhost/inventory_db?charset=utf8mb4',
+        'payment_db': 'mysql+pymysql://root:ChessFun%402@localhost/payment_db?charset=utf8mb4'
     }
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
         'pool_pre_ping': True,
