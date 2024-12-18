@@ -66,12 +66,14 @@ def create_app():
     from app.routes.loans import loans_bp
     from app.routes.holds import holds_bp
     from app.routes.transfers import transfers_bp
+    from app.routes.profile import profile_bp
 
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(media_bp, url_prefix='/api/media')
     app.register_blueprint(loans_bp, url_prefix='/api/loans')
     app.register_blueprint(holds_bp, url_prefix='/api/holds')
     app.register_blueprint(transfers_bp, url_prefix='/api/transfers')
+    app.register_blueprint(profile_bp, url_prefix='/api/auth')
 
     return app
 
