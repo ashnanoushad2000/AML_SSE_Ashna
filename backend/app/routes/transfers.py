@@ -12,39 +12,39 @@ transfers_bp = Blueprint('transfers', __name__)
 @transfers_bp.route('/getTransfers', methods=['GET'])
 def fetch_transfers():
     """
-    Fetch all transfers with source and destination branch names.
+    Fetch all transfers with source and destination branch names and media titles.
     """
     try:
         query = text("""
             SELECT 
                 t.transfer_id,
-                t.media_id,
                 t.quantity,
                 t.reason,
                 t.status,
                 t.initiated_at,
                 t.completed_at,
                 sb.branch_name AS source_branch_name,
-                db.branch_name AS destination_branch_name
+                db.branch_name AS destination_branch_name,
+                m.title AS media_title
             FROM 
                 inventory_db.inventory_transfers t
             LEFT JOIN 
                 inventory_db.branches sb ON t.source_branch_id = sb.branch_id
             LEFT JOIN 
-                inventory_db.branches db ON t.destination_branch_id = db.branch_id;
+                inventory_db.branches db ON t.destination_branch_id = db.branch_id
+            LEFT JOIN 
+                media_db.media_items m ON t.media_id = m.media_id;
         """)
 
         # Use a connection to execute the query
         with db.engine.connect() as connection:
-            print("DEBUG: Successfully connected to the database.")  # Debug log
             result = connection.execute(query)
-            print("DEBUG: Query executed successfully.")  # Debug log
 
             # Fetch rows safely
             transfers = [
                 {
                     "transfer_id": row["transfer_id"],
-                    "media_id": row["media_id"],
+                    "media_title": row["media_title"],  # Updated to include media title
                     "quantity": row["quantity"],
                     "reason": row["reason"],
                     "status": row["status"],
@@ -68,6 +68,7 @@ def fetch_transfers():
         print("Error fetching transfers:", str(e))
         traceback.print_exc()  # Log detailed traceback
         return jsonify({"message": f"Error fetching transfers: {str(e)}"}), 500
+
 
 
 @transfers_bp.route('/updateStatus/<string:transfer_id>', methods=['PUT'])

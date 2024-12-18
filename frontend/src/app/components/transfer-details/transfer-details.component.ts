@@ -57,5 +57,23 @@ export class TransferDetailsComponent {
         }
       });
   }
+
+  markAsInTransit(): void {
+    const updatedStatus = { status: 'IN_TRANSIT' };
+  
+    this.http
+      .put(`http://localhost:5000/api/transfers/updateStatus/${this.transferDetails.transfer_id}`, updatedStatus)
+      .subscribe({
+        next: () => {
+          alert('Transfer has been marked as In-Transit successfully!');
+          this.transferDetails.status = 'IN_TRANSIT'; // Update status locally
+        },
+        error: (error) => {
+          console.error('Error marking transfer as In-Transit:', error);
+          alert('Failed to update transfer status. Please try again later.');
+        }
+      });
+  }
+  
   
 }

@@ -98,11 +98,11 @@
   }
   
   .close-btn {
-    background-color: #28a745; /* Bootstrap-like Green */
+    background-color: black; /* Bootstrap-like Green */
   }
   
   .close-btn:hover {
-    background-color: #218838; /* Slightly darker green on hover */
+    background-color: darkslategray; /* Slightly darker green on hover */
   }
 
   .complete-button {
@@ -111,5 +111,13 @@
   
   .complete-button:hover {
     background-color: darkblue; /* Slightly darker red on hover */
+  }
+
+  .in-transit-button{
+    background-color: #28a745;
+  }
+
+  .in-transit-button:hover{
+    background-color: #218838;
   }
   
