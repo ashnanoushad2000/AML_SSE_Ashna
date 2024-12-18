@@ -8,7 +8,7 @@ import { SingleMediaAdditionComponent } from './components/single-media-addition
 import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
 import { HoldsComponent } from './components/holds/holds.component';
-import { LoansComponent } from './components/loans/loans.component';  // Add this import
+import { LoansComponent } from './components/loans/loans.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminHomepageComponent } from './components/admin-homepage/admin-homepage.component';
 import { InventoryManagementComponent } from './components/inventory-management/inventory-management.component';
