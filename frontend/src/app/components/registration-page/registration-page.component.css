@@ -1,3 +1,4 @@
+/* registration-page.component.css */
 h1 {
     text-align: center;
     font-size: 1.8rem;
@@ -69,11 +70,20 @@ h3 {
     background-color: #e0a106;
 }
 
-.strength-indicator,
-.error-message {
+.field-error {
+    color: #c62828;
     font-size: 0.8rem;
-    color: #ff0000;
     margin-top: 5px;
+}
+
+.error-banner {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.9rem;
 }
 
 p {
@@ -93,10 +103,35 @@ a:hover {
     text-decoration: underline;
 }
 
-.route{
+.route {
     padding-bottom: 40px;
 }
 
-.centered-container{
+.centered-container {
     padding-top: 50px;
+}
+
+.success-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content h3 {
+    margin-bottom: 10px;
 }

@@ -14,6 +14,7 @@ class Users(db.Model):
     last_name = db.Column(db.String(100))
     date_of_birth = db.Column(db.Date)
     address = db.Column(db.Text)
+    post_code = db.Column(db.String(10))  # Add this line
     phone = db.Column(db.String(20))
     user_type = db.Column(db.String(20))
     created_at = db.Column(db.TIMESTAMP)

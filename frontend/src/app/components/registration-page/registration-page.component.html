@@ -2,57 +2,111 @@
     <h1>Advanced Media<br>Library</h1>
     <h3>Sign Up Form</h3>
     <p class="small-text"><i>please fill out the form below</i></p>
-    <form class="add-form" onsubmit="return validateForm(event)">
+
+    <!-- Error Message -->
+    <div class="error-banner" *ngIf="registrationError">
+        {{ registrationError }}
+    </div>
+
+    <form class="add-form" (ngSubmit)="handleSubmit($event)">
         <div class="form-control">
             <label for="first-name">*First Name: </label>
-            <input type="text" name="first-name" id="first-name" placeholder="First Name" required>
+            <input 
+                type="text" 
+                name="first_name" 
+                id="first-name" 
+                placeholder="First Name" 
+                [(ngModel)]="formData.first_name" 
+                required>
         </div>
+
         <div class="form-control">
             <label for="last-name">*Last Name: </label>
-            <input type="text" name="last-name" id="last-name" placeholder="Last Name" required>
+            <input 
+                type="text" 
+                name="last_name" 
+                id="last-name" 
+                placeholder="Last Name" 
+                [(ngModel)]="formData.last_name" 
+                required>
         </div>
+
         <div class="form-control">
             <label for="dob">*Date of Birth: </label>
-            <input type="date" name="dob" id="dob" required>
+            <input 
+                type="date" 
+                name="date_of_birth" 
+                id="dob" 
+                [(ngModel)]="formData.date_of_birth" 
+                required>
         </div>
+
         <div class="form-control">
             <label for="email">*Email: </label>
-            <input type="email" name="email" id="email" placeholder="Email" required>
+            <input 
+                type="email" 
+                name="email" 
+                id="email" 
+                placeholder="Email" 
+                [(ngModel)]="formData.email" 
+                required>
         </div>
-        
+
         <div class="form-control">
-            <label for="street">*Street Address: </label>
-            <input type="text" name="street" id="street" placeholder="Street Address" required>
+            <label for="street">*Address: </label>
+            <input 
+                type="text" 
+                name="address" 
+                id="street" 
+                placeholder="Street Address" 
+                [(ngModel)]="formData.address" 
+                required>
         </div>
-        <div class="form-control">
-            <label for="city">*City: </label>
-            <input type="text" name="city" id="city" placeholder="City" required>
-        </div>
-        <div class="form-control">
-            <label for="county">County: </label>
-            <input type="text" name="county" id="county" placeholder="County">
-        </div>
-        <div class="form-control">
-            <label for="country">*Country: </label>
-            <input type="text" name="country" id="country" placeholder="Country" required>
-        </div>
+
         <div class="form-control">
             <label for="postal-code">*Postal Code: </label>
-            <input type="text" name="postal-code" id="postal-code" placeholder="Postal Code" required>
+            <input 
+                type="text" 
+                name="post_code"
+                id="postal-code" 
+                placeholder="Postal Code" 
+                [(ngModel)]="formData.post_code" 
+                required>
         </div>
-    
+
         <div class="form-control">
             <label for="password">*Password: </label>
-            <input type="password" name="password" id="password" [(ngModel)]="password" (input)="checkPasswordStrength(); validatePasswords()" placeholder="Password" required>
-            <p class="strength-indicator">Password strength: <span [style.color]="getPasswordStrengthColor()">{{ passwordStrength }}</span></p>
+            <input 
+                type="password" 
+                name="password" 
+                id="password" 
+                placeholder="Password" 
+                [(ngModel)]="formData.password" 
+                required>
+            <div class="field-error" *ngIf="passwordError">{{ passwordError }}</div>
         </div>
+
         <div class="form-control">
             <label for="confirm-password">*Confirm Password: </label>
-            <input type="password" name="confirm-password" id="confirm-password" [(ngModel)]="confirmPassword" placeholder="Confirm Password" (input)="validatePasswords()" required>
-            <p class="error-message">{{passwordError}}</p>
+            <input 
+                type="password" 
+                name="confirm-password" 
+                id="confirm-password" 
+                placeholder="Confirm Password" 
+                [(ngModel)]="confirmPassword" 
+                required>
         </div>
-        
-        <input type="submit" value="Sign Up" class="btn btn-block">
+
+        <button type="submit" class="btn">Sign Up</button>
     </form>
-<p class="route">Already have an Account? <a routerLink="/">Sign in</a></p>
+
+    <p class="route">Already have an Account? <a routerLink="/">Sign in</a></p>
+</div>
+
+<!-- Success Popup -->
+<div class="success-popup" *ngIf="showSuccessPopup">
+    <div class="popup-content">
+        <h3>Registration Successful!</h3>
+        <p>Redirecting to login page...</p>
+    </div>
 </div>
