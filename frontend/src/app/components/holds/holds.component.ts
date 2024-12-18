@@ -5,7 +5,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { HoldService, Hold } from '../../services/hold.service';
 import { AuthService } from '../../services/auth.service';
 import { SearchService } from '../../services/search.service';
-import { catchError, forkJoin } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { HoldDetailsComponent } from './hold-details.component';
 
@@ -62,7 +62,11 @@ interface DisplayBook {
       <app-hold-details
         [show]="showOverlay"
         [mediaId]="selectedMediaId"
+        [holdId]="selectedHoldId"
+        [holdDate]="selectedHoldDate"
+        [status]="selectedStatus"
         (closeOverlay)="closeDetails()"
+        (holdCancelled)="onHoldCancelled()"
       ></app-hold-details>
     </div>
     <app-footer></app-footer>
@@ -76,6 +80,9 @@ export class HoldsComponent implements OnInit {
   searchTerm: string = '';
   showOverlay: boolean = false;
   selectedMediaId: string = '';
+  selectedHoldId: string = '';
+  selectedHoldDate: string = '';
+  selectedStatus: string = '';
   mediaCache: Map<string, any> = new Map();
 
   constructor(
@@ -186,12 +193,24 @@ export class HoldsComponent implements OnInit {
 
   showDetails(book: DisplayBook) {
     this.selectedMediaId = book.mediaId;
+    this.selectedHoldId = book.id;
+    this.selectedHoldDate = book.holdDate;
+    this.selectedStatus = book.status;
     this.showOverlay = true;
+  }
+
+  onHoldCancelled() {
+    if (this.userId) {
+      this.fetchHolds();
+    }
   }
 
   closeDetails() {
     this.showOverlay = false;
     this.selectedMediaId = '';
+    this.selectedHoldId = '';
+    this.selectedHoldDate = '';
+    this.selectedStatus = '';
   }
 
   goBack() {

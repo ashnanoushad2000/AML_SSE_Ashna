@@ -77,4 +77,23 @@ export class HoldService {
       })
     );
   }
+
+  cancelHold(holdId: string): Observable<any> {
+    const url = `${this.apiUrl}/${holdId}/cancel`;
+    console.log('HoldService: Cancelling hold:', holdId);
+    
+    return this.http.put(url, {}, {
+      headers: this.getHeaders(),
+      withCredentials: true
+    }).pipe(
+      tap(response => console.log('HoldService: Hold cancelled:', response)),
+      catchError((error: HttpErrorResponse) => {
+        console.error('HoldService: Error cancelling hold:', error);
+        if (error.status === 401) {
+          this.authService.logout();
+        }
+        return throwError(() => error);
+      })
+    );
+  }
 }

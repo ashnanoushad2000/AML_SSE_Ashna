@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchService, MediaSearchResult } from '../../services/search.service';
+import { HoldService } from '../../services/hold.service';
 
 @Component({
   selector: 'app-hold-details',
@@ -22,17 +23,17 @@ import { SearchService, MediaSearchResult } from '../../services/search.service'
               <span class="label">ISBN:</span>
               <span class="value">{{ mediaDetails.isbn }}</span>
             </div>
+            <div class="detail-item">
+              <span class="label">Hold Date:</span>
+              <span class="value">{{ holdDate | date }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Status:</span>
+              <span class="value" [class.ready]="status === 'READY'">{{ status }}</span>
+            </div>
             <div class="detail-item" *ngIf="mediaDetails.publisher">
               <span class="label">Publisher:</span>
               <span class="value">{{ mediaDetails.publisher }}</span>
-            </div>
-            <div class="detail-item" *ngIf="mediaDetails.publication_date">
-              <span class="label">Publication Date:</span>
-              <span class="value">{{ mediaDetails.publication_date | date }}</span>
-            </div>
-            <div class="detail-item" *ngIf="mediaDetails.category">
-              <span class="label">Category:</span>
-              <span class="value">{{ mediaDetails.category.category_name }}</span>
             </div>
             <div class="detail-item" *ngIf="mediaDetails.inventory">
               <span class="label">Availability:</span>
@@ -43,6 +44,16 @@ import { SearchService, MediaSearchResult } from '../../services/search.service'
           <div class="description" *ngIf="mediaDetails.item_description">
             <h3>Description</h3>
             <p>{{ mediaDetails.item_description }}</p>
+          </div>
+
+          <div class="actions" *ngIf="canCancel">
+            <button 
+              class="btn-cancel" 
+              (click)="cancelHold()"
+              [disabled]="isCancelling">
+              {{ isCancelling ? 'Cancelling...' : 'Cancel Hold' }}
+            </button>
+            <div class="error-message" *ngIf="cancelError">{{ cancelError }}</div>
           </div>
         </div>
         
@@ -125,6 +136,10 @@ import { SearchService, MediaSearchResult } from '../../services/search.service'
       font-size: 0.9rem;
     }
 
+    .value.ready {
+      color: #40c057;
+    }
+
     .description h3 {
       font-size: 1.1rem;
       margin: 0 0 12px 0;
@@ -149,17 +164,63 @@ import { SearchService, MediaSearchResult } from '../../services/search.service'
       text-align: center;
       padding: 20px;
     }
+
+    .actions {
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .btn-cancel {
+      background-color: #FFC107;
+      color: #333;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    .btn-cancel:hover:not(:disabled) {
+      background-color: #e0a106;
+    }
+
+    .btn-cancel:disabled {
+      background-color: #dee2e6;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      color: #fa5252;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      font-weight: bold;
+    }
   `]
 })
 export class HoldDetailsComponent {
   @Input() show: boolean = false;
   @Input() mediaId: string = '';
+  @Input() holdId: string = '';
+  @Input() holdDate: string = '';
+  @Input() status: string = '';
   @Output() closeOverlay = new EventEmitter<void>();
+  @Output() holdCancelled = new EventEmitter<void>();
   
   mediaDetails: MediaSearchResult | null = null;
   error: string = '';
+  cancelError: string = '';
+  isCancelling: boolean = false;
 
-  constructor(private searchService: SearchService) {}
+  constructor(
+    private searchService: SearchService,
+    private holdService: HoldService
+  ) {}
+
+  get canCancel(): boolean {
+    return this.status === 'On Hold';
+  }
 
   ngOnChanges() {
     if (this.show && this.mediaId) {
@@ -167,6 +228,7 @@ export class HoldDetailsComponent {
     } else if (!this.show) {
       this.mediaDetails = null;
       this.error = '';
+      this.cancelError = '';
     }
   }
 
@@ -183,6 +245,28 @@ export class HoldDetailsComponent {
         error: (error) => {
           console.error('Error loading media details:', error);
           this.error = 'Failed to load media details. Please try again later.';
+        }
+      });
+  }
+
+  cancelHold() {
+    if (!this.canCancel) return;
+
+    this.isCancelling = true;
+    this.cancelError = '';
+
+    this.holdService.cancelHold(this.holdId)
+      .subscribe({
+        next: (response) => {
+          console.log('Hold cancelled successfully:', response);
+          this.isCancelling = false;
+          this.holdCancelled.emit();
+          this.close();
+        },
+        error: (error) => {
+          console.error('Error cancelling hold:', error);
+          this.isCancelling = false;
+          this.cancelError = error.error?.message || 'Failed to cancel hold. Please try again later.';
         }
       });
   }
