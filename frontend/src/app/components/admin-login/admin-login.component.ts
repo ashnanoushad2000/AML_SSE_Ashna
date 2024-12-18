@@ -56,7 +56,7 @@ export class AdminLoginComponent {
         console.log('Login response:', response);
         this.isLoading = false;
         if (response.access_token) {
-          this.authService.login(response.access_token, 'ADMIN');
+          this.authService.login(response.access_token, 'ADMIN', response.user_id);
           localStorage.setItem('token', response.access_token);
           localStorage.setItem('user_type', response.user_type);
           localStorage.setItem('user_id', response.user_id.toString());

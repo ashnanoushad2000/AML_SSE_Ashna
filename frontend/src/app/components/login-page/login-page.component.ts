@@ -53,8 +53,12 @@ export class LoginPageComponent {
         console.log('Login response:', response);
         this.isLoading = false;
         if (response.access_token) {
-          // Store the token and user details
-          this.authService.login(response.access_token, 'MEMBER');
+          // Use the full login call
+          this.authService.login(
+            response.access_token, 
+            'MEMBER',
+            response.user_id
+          );
 
           localStorage.setItem('user_type', response.user_type);
           localStorage.setItem('user_id', response.user_id.toString());

@@ -34,21 +34,33 @@ export class AuthService {
       tap(response => {
         console.log('Auth response:', response);
         if (response.access_token) {
-          this.login(response.access_token, response.user_type);
-          localStorage.setItem(this.USER_ID_KEY, response.user_id);
+          this.login(response.access_token, response.user_type, response.user_id);
         }
       })
     );
   }
 
-  login(token: string, userType: string): void {
-    console.log('AuthService: Logging in. Token saved:', token.substring(0, 20) + '...', 'User type:', userType);
+  login(token: string, userType: string, userId: string): void {
+    console.log('AuthService: Logging in.', {
+      tokenPreview: token.substring(0, 20) + '...',
+      userType,
+      userId
+    });
+    
     localStorage.setItem(this.TOKEN_KEY, token);
     localStorage.setItem(this.USER_TYPE_KEY, userType);
+    localStorage.setItem(this.USER_ID_KEY, userId);
+    
+    // Verify storage
+    console.log('AuthService: Stored values:', {
+      token: this.getToken()?.substring(0, 20) + '...',
+      userType: this.getRole(),
+      userId: this.getUserId()
+    });
   }
 
   logout(): void {
-    console.log('AuthService: Logging out. Clearing token and user type.');
+    console.log('AuthService: Logging out. Clearing storage.');
     localStorage.clear();
     this.http.post(`${this.API_URL}/logout`, {}, { withCredentials: true })
       .subscribe(() => {
@@ -57,7 +69,7 @@ export class AuthService {
   }
 
   logoutStaff(): void {
-    console.log('AuthService: Logging out staff. Clearing token and user type.');
+    console.log('AuthService: Logging out staff. Clearing storage.');
     localStorage.clear();
     this.http.post(`${this.API_URL}/logout`, {}, { withCredentials: true })
       .subscribe(() => {
@@ -66,7 +78,7 @@ export class AuthService {
   }
 
   logoutAdmin(): void {
-    console.log('AuthService: Logging out admin. Clearing token and user type.');
+    console.log('AuthService: Logging out admin. Clearing storage.');
     localStorage.clear();
     this.http.post(`${this.API_URL}/logout`, {}, { withCredentials: true })
       .subscribe(() => {
@@ -81,16 +93,20 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    const token = localStorage.getItem(this.TOKEN_KEY);
+    console.log('AuthService: Retrieved token:', token ? token.substring(0, 20) + '...' : 'null');
+    return token;
   }
 
   getRole(): string | null {
     const role = localStorage.getItem(this.USER_TYPE_KEY);
-    console.log('AuthService: Retrieved role from localStorage:', role);
+    console.log('AuthService: Retrieved role:', role);
     return role;
   }
 
   getUserId(): string | null {
-    return localStorage.getItem(this.USER_ID_KEY);
+    const userId = localStorage.getItem(this.USER_ID_KEY);
+    console.log('AuthService: Retrieved user ID:', userId);
+    return userId;
   }
 }

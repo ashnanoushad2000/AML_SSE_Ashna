@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FooterComponent } from '../footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircle, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -29,7 +29,8 @@ interface UserResponse {
     CommonModule, 
     FooterComponent, 
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [
     AuthService,
@@ -87,7 +88,7 @@ export class HomeComponent implements OnInit {
     }).subscribe({
       next: (response) => {
         console.log('HomeComponent: Session check successful:', response);
-        if (response && response.email) {  // Using email as it seems to be present in the response
+        if (response && response.email) {
           this.handleSessionResponse(response);
         } else {
           console.error('HomeComponent: Invalid session response structure:', response);
@@ -107,15 +108,13 @@ export class HomeComponent implements OnInit {
   private handleSessionResponse(response: UserResponse) {
     console.log('HomeComponent: Handling session response:', response);
     
-    // Extract user ID - you might need to adjust this based on your actual response structure
-    const userId = response.user_id || response.email;  // Using email as fallback
+    const userId = response.user_id || response.email;
     if (!userId) {
       console.error('HomeComponent: No user identifier in session response');
       return;
     }
 
     console.log('HomeComponent: Setting user data from session');
-    // Set username - adjust this based on your actual response structure
     this.userName = response.first_name || response.email.split('@')[0] || 'User';
     this.userId = userId;
     
@@ -165,7 +164,10 @@ export class HomeComponent implements OnInit {
   }
 
   navigateToHolds() {
-    this.router.navigate(['/holds']);
+    console.log('Attempting to navigate to holds page');
+    this.router.navigate(['/holds'])
+      .then(() => console.log('Navigation successful'))
+      .catch(err => console.error('Navigation failed:', err));
   }
 
   showBookNotification() {
