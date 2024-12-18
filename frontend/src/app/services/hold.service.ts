@@ -78,6 +78,34 @@ export class HoldService {
     );
   }
 
+  createHold(userId: string, mediaId: string): Observable<any> {
+    const url = `${this.apiUrl}/create`;
+    console.log('HoldService: Creating hold:', { userId, mediaId });
+
+    return this.http.post(url, { 
+      user_id: userId, 
+      media_id: mediaId 
+    }, {
+      headers: this.getHeaders(),
+      withCredentials: true
+    }).pipe(
+      tap(response => {
+        console.log('HoldService: Hold created successfully:', response);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('HoldService: Error creating hold:', {
+          status: error.status,
+          message: error.message,
+          error: error.error
+        });
+        if (error.status === 401) {
+          this.authService.logout();
+        }
+        return throwError(() => error);
+      })
+    );
+  }
+
   cancelHold(holdId: string): Observable<any> {
     const url = `${this.apiUrl}/${holdId}/cancel`;
     console.log('HoldService: Cancelling hold:', holdId);
