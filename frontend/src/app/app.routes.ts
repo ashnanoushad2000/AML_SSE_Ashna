@@ -8,7 +8,7 @@ import { SingleMediaAdditionComponent } from './components/single-media-addition
 import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
 import { HoldsComponent } from './components/holds/holds.component';
-import { LoansComponent } from './components/loans/loans.component';  // Add this import
+import { LoansComponent } from './components/loans/loans.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminHomepageComponent } from './components/admin-homepage/admin-homepage.component';
 import { InventoryManagementComponent } from './components/inventory-management/inventory-management.component';
@@ -19,6 +19,9 @@ import { AuthGuard } from './Route-Guards/auth.guard';
 import { StaffGuard } from './Route-Guards/staff.guard';
 import { AdminGuard } from './Route-Guards/admin.guard';
 import { EditMediaComponent } from './components/edit-media/edit-media.component';
+import { PaymentOptionsComponent } from './components/payment-options/payment-options.component';
+import { PayByCardComponent } from './components/pay-by-card/pay-by-card.component';
+import { ProfileManagementComponent } from './components/profile-management/profile-management.component';
 
 export const routes: Routes = [{
     path: '', component: LoginPageComponent, canActivate: [AuthGuard]
@@ -41,15 +44,15 @@ export const routes: Routes = [{
     {
         path: 'admin', component: AdminLoginComponent, canActivate: [AdminGuard]
     },
-   {
-    path: 'search', component: SearchComponent, canActivate: [AuthGuard]
-   },
-   {
-    path: 'holds', component: HoldsComponent, canActivate: [AuthGuard]
-   },
-   {
-    path: 'loans', component: LoansComponent, canActivate: [AuthGuard]  // Add this route
-   },
+    {
+        path: 'search', component: SearchComponent, canActivate: [AuthGuard]
+    },
+    {
+        path: 'holds', component: HoldsComponent, canActivate: [AuthGuard]
+    },
+    {
+        path: 'loans', component: LoansComponent, canActivate: [AuthGuard]
+    },
     {
         path: 'admin_homepage', component: AdminHomepageComponent, canActivate: [AdminGuard]
     },
@@ -67,6 +70,15 @@ export const routes: Routes = [{
     },
     {
         path: 'edit_media/:mediaId', component: EditMediaComponent, canActivate: [StaffGuard, AdminGuard]
+    },
+    {
+        path: 'payment_options', component: PaymentOptionsComponent, canActivate: [AuthGuard]
+    },
+    {
+        path: 'profile-management', component: ProfileManagementComponent, canActivate: [AuthGuard]
+    },
+    {
+        path: 'pay_by_card', component: PayByCardComponent, canActivate: [AuthGuard]
     }
 ];
 

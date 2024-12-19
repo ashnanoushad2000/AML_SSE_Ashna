@@ -1,69 +1,110 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome'
-import {faArrowLeftLong, faUser} from '@fortawesome/free-solid-svg-icons'
-import { faCircle } from "@fortawesome/free-regular-svg-icons";
-import { HeaderComponent } from '../header/header.component';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../header/header.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { PaymentService } from '../../services/payment.service';
 
-
-export interface payment{
-  fees: number;
-  fines: number;
-  subscriptions: number;
+export interface Payment {
+  Fees: number;
+  Fines: number;
+  Subscriptions: number;
 }
 
 @Component({
   selector: 'app-payments',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, RouterLink, HeaderComponent, FooterComponent],
+  imports: [HeaderComponent, FooterComponent, FormsModule, CommonModule],
   templateUrl: './payments.component.html',
-  styleUrl: './payments.component.css'
+  styleUrls: ['./payments.component.css']
 })
+export class PaymentsComponent implements OnInit {
+  payments: Payment = { Fees: 0, Fines: 0, Subscriptions: 0 };
+  total: number = 0;
+  deadlines: string[] = [];
+  userId: string | undefined;
 
-export class PaymentsComponent {
-  payments : payment = { fees: 0, fines: 0, subscriptions: 0 };
-  total = 0;
-  deadlines: String[] = [];
-  faArrowLeftLong = faArrowLeftLong;
-  faUser = faUser;
-  faCircle = faCircle;
-
-  //constructor(private paymentsService: PaymentsService) {}
+  constructor(private http: HttpClient, private router: Router, private paymentService: PaymentService) {}
 
   ngOnInit(): void {
+    this.initializePayments();
+  }
+
+  initializePayments(): void {
+    this.http
+      .get<any>('http://localhost:5000/api/auth/session-check', { withCredentials: true })
+      .subscribe({
+        next: (response) => {
+          this.userId = response.user_id;
+          this.loadPaymentsAndDeadlines();
+        },
+        error: (error) => {
+          console.error('Error fetching user session:', error);
+          alert('Unable to fetch user session. Please log in again.');
+        },
+      });
+  }
+
+  loadPaymentsAndDeadlines(): void {
+    if (!this.userId) return;
+
     this.fetchPayments();
     this.fetchDeadlines();
   }
 
   fetchPayments(): void {
-    //Fetch from Database
-    //this.paymentsService.getPayments().subscribe(data => {
-    //this.payments = data;
-    // this.calculateTotal();
-   //});
-   this.payments = {fees: 5,fines: 5,subscriptions: 5};
-   this.calculateTotal()
+    this.http
+      .get<{ payments: Payment; total: number }>(
+        `http://localhost:5000/api/payments/payments/${this.userId}`
+      )
+      .subscribe({
+        next: (data) => {
+          this.payments = data.payments;
+          this.total = data.total;
+        },
+        error: (error) => {
+          console.error('Error fetching payments:', error);
+          alert('Failed to load payments. Please try again later.');
+        },
+      });
   }
 
   fetchDeadlines(): void {
-    //Fetch from Database
-    //this.paymentsService.getDeadlines().subscribe(data => {
-    //  this.deadlines = data;
-    //});
-    this.deadlines = ["Book 1: 19/12/2024", "Book 2: 11/1,2025", "Book 3: 29/1/2025"]
+    this.http
+      .get<{ item_name: string; due_date: string; category: string }[]>(
+        `http://localhost:5000/api/payments/deadlines/${this.userId}`
+      )
+      .subscribe({
+        next: (data) => {
+          // Format deadlines with item name and due date on separate lines
+          this.deadlines = data.map(
+            (deadline) => `${deadline.item_name} (${deadline.category})<br><strong>Due: ${deadline.due_date}</strong>`
+          );
+        },
+        error: (error) => {
+          console.error('Error fetching deadlines:', error);
+          alert('Failed to load deadlines. Please try again later.');
+        },
+      });
   }
+  
 
-  calculateTotal(): void {
-    this.total = this.payments.fees + this.payments.fines + this.payments.subscriptions;
-  }
-
-  viewDetails(category: string): void {
-    alert(`Viewing details for ${category}`);
-  }
-
-  makePayment(): void {
-    alert('Payment processing...');
+  navigateToPaymentOptions(): void {
+    if (!this.userId) {
+      alert('user session missing, please log in again');
+      return;
+    }
+    if (this.total === 0) {
+      alert('No pending payments');
+      return;
+    }
+  
+    // Store payment details in the service
+    this.paymentService.setPaymentDetails(this.total, this.userId);
+  
+    // Navigate to payment options
+    this.router.navigate(['/payment_options']);
   }
 }

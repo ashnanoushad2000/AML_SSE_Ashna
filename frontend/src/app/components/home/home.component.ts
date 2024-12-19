@@ -196,7 +196,7 @@ export class HomeComponent implements OnInit {
   }
 
   profileAlert() {
-    alert("This icon opens profile settings");
+    this.router.navigate(['/profile-management']);
   }
 
   logout(): void {

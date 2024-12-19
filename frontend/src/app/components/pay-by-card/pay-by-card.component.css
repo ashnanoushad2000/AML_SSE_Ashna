@@ -1,0 +1,116 @@
+.pay-by-card-container {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    max-width: 600px; /* Adjust for smaller mobile screens */
+    width: 90%; /* Responsive width */
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+    border: none;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px; /* Adjusted spacing */
+    font-weight: bold;
+}
+
+.pay-by-card-container input,
+.pay-by-card-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-top: 5px;
+    margin-bottom: 20px; /* Added spacing */
+    font-size: 1rem;
+}
+
+.pay-by-card-container input:focus,
+.pay-by-card-container textarea:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+form {
+    width: 100%;
+    overflow-y: auto; /* Scrollable content when necessary */
+    padding: 10px;
+}
+
+label {
+    font-size: 1.2rem;
+    margin-bottom: 10px; /* Spacing between label and input */
+    display: block;
+}
+
+.pay-button,
+.cancel-button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px; /* Added consistent spacing between buttons */
+    transition: background-color 0.3s ease;
+}
+
+.pay-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.pay-button:hover {
+    background-color: #218838;
+}
+
+.cancel-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: #c82333;
+}
+
+.error input,
+.error select {
+    border: 2px solid red;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.feedback-message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.1em;
+}
+
+.feedback-success {
+    color: green;
+}
+
+.feedback-error {
+    color: red;
+}
+
+@media (max-width: 768px) {
+    .pay-by-card-container {
+        width: 95%;
+        padding: 15px;
+    }
+}

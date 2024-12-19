@@ -45,7 +45,6 @@ export class TransferManagementComponent {
     });
   }
 
-  // Filter transfers by source or destination branch names
   // Filter transfers by source, destination branch names, and status
 filterTransfers(): void {
   const query = this.searchQuery.toLowerCase();
@@ -56,7 +55,6 @@ filterTransfers(): void {
       .includes(query)
   );
 }
-
 
   // View details of a transfer
   viewDetails(transfer: any): void {

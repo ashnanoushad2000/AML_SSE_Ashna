@@ -11,7 +11,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ChessFun%402@localhost/auth_db'
     SQLALCHEMY_BINDS = {
         'media_db': 'mysql+pymysql://root:ChessFun%402@localhost/media_db',
-        'inventory_db': 'mysql+pymysql://root:ChessFun%402@localhost/inventory_db',
+        'payments_db': 'mysql+pymysql://root:ChessFun%402@localhost/payments_db'
     }
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True

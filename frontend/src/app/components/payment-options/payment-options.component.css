@@ -1,0 +1,75 @@
+.organizer {
+    max-width: 414px;
+    margin: 30px auto;
+    min-height: 780px;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    display: flex; /* Enables Flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 20px; /* Add padding for inner spacing */
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.payment-options h1 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.payment-options p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.payment-options button {
+    width: 80%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: background-color 0.3s ease;
+}
+
+.payment-options .card-button {
+    background-color: #4caf50;
+    color: white;
+}
+
+.payment-options .card-button:hover {
+    background-color: #388e3c;
+}
+
+.payment-options .paypal-button {
+    background-color: #0070ba;
+    color: white;
+}
+
+.payment-options .paypal-button:hover {
+    background-color: #005ea6;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    font-size: larger;
+
+  }
