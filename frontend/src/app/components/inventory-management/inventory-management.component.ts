@@ -39,7 +39,15 @@ export class InventoryManagementComponent implements OnInit {
 
   filterMedia(): void {
     this.filteredMediaItems = this.mediaItems.filter(item =>
-      item.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      item.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
+    const query = this.searchQuery.toLowerCase();
+  
+    this.filteredMediaItems = this.mediaItems.filter((item) =>
+      (
+        `${item.title} ${item.author} ${item.isbn}`
+      )
+        .toLowerCase()
+        .includes(query)
     );
   }
 
