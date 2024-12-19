@@ -45,14 +45,16 @@ export class TransferManagementComponent {
     });
   }
 
-  // Filter transfers by source or destination branch names
-  filterTransfers(): void {
-    this.filteredTransfers = this.transfers.filter((transfer) =>
-      `${transfer.source_branch_name} ${transfer.destination_branch_name}`
-        .toLowerCase()
-        .includes(this.searchQuery.toLowerCase())
-    );
-  }
+  // Filter transfers by source, destination branch names, and status
+filterTransfers(): void {
+  const query = this.searchQuery.toLowerCase();
+
+  this.filteredTransfers = this.transfers.filter((transfer) =>
+    (`${transfer.source_branch} ${transfer.destination_branch} ${transfer.status}`)
+      .toLowerCase()
+      .includes(query)
+  );
+}
 
   // View details of a transfer
   viewDetails(transfer: any): void {
