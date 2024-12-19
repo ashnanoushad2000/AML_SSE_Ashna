@@ -5,31 +5,44 @@
 
     <!-- Transfer Details -->
     <p><strong>Transfer ID:</strong> {{ transferDetails?.transfer_id }}</p>
-    <p><strong>Media ID:</strong> {{ transferDetails?.media_id }}</p>
+    <p><strong>Media:</strong> {{ transferDetails?.media_title }}</p>
     <p><strong>Quantity:</strong> {{ transferDetails?.quantity }}</p>
-    <p><strong>Source Branch:</strong> {{ transferDetails?.source_branch }}</p> <!-- Updated -->
-    <p><strong>Destination Branch:</strong> {{ transferDetails?.destination_branch }}</p> <!-- Updated -->
+    <p><strong>Source Branch:</strong> {{ transferDetails?.source_branch }}</p>
+    <p><strong>Destination Branch:</strong> {{ transferDetails?.destination_branch }}</p>
     <p><strong>Status:</strong> {{ transferDetails?.status }}</p>
     <p><strong>Initiated At:</strong> {{ transferDetails?.initiated_at }}</p>
     <p><strong>Completed At:</strong> {{ transferDetails?.completed_at || 'N/A' }}</p>
 
     <!-- Buttons -->
     <div class="button-container">
+      <!-- Cancel Button -->
       <button 
         *ngIf="transferDetails.status === 'PENDING'" 
         class="cancel-button" 
         (click)="cancelTransfer()">
         Cancel
       </button>
-      <button (click)="closeModal()" class="close-btn">
-        Close
-      </button>
+      
+      <!-- Mark as Completed Button -->
       <button 
         *ngIf="transferDetails.status === 'IN_TRANSIT'" 
         class="complete-button" 
         (click)="completeTransfer()">
         Mark as Completed
       </button>
+
+      <!-- Close Button -->
+      <button (click)="closeModal()" class="close-btn">
+        Close
+      </button>
     </div>
+
+    <!-- Mark as In-Transit Button (below other buttons) -->
+      <button 
+        *ngIf="transferDetails.status === 'PENDING'" 
+        class="in-transit-button" 
+        (click)="markAsInTransit()">
+        Mark as In-Transit
+      </button>
   </div>
 </div>
