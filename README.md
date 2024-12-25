@@ -341,4 +341,4 @@ For technical support:
 
 ---
 
-For additional information or clarification, please contact the **SAAD Group 16** team.
+For additional information or clarification, please contact the **SAAD Group 16** development team.
