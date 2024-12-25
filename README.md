@@ -180,11 +180,36 @@ Advanced-Media-Library/
   - User logout endpoint
   - Invalidates current session
 
+- **GET /api/auth/session-check**
+  - Check session status
+  - Returns session details
+
+- **GET /api/auth/validate**
+  - Validate JWT token
+  - Optionally includes user details
+
+- **POST /api/register/check-email**
+  - Check if email is already registered
+  - Requires email
+  - Returns email existence status
+
+- **POST /api/register**
+  - Register a new user
+  - Requires email, password, and user details
+  - Returns user ID upon success
+
+- **PUT /api/profile/<user_id>/password**
+  - Change user password
+  - Requires current and new password
+
+- **GET /api/auth/test**
+  - Test database connection
+  - Returns test user details if successful
+
 ### Media Management Endpoints
 
 - **GET /api/media/search**
-  - Search media items
-  - Supports multiple filters
+  - Search media items with optional filters (e.g., title, author, ISBN)
 
 - **GET /api/media/categories**
   - Retrieve media categories
@@ -194,43 +219,105 @@ Advanced-Media-Library/
   - Add new media items
   - Staff/Admin access only
 
+- **GET /api/media/all**
+  - Retrieve all media items
+  - Returns detailed information about media
+
+- **GET /api/media/<media_id>**
+  - Retrieve a specific media item by ID
+
+- **PUT /api/media/update/<media_id>**
+  - Update a media item
+  - Requires media ID and updated details
+
+- **DELETE /api/media/delete/<media_id>**
+  - Delete a media item
+  - Requires media ID
+
+- **GET /api/media/branches**
+  - Retrieve all library branches
+
+- **GET /api/media/inventory/categories**
+  - Retrieve media categories available in inventory
+
 ### Loan Management Endpoints
 
-- **GET /api/loans/user/:id/active**
+- **GET /api/loans/user/<user_id>/active**
   - Retrieve active user loans
   - Shows loan status and details
 
+- **GET /api/loans/user/<user_id>/all**
+  - Retrieve all loans for a specific user
+  - Shows loan history
+
 - **POST /api/loans/create**
-  - Create new loan record
-  - Requires media and user ID
+  - Create a new loan
+  - Requires user and media details
+  - Returns loan ID upon success
+
+- **PUT /api/loans/<loan_id>/renew**
+  - Renew a loan
+  - Extends due date
+  - Maximum renewals: 3
 
 ### Hold Management Endpoints
 
-- **GET /api/holds/user/:id**
-  - Retrieve user hold requests
-  - Shows hold status
+- **GET /api/holds/user/<user_id>**
+  - Fetch all holds for a specific user
+  - Requires valid JWT token
 
 - **POST /api/holds/create**
-  - Create new hold request
-  - Requires media and user ID
+  - Create a new hold
+  - Requires user and media details
 
-- **PUT /api/holds/:id/cancel**
-  - Cancel existing hold
-  - Updates hold status
+- **PUT /api/holds/<hold_id>/cancel**
+  - Cancel a hold
+  - Requires valid JWT token
 
-### Inventory Management Endpoints
+- **PUT /api/holds/<hold_id>/ready**
+  - Mark a hold as ready for pickup
+  - Requires valid JWT token
+
+- **PUT /api/holds/<hold_id>/fulfill**
+  - Mark a hold as fulfilled
+  - Requires valid JWT token
+
+### Payment Management Endpoints
+
+- **GET /api/payments/<user_id>**
+  - Fetch payment details for a specific user
+  - Includes category-wise breakdown and total
+
+- **GET /api/deadlines/<user_id>**
+  - Fetch upcoming payment deadlines for a user
+  - Returns list of items with due dates and categories
+
+- **POST /api/payments/make**
+  - Mark a payment as completed for a specific user and category
+  - Requires user ID and category
+
+- **POST /api/payments/pay**
+  - Process a payment and update transaction records
+  - Requires user ID, amount, and payment method
+
+### Transfer Management Endpoints
 
 - **GET /api/transfers/getTransfers**
-  - Retrieve transfer records
-  - Shows transfer status
+  - Fetch all transfers with source and destination branch names and media titles
+
+- **PUT /api/transfers/updateStatus/<transfer_id>**
+  - Update the status of a transfer
+  - Handles cancellations and completions
+
+- **GET /api/transfers/getAvailableMedia/<source_branch_id>**
+  - Fetch available media items for a specific source branch
 
 - **POST /api/transfers/initiateTransfer**
-  - Start new transfer
-  - Requires source and destination
+  - Initiate a new transfer
+  - Requires source branch, destination branch, media ID, and quantity
 
-- **PUT /api/transfers/updateStatus/:id**
-  - Update transfer status
-  - Modifies transfer record
+- **GET /api/transfers/branches**
+  - Retrieve all branches for source and destination dropdowns
 
 ---
 
@@ -254,4 +341,4 @@ For technical support:
 
 ---
 
-For additional information or clarification, please contact the **SAAD Group 16** development team.
+For additional information or clarification, please contact the **SAAD Group 16** team.
