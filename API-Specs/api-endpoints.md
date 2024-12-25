@@ -60,6 +60,8 @@
 }
 ```
 
+---
+
 ## Media Service (/api/v1/media)
 
 ### Search Media
@@ -121,6 +123,26 @@
   "media_id": "uuid"
 }
 ```
+
+### Get Media Categories
+**Endpoint**: GET /api/v1/media/categories  
+**Description**: Retrieves media categories  
+**Headers**:
+- `Authorization`: Bearer [token]
+
+**Response**:
+- Status: 200 OK
+```json
+[
+  {
+    "category_id": "uuid",
+    "category_name": "Category Name",
+    "category_description": "Description"
+  }
+]
+```
+
+---
 
 ## Loans Service (/api/v1/loans)
 
@@ -186,6 +208,8 @@
 }
 ```
 
+---
+
 ## Inventory Service (/api/v1/inventory)
 
 ### Get Branch Inventory
@@ -234,6 +258,73 @@
   "initiated_at": "2024-01-01T00:00:00Z"
 }
 ```
+
+### Fetch Transfers
+**Endpoint**: GET /api/v1/inventory/transfers  
+**Description**: Fetches all transfers along with their details  
+**Headers**:
+- `Authorization`: Bearer [token]
+
+**Response**:
+- Status: 200 OK
+```json
+[
+  {
+    "transfer_id": "uuid",
+    "media_title": "Media Title",
+    "quantity": 5,
+    "reason": "Restock",
+    "status": "PENDING",
+    "initiated_at": "2024-01-01T00:00:00Z",
+    "completed_at": null,
+    "source_branch": "Branch A",
+    "destination_branch": "Branch B"
+  }
+]
+```
+
+### Update Transfer Status
+**Endpoint**: PUT /api/v1/inventory/transfers/{transferId}/status  
+**Description**: Updates the status of a transfer (e.g., COMPLETED or CANCELLED)  
+**Headers**:
+- `Authorization`: Bearer [token]
+- `Content-Type`: application/json
+
+**Request Body**:
+```json
+{
+  "status": "COMPLETED"
+}
+```
+
+**Response**:
+- Status: 200 OK
+```json
+{
+  "message": "Transfer status updated successfully"
+}
+```
+
+### Fetch Available Media for Transfer
+**Endpoint**: GET /api/v1/inventory/{branchId}/available-media  
+**Description**: Retrieves available media items for a specific branch  
+**Headers**:
+- `Authorization`: Bearer [token]
+
+**Response**:
+- Status: 200 OK
+```json
+[
+  {
+    "media_id": "uuid",
+    "title": "Book Title",
+    "author": "Author Name",
+    "available_copies": 5
+  }
+]
+```
+
+---
 
 ## Common Response Codes
 
