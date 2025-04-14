@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -12,19 +12,29 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit {
   email: string = '';
   password: string = '';
   showPassword: boolean = false;
   isLoading: boolean = false;
   error: string = '';
   successMessage: string = '';
+  logoutMessage: string = ''; // ✅ SR2 message on logout
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private authService: AuthService
   ) {}
+
+  ngOnInit(): void {
+    // ✅ Check if user was logged out due to inactivity{
+      const reason = localStorage.getItem('logoutReason');
+      if (reason === 'timeout') {
+        this.logoutMessage = '⏳ You were logged out due to inactivity.';
+        localStorage.removeItem('logoutReason');
+      }
+    }
 
   onSubmit(): void {
     if (!this.email || !this.password) {
@@ -53,7 +63,6 @@ export class LoginPageComponent {
         console.log('Login response:', response);
         this.isLoading = false;
         if (response.access_token) {
-          // Use the full login call
           this.authService.login(
             response.access_token, 
             'MEMBER',
@@ -69,7 +78,6 @@ export class LoginPageComponent {
           this.successMessage = 'Login successful';
 
           setTimeout(() => {
-            // Redirect based on user type
             switch (response.user_type) {
               case 'ADMIN':
                 this.router.navigate(['/admin_homepage']);

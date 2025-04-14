@@ -1,6 +1,12 @@
 <div class="centered-container">
   <h1>Advanced Media Library</h1>
 
+  
+  <!-- ✅ SR2 Logout Notification -->
+  <div *ngIf="logoutMessage" class="logout-banner">
+    {{ logoutMessage }}
+  </div>
+
   <div class="logo-container">
       <img src="/ADML_Logo.ico" alt="Logo" class="logo-image">
   </div>

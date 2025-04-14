@@ -5,6 +5,7 @@ from app.models import Users, db
 from datetime import timedelta, datetime
 from functools import wraps
 from uuid import uuid4
+import re  # ✅ For SR1: password regex
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -178,26 +179,34 @@ def register():
     try:
         data = request.get_json()
         print("Registration attempt for email:", data.get('email'))
-        
+
         # Validate required fields
         required_fields = ['email', 'password', 'first_name', 'last_name', 
                          'date_of_birth', 'address', 'post_code']
         for field in required_fields:
             if not data.get(field):
                 return jsonify({'message': f'Missing required field: {field}'}), 400
-        
+
         # Check if user already exists
         existing_user = Users.query.filter_by(email=data['email']).first()
         if existing_user:
             print("User already exists with email:", data['email'])
             return jsonify({'message': 'Email already registered'}), 400
-            
+
+        # ✅ SR1: Strong password validation
+        password = data['password']
+        pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$'
+        if not re.match(pattern, password):
+            return jsonify({
+                'message': 'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.'
+            }), 400
+
         # Create new user
         try:
             new_user = Users(
                 user_id=str(uuid4()),
                 email=data['email'],
-                password_hash=generate_password_hash(data['password']),
+                password_hash=generate_password_hash(password),
                 first_name=data['first_name'],
                 last_name=data['last_name'],
                 date_of_birth=datetime.strptime(data['date_of_birth'], '%Y-%m-%d').date(),
@@ -207,20 +216,20 @@ def register():
                 created_at=datetime.utcnow(),
                 updated_at=datetime.utcnow()
             )
-            
+
             db.session.add(new_user)
             db.session.commit()
             print("Successfully registered user:", new_user.email)
-            
+
             return jsonify({
                 'message': 'Registration successful',
                 'user_id': new_user.user_id
             }), 201
-            
+
         except ValueError as ve:
             print("Validation error during user creation:", str(ve))
             return jsonify({'message': f'Invalid data format: {str(ve)}'}), 400
-            
+
     except Exception as e:
         db.session.rollback()
         print("Registration error:", str(e))

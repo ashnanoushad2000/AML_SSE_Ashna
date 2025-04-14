@@ -70,13 +70,15 @@ export class RegistrationPageComponent {
           return 'Invalid postal code format';
         break;
       
+      //SR1 
+
       case 'password':
-        if (!value) return 'Password is required';
-        if (value.length < 8) return 'Password must be at least 8 characters';
-        if (!/(?=.*[a-z])/.test(value)) return 'Password must include lowercase letters';
-        if (!/(?=.*[A-Z])/.test(value)) return 'Password must include uppercase letters';
-        if (!/(?=.*\d)/.test(value)) return 'Password must include numbers';
-        break;
+  if (!value) return 'Password is required';
+  if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])(?=.*\d).{8,}$/.test(value)) {
+    return 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character';
+  }
+  break;
+
     }
     return '';
   }

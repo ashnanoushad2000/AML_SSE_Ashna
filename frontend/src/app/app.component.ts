@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HoldsComponent } from './components/holds/holds.component';
 import { LoansComponent } from './components/loans/loans.component';
-
+import { IdleTimeoutService } from './services/idle-timeout.service';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class AppComponent {
 
   title = 'AML-16';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private idleTimeoutService: IdleTimeoutService) {}
 
   isAdminOrLibrarianRoute(): boolean {
     const currentUrl = this.router.url;
