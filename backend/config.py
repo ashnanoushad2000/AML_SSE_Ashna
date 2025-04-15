@@ -11,7 +11,9 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ashna12@localhost/auth_db'
     SQLALCHEMY_BINDS = {
     'media_db': 'mysql+pymysql://root:ashna12@localhost/media_db',
-   
+    'loan_db': 'mysql+pymysql://root:ashna12@localhost/loan_db',
+    'inventory_db': 'mysql+pymysql://root:ashna12@localhost/inventory_db',
+    # 'payments_db': 'mysql+pymysql://root:ashna12@localhost/payments_db',
 }
 
 

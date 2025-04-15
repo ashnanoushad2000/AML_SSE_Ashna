@@ -37,7 +37,7 @@ def create_app():
         'loan_db': 'mysql+pymysql://root:ashna12@localhost/loan_db?charset=utf8mb4',
         'media_db': 'mysql+pymysql://root:ashna12@localhost/media_db?charset=utf8mb4',
         'inventory_db': 'mysql+pymysql://root:ashna12@localhost/inventory_db?charset=utf8mb4',
-        'payments_db': 'mysql+pymysql://root:ashna12@localhost/payments_db?charset=utf8mb4'
+        # 'payments_db': 'mysql+pymysql://root:ashna12@localhost/payments_db?charset=utf8mb4'
     }
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
         'pool_pre_ping': True,
@@ -67,14 +67,14 @@ def create_app():
     from app.routes.holds import holds_bp
     from app.routes.transfers import transfers_bp
     from app.routes.profile import profile_bp
-    from app.routes.payments import payments_bp
+    # from app.routes.payments import payments_bp
 
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(media_bp, url_prefix='/api/media')
     app.register_blueprint(loans_bp, url_prefix='/api/loans')
     app.register_blueprint(holds_bp, url_prefix='/api/holds')
     app.register_blueprint(transfers_bp, url_prefix='/api/transfers')
-    app.register_blueprint(payments_bp, url_prefix='/api/payments')
+    # app.register_blueprint(payments_bp, url_prefix='/api/payments')
 
     return app
 
