@@ -1,6 +1,3 @@
-# This module defines authentication-related routes and session handling for the AML system.
-# It includes login, registration, logout, session checking, password change, and validation.
-
 from flask import Blueprint, request, jsonify, session, current_app
 from flask_jwt_extended import create_access_token
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -13,7 +10,9 @@ from app.utils.logger import log_admin_action  # For SR3 Admin Activity Logging
 
 auth_bp = Blueprint('auth', __name__)
 
-# Decorator to validate session for protected routes
+# -------------------------------
+# Session Validation Decorator
+# -------------------------------
 def validate_session(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -22,7 +21,7 @@ def validate_session(f):
 
         if 'created_at' in session:
             age = datetime.now() - datetime.fromisoformat(session['created_at'])
-            if age.total_seconds() > 1800:  # 30-minute session timeout
+            if age.total_seconds() > 1800:  # 30-minute timeout
                 old_data = dict(session)
                 session.clear()
                 session.update(old_data)
@@ -31,7 +30,9 @@ def validate_session(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# Test route to verify DB connection
+# -------------------------------
+# DB Test Route
+# -------------------------------
 @auth_bp.route('/test', methods=['GET'])
 def test():
     try:
@@ -47,29 +48,33 @@ def test():
             'status': 'success'
         })
     except Exception as e:
-        return jsonify({
-            'message': f'Database error: {str(e)}',
-            'status': 'error'
-        }), 500
+        return jsonify({'message': f'Database error: {str(e)}'}), 500
 
-# Login endpoint
+# -------------------------------
+# Login Route with SR3 + SR4
+# -------------------------------
 @auth_bp.route('/login', methods=['POST'])
 def login():
     try:
         data = request.get_json()
+
         if not data or not data.get('email') or not data.get('password'):
             return jsonify({'message': 'Missing email or password'}), 400
 
         user = Users.query.filter_by(email=data['email']).first()
 
-        if not user or (user.password_hash != data['password'] and not check_password_hash(user.password_hash, data['password'])):
+        # SR4: Restrict admin login based on IP address
+        trusted_ips = ['127.0.0.1', '::1', '10.67.198.10']
+        request_ip = request.remote_addr
+
+        if user and user.user_type == 'ADMIN' and request_ip not in trusted_ips:
+            return jsonify({'message': f'Admin login not allowed from IP: {request_ip}'}), 403
+
+        if not user or not check_password_hash(user.password_hash, data['password']):
             return jsonify({'message': 'Invalid email or password'}), 401
 
-        # Generate JWT token
-        access_token = create_access_token(
-            identity=user.user_id,
-            expires_delta=timedelta(hours=1)
-        )
+        # Create JWT
+        access_token = create_access_token(identity=user.user_id, expires_delta=timedelta(hours=1))
 
         # Save session
         session.clear()
@@ -81,15 +86,12 @@ def login():
         session.permanent = True
 
         # SR3: Log admin login
-        try:
-            if session['user_type'] == 'ADMIN':
-                log_admin_action(
-                    admin_id=session['user_id'],
-                    action='Admin Login',
-                    details=f"Admin {session['email']} logged in"
-                )
-        except Exception as log_error:
-            print("Logging failed:", log_error)
+        if user.user_type == 'ADMIN':
+            log_admin_action(
+                admin_id=user.user_id,
+                action='Admin Login',
+                details=f"Admin {user.email} logged in from IP {request_ip}"
+            )
 
         return jsonify({
             'access_token': access_token,
@@ -102,7 +104,9 @@ def login():
         print("Login error:", str(e))
         return jsonify({'message': f'Error during login: {str(e)}'}), 500
 
-# Check current session info
+# -------------------------------
+# Session Check
+# -------------------------------
 @auth_bp.route('/session-check', methods=['GET'])
 @validate_session
 def check_session():
@@ -123,17 +127,20 @@ def check_session():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Logout route
+# -------------------------------
+# Logout
+# -------------------------------
 @auth_bp.route('/logout', methods=['POST'])
 def logout():
     try:
         session.clear()
         return jsonify({'message': 'Logged out successfully'}), 200
     except Exception as e:
-        print("Logout error:", str(e))
         return jsonify({'message': 'Logout error'}), 500
 
-# Token validation
+# -------------------------------
+# Validate JWT Token
+# -------------------------------
 @auth_bp.route('/validate', methods=['GET'])
 @validate_session
 def validate_token():
@@ -154,10 +161,11 @@ def validate_token():
         return jsonify(response), 200
 
     except Exception as e:
-        print("Error during validation:", str(e))
         return jsonify({"message": f"Error during validation: {str(e)}"}), 500
 
-# Email existence check
+# -------------------------------
+# Email Exists Check
+# -------------------------------
 @auth_bp.route('/register/check-email', methods=['POST'])
 def check_email():
     try:
@@ -169,10 +177,11 @@ def check_email():
         return jsonify({'exists': bool(user)}), 200
 
     except Exception as e:
-        print("Email check error:", str(e))
         return jsonify({'message': f'Error checking email: {str(e)}'}), 500
 
-# Register a new user
+# -------------------------------
+# User Registration with SR1
+# -------------------------------
 @auth_bp.route('/register', methods=['POST'])
 def register():
     try:
@@ -182,14 +191,13 @@ def register():
             if not data.get(field):
                 return jsonify({'message': f'Missing required field: {field}'}), 400
 
-        existing_user = Users.query.filter_by(email=data['email']).first()
-        if existing_user:
+        if Users.query.filter_by(email=data['email']).first():
             return jsonify({'message': 'Email already registered'}), 400
 
-        # SR1: Strong password check
+        # SR1: Strong password validation
         pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$'
         if not re.match(pattern, data['password']):
-            return jsonify({'message': 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.'}), 400
+            return jsonify({'message': 'Password must include uppercase, lowercase, digit, and special character.'}), 400
 
         new_user = Users(
             user_id=str(uuid4()),
@@ -207,15 +215,15 @@ def register():
 
         db.session.add(new_user)
         db.session.commit()
-
         return jsonify({'message': 'Registration successful', 'user_id': new_user.user_id}), 201
 
     except Exception as e:
         db.session.rollback()
-        print("Registration error:", str(e))
         return jsonify({'message': f'Error during registration: {str(e)}'}), 500
 
-# Change user password
+# -------------------------------
+# Change Password
+# -------------------------------
 @auth_bp.route('/profile/<user_id>/password', methods=['PUT'])
 @validate_session
 def change_password(user_id):
@@ -235,7 +243,7 @@ def change_password(user_id):
         if not current_password or not new_password:
             return jsonify({'message': 'Current and new password are required'}), 400
 
-        if user.password_hash != current_password and not check_password_hash(user.password_hash, current_password):
+        if not check_password_hash(user.password_hash, current_password):
             return jsonify({'message': 'Current password is incorrect'}), 401
 
         user.password_hash = generate_password_hash(new_password)
